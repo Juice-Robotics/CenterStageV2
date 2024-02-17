@@ -46,11 +46,7 @@ public class Slides {
 
     public Motor slides1;
     public Motor slides2;
-    public Motor climbMotor;
-    public StepperServo climbServo;
     public VoltageSensor voltageSensor;
-    private float ENGAGED_POS = 82;
-    private float DISENGAGED_POS = 20;
     private double HEIGHT_CLIMB = 500;
     //public boolean climbing = false;
     public int backdropTarget = 300;
@@ -59,13 +55,10 @@ public class Slides {
     public boolean climbing = false;
 
 
-    public Slides(Motor slides1, Motor slides2, Motor climbMotor, StepperServo climbServo, VoltageSensor voltageSensor) {
+    public Slides(Motor slides1, Motor slides2, VoltageSensor voltageSensor) {
         this.slides1 = slides1;
         this.slides2 = slides2;
-        this.climbMotor = climbMotor;
-        this.climbServo = climbServo;
         this.voltageSensor = voltageSensor;
-        this.climbServo.setAngle(DISENGAGED_POS);
 
         controller1 = new PIDController(p, i , d);
         controller2 = new PIDController(p, i , d);
@@ -90,10 +83,6 @@ public class Slides {
         power1 = (pid1 + ff) * voltageCompensation;
 //        power2 = pid2 + ff;
 
-        if (climbing) {
-            climbMotor.motor.setPower(power1);
-        }
-        else { //huh why
             if (target == 0){
                 slides1.motor.setPower(power1);
                 slides2.motor.setPower(power1); //was at *0.3 pre push
@@ -101,7 +90,6 @@ public class Slides {
             else {
                 slides1.motor.setPower(power1);
                 slides2.motor.setPower(power1);
-            }
         }
     }
 
@@ -134,21 +122,6 @@ public class Slides {
     public void runToClimb(){
         profile = MotionProfileGenerator.generateSimpleMotionProfile(new MotionState(getPos(), 0), new MotionState(HEIGHT_CLIMB, 0), maxvel, maxaccel);
         timer.reset();
-    }
-
-    public void shiftGear(boolean engaged) {
-        if (engaged) {
-            climbServo.setAngle(ENGAGED_POS);
-            climbMotor.motor.setPower(0);
-            try {
-                TimeUnit.SECONDS.sleep(1); //TEST
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } else {
-            climbServo.setAngle(DISENGAGED_POS);
-            climbMotor.motor.setPower(0);
-        }
     }
 
     public void startClimb(){

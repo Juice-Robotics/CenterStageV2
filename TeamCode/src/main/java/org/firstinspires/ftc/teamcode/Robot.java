@@ -71,18 +71,16 @@ public class Robot {
 
                 new Motor(0, "slides1", map, false),          //4
                 new Motor(0, "slides2", map, false),          //5
-                new Motor(0, "climb", map, false),            //6
-                new StepperServo(1, "shifter", map),                 //7
 
-                new StepperServo(1, "arm1", map),                    //8
-                new StepperServo(1, "arm2", map),                    //9
-                new StepperServo(1, "elbow", map),                   //10
-                new StepperServo(1, "claw1", map),                 //11
-                new StepperServo(1, "claw2", map),                 // 12
-                new StepperServo(1, "wrist", map),                   //13
-                new MotorEx(1, "intakeMotor", map, false),   //14
-                new StepperServo(1, "intakeServo1", map),            //15
-                new StepperServo(1, "intakeServo2", map),            //16
+                new StepperServo(1, "arm1", map),                    //6
+                new StepperServo(1, "arm2", map),                    //7
+                new StepperServo(1, "elbow", map),                   //8
+                new StepperServo(1, "claw1", map),                 //9
+                new StepperServo(1, "claw2", map),                 // 10
+                new StepperServo(1, "wrist", map),                   //11
+                new MotorEx(1, "intakeMotor", map, false),   //12
+                new StepperServo(1, "intakeServo1", map),            //13
+                new StepperServo(1, "intakeServo2", map),            //14
 
                 new StepperServo(1, "drone", map),                   //17
 
@@ -92,12 +90,12 @@ public class Robot {
 
         // INIT SUBSYSTEMS
 
-        this.claw = new Claw((StepperServo) components[11], (StepperServo) components[12], (StepperServo) components[13]);
-        this.arm = new ArmElbow((StepperServo) components[8], (StepperServo) components[9], (StepperServo) components[10]);
-        this.intake = new Intake((StepperServo) components[15], (StepperServo) components[16], (MotorEx) components[14]);
+        this.claw = new Claw((StepperServo) components[9], (StepperServo) components[10], (StepperServo) components[11]);
+        this.arm = new ArmElbow((StepperServo) components[6], (StepperServo) components[7], (StepperServo) components[8]);
+        this.intake = new Intake((StepperServo) components[13], (StepperServo) components[14], (MotorEx) components[12]);
         this.intakeSensor = new IntakeSensor(map.colorSensor.get("intakeSensor1"), map.colorSensor.get("intakeSensor2"));
-        this.slides = new Slides((Motor) components[4], (Motor) components[5], (Motor) components[6], (StepperServo) components[7], voltageSensor);
-        this.drone = new DroneLauncher((StepperServo) components[17]);
+        this.slides = new Slides((Motor) components[4], (Motor) components[5], voltageSensor);
+        this.drone = new DroneLauncher((StepperServo) components[15]);
         this.cv = new CVMaster(map);
         this.hardwareMap = map;
 
