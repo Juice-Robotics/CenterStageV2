@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.Levels;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
 import org.firstinspires.ftc.teamcode.lib.RobotFlags;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 import java.util.concurrent.TimeUnit;
@@ -103,8 +104,12 @@ public class TeleOpSafe extends LinearOpMode {
 //            }
 
             //CLAW
-            if (gamepad1.cross) {
-                robot.smartClawOpen();
+            if (gamepad1.circle) {
+                robot.smartClawOpen(Claw.Side.RIGHT);
+            }
+
+            if (gamepad1.square) {
+                robot.smartClawOpen(Claw.Side.LEFT);
             }
 
             if (gamepad1.square && !previousSquare) {
@@ -166,16 +171,12 @@ public class TeleOpSafe extends LinearOpMode {
             previousDroneState = gamepad1.triangle;
 
             // CLIMB
-            if (gamepad2.dpad_up && !previousDpadUp) {
-//                if (!robot.flags.contains(RobotFlags.CLIMB_ENGAGED)) {
+            if (gamepad1.dpad_up && !previousDpadUp) {
                 robot.climbExtend();
-//                } else {
-//                    robot.climbRetract();
-//                }
             }
             previousDpadUp = gamepad1.dpad_up;
 
-            if (gamepad2.dpad_down) {
+            if (gamepad1.dpad_down) {
                 robot.startClimb();
             }
 

@@ -2,14 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 // IMPORT SUBSYSTEMS
 
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.Component;
 import org.firstinspires.ftc.teamcode.lib.Levels;
@@ -28,7 +25,6 @@ import org.firstinspires.ftc.teamcode.subsystems.vision.CVMaster;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 
 public class Robot {
 
@@ -81,13 +77,14 @@ public class Robot {
                 new StepperServo(1, "arm1", map),                    //8
                 new StepperServo(1, "arm2", map),                    //9
                 new StepperServo(1, "elbow", map),                   //10
-                new StepperServo(1, "claw", map),                 //11
-                new StepperServo(1, "wrist", map),                   //12
-                new MotorEx(1, "intakeMotor", map, false),   //13
-                new StepperServo(1, "intakeServo1", map),            //14
-                new StepperServo(1, "intakeServo2", map),            //15
+                new StepperServo(1, "claw1", map),                 //11
+                new StepperServo(1, "claw2", map),                 // 12
+                new StepperServo(1, "wrist", map),                   //13
+                new MotorEx(1, "intakeMotor", map, false),   //14
+                new StepperServo(1, "intakeServo1", map),            //15
+                new StepperServo(1, "intakeServo2", map),            //16
 
-                new StepperServo(1, "drone", map),                   //16
+                new StepperServo(1, "drone", map),                   //17
 
         };
 
@@ -95,12 +92,12 @@ public class Robot {
 
         // INIT SUBSYSTEMS
 
-        this.claw = new Claw((StepperServo) components[11], (StepperServo) components[12]);
+        this.claw = new Claw((StepperServo) components[11], (StepperServo) components[12], (StepperServo) components[13]);
         this.arm = new ArmElbow((StepperServo) components[8], (StepperServo) components[9], (StepperServo) components[10]);
-        this.intake = new Intake((StepperServo) components[14], (StepperServo) components[15], (MotorEx) components[13]);
+        this.intake = new Intake((StepperServo) components[15], (StepperServo) components[16], (MotorEx) components[14]);
         this.intakeSensor = new IntakeSensor(map.colorSensor.get("intakeSensor1"), map.colorSensor.get("intakeSensor2"));
         this.slides = new Slides((Motor) components[4], (Motor) components[5], (Motor) components[6], (StepperServo) components[7], voltageSensor);
-        this.drone = new DroneLauncher((StepperServo) components[16]);
+        this.drone = new DroneLauncher((StepperServo) components[17]);
         this.cv = new CVMaster(map);
         this.hardwareMap = map;
 
@@ -117,7 +114,7 @@ public class Robot {
         //turning to get through the thingy
         this.slides.runToPreset(Levels.INTAKE);
         this.arm.runtoPreset(Levels.INTAKE);
-        this.claw.setClawOpen();
+        this.claw.setClawOpen(Claw.Side.BOTH);
         this.claw.runToWristPreset(Levels.INTAKE);
         this.intake.runToPreset(Levels.INTAKE);
         this.subsystemState = Levels.INTAKE;
@@ -127,7 +124,7 @@ public class Robot {
         intaking = true;
         this.intake.startIntake();
         this.arm.runtoPreset(Levels.INTAKE);
-        this.claw.setClawOpen();
+        this.claw.setClawOpen(Claw.Side.BOTH);
         this.intake.runToPreset(Levels.INTAKE);
         this.claw.runToWristPreset(Levels.INTAKE);
         this.slides.runToPosition(0);
@@ -148,7 +145,7 @@ public class Robot {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(150);
-                claw.setClawClose();
+                claw.setClawClose(Claw.Side.BOTH);
                 sleep(350);
                 intake.stopIntake();
                 intake.runToPreset(Levels.INTERMEDIATE);
@@ -162,7 +159,7 @@ public class Robot {
         intaking = true;
         this.intake.reverseIntake();
         this.arm.runtoPreset(Levels.INTAKE);
-        this.claw.setClawOpen();
+        this.claw.setClawOpen(Claw.Side.BOTH);
         this.intake.runToPreset(Levels.INTAKE);
         this.claw.runToWristPreset(Levels.INTAKE);
         this.slides.runToPosition(0);
@@ -175,7 +172,7 @@ public class Robot {
         sleep(500);
         this.arm.runtoPreset(Levels.INIT);
         sleep(2000);
-        this.claw.setClawClose();
+        this.claw.setClawClose(Claw.Side.BOTH);
 //        this.intake.setAngle(50);
         this.subsystemState = Levels.INIT;
     }
@@ -207,18 +204,21 @@ public class Robot {
         this.stopIntake();
     }
 
-    public void smartClawOpen() {
-        this.claw.setClawOpen();
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                sleep(300);
-                arm.setAngleArm(30);
-                arm.setAngleElbow(106);
-                claw.runToWristPreset(Levels.INTAKE);
-                sleep(300);
-                slides.runToPosition(0);
-            }});
-        thread.start();
+    public void smartClawOpen(Claw.Side side) {
+        this.claw.setClawOpen(side);
+        if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
+            Thread thread = new Thread(new Runnable() {
+                public void run() {
+                    sleep(300);
+                    arm.setAngleArm(30);
+                    arm.setAngleElbow(106);
+                    claw.runToWristPreset(Levels.INTAKE);
+                    sleep(300);
+                    slides.runToPosition(0);
+                }
+            });
+            thread.start();
+        }
     }
 
     public void smartIntakeUpdate() {
@@ -287,21 +287,6 @@ public class Robot {
                 sleep(600);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
-                while (slides.getPos() <= 460) {
-                    // sleep
-                }
-                    slides.setPower((float) 0.6);
-                    slides.shiftGear(true);
-                    sleep(100);
-                    slides.setPower(0);
-
-//                if (flags.contains(RobotFlags.CLIMB_RETRACT_REQUESTED)) {
-//                    slides.shiftGear(false);
-//                    sleep(100);
-//                    smartClawOpen();
-//                    flags.remove(RobotFlags.CLIMB_RETRACT_REQUESTED);
-//                }
-//                flags.remove(RobotFlags.CLIMB_EXTEND_IN_PROGRESS);
             }});
         thread.start();
     }
@@ -317,7 +302,7 @@ public class Robot {
         } else {
             slides.shiftGear(false);
             sleep(100);
-            smartClawOpen();
+            smartClawOpen(Claw.Side.BOTH);
         }
     }
 
