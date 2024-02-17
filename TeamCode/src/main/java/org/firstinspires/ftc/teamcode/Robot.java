@@ -289,21 +289,6 @@ public class Robot {
         thread.start();
     }
 
-    /**
-     * <h1>Climb Disengage, NOT Climb Start</h1>
-     * Use <code>startClimb()</code> in order to climb.
-     */
-    public void climbRetract() {
-        this.flags.remove(RobotFlags.CLIMB_ENGAGED);
-        if (flags.contains(RobotFlags.CLIMB_EXTEND_IN_PROGRESS)) {
-            flags.add(RobotFlags.CLIMB_RETRACT_REQUESTED);
-        } else {
-            slides.shiftGear(false);
-            sleep(100);
-            smartClawOpen(Claw.Side.BOTH);
-        }
-    }
-
     public void antiJam(){
         if (intaking) {
             if (this.intake.intakeMotor.getCurrent() > 4.5 && !flags.contains(RobotFlags.ANTI_JAM_IN_PROGRESS) && antiJamCooldown.time(TimeUnit.MILLISECONDS) >= 250) {
