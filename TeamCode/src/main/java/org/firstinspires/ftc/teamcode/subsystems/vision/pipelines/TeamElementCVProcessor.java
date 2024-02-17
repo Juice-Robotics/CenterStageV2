@@ -1,20 +1,15 @@
-package org.firstinspires.ftc.teamcode.subsystems.vision;
+package org.firstinspires.ftc.teamcode.subsystems.vision.pipelines;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
 
-import androidx.annotation.NonNull;
-
-import org.firstinspires.ftc.robotcore.external.function.Consumer;
-import org.firstinspires.ftc.robotcore.external.function.Continuation;
-import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.camera.calibration.CameraCalibration;
+import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.vision.VisionProcessor;
-import org.opencv.android.Utils;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -25,38 +20,52 @@ import org.opencv.imgproc.Moments;
 
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.DoubleSupplier;
 
-public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
+public class TeamElementCVProcessor implements VisionProcessor {
     private final DoubleSupplier minArea, left, right;
     private final Scalar upper; // lower bounds for masking
     private final Scalar lower; // upper bounds for masking
+
     private final TextPaint textPaint;
     private final Paint linePaint;
+
     private final ArrayList<MatOfPoint> contours;
+
     private final Mat hierarchy = new Mat();
-    private final Mat sel1 = new Mat(); // these facilitate capturing through 0
-    private final Mat sel2 = new Mat();
-    private final AtomicReference<Bitmap> lastFrame = new AtomicReference<>(Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565));
+
     private double largestContourX;
     private double largestContourY;
     private double largestContourArea;
     private MatOfPoint largestContour;
-    private PropPositions previousPropPosition;
-    private PropPositions recordedPropPosition = PropPositions.UNFOUND;
 
+    private Location previousPropPosition;
+    private Location recordedPropPosition = Location.UNFOUND;
+    Telemetry telemetry;
 
     /**
      * Uses HSVs for the scalars
      *
-     * @param lower   the lower masked bound, a three a value scalar in the form of a HSV
-     * @param upper   the upper masked bound, a three a value scalar in the form of a HSV
+     //     * @param lower   the lower masked bound, a three a value scalar in the form of a HSV
+     //     * @param upper   the upper masked bound, a three a value scalar in the form of a HSV
      * @param minArea the minimum area for a detected blob to be considered the prop
      * @param left    the dividing point for the prop to be on the left
      * @param right   the diving point for the prop to be on the right
      */
-    public YoinkP2Pipeline(@NonNull Scalar lower, @NonNull Scalar upper, DoubleSupplier minArea, DoubleSupplier left, DoubleSupplier right) {
+    public TeamElementCVProcessor(DoubleSupplier minArea, DoubleSupplier left, DoubleSupplier right, Telemetry t, AllianceColor a) {
+
+        Scalar lower;
+        Scalar upper;
+        telemetry = t;
+
+        if (a == AllianceColor.BLUE) {
+            lower = new Scalar(100, 150,80);
+            upper = new Scalar(300,254,254);
+        } else {
+            lower = new Scalar(0,80,20);
+            upper = new Scalar(60,254,254);
+        }
+
         this.contours = new ArrayList<>();
         this.lower = lower;
         this.upper = upper;
@@ -83,7 +92,6 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
 
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
-        lastFrame.set(Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565));
         // this method comes with all VisionProcessors, we just don't need to do anything here, and you dont need to call it
     }
 
@@ -110,7 +118,6 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
 
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
-
         // this method processes the image (frame) taken by the camera, and tries to find a suitable prop
         // you dont need to call it
 
@@ -118,20 +125,8 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
         Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2HSV);
         // thats why you need to give your scalar upper and lower bounds as HSV values
 
-        if (upper.val[0] < lower.val[0]) {
-            // makes new scalars for the upper [upper, 0] detection, places the result in sel1
-            Core.inRange(frame, new Scalar(upper.val[0], lower.val[1], lower.val[2]), new Scalar(0, upper.val[1], upper.val[2]), sel1);
-            // makes new scalars for the lower [0, lower] detection, places the result in sel2
-            Core.inRange(frame, new Scalar(0, lower.val[1], lower.val[2]), new Scalar(lower.val[0], upper.val[1], upper.val[2]), sel2);
-
-            // combines the selections
-            Core.bitwise_or(sel1, sel2, frame);
-        } else {
-            // this process is simpler if we are not trying to wrap through 0
-            // this method makes the colour image black and white, with everything between your upper and lower bound values as white, and everything else black
-            Core.inRange(frame, lower, upper, frame);
-        }
-
+        // this method makes the colour image black and white, with everything between your upper and lower bound values as white, and everything else black
+        Core.inRange(frame, lower, upper, frame);
 
         // this empties out the list of found contours, otherwise we would keep all the old ones, read on to find out more about contours!
         contours.clear();
@@ -141,7 +136,7 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
         Imgproc.findContours(frame, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
         // this sets up our largest contour area to be 0
-        largestContourArea = -1;
+        largestContourArea = 0;
         // and our currently found largest contour to be null
         largestContour = null;
 
@@ -160,7 +155,6 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
             }
         }
 
-
         // sets up the center points of our largest contour to be -1 (offscreen)
         largestContourX = largestContourY = -1;
 
@@ -173,21 +167,21 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
 
         // determines the current prop position, using the left and right dividers we gave earlier
         // if we didn't find any contours which were large enough, sets it to be unfound
-        PropPositions propPosition;
+        Location propPosition;
         if (largestContour == null) {
-            propPosition = PropPositions.LEFT;
+            propPosition = Location.UNFOUND;
         } else if (largestContourX < left.getAsDouble()) {
-            propPosition = PropPositions.RIGHT;
+            propPosition = Location.LEFT;
         } else if (largestContourX > right.getAsDouble()) {
-            propPosition = PropPositions.LEFT;
+            propPosition = Location.RIGHT;
         } else {
-            propPosition = PropPositions.CENTER;
+            propPosition = Location.CENTER;
         }
 
         // if we have found a new prop position, and it is not unfound, updates the recorded position,
         // this makes sure that if our camera is playing up, we only need to see the prop in the correct position
         // and we will hold onto it
-        if (propPosition != previousPropPosition && propPosition != PropPositions.UNFOUND) {
+        if (propPosition != previousPropPosition && propPosition != Location.UNFOUND) {
             recordedPropPosition = propPosition;
         }
 
@@ -197,9 +191,6 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
 //		Imgproc.drawContours(frame, contours, -1, colour);
 
         // returns back the edited image, don't worry about this too much
-        Bitmap b = Bitmap.createBitmap(frame.width(), frame.height(), Bitmap.Config.RGB_565);
-        Utils.matToBitmap(frame, b);
-        lastFrame.set(b);
         return frame;
     }
 
@@ -232,9 +223,9 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
     }
 
     /**
-     * @return the last found prop position, if none have been found, returns {@link PropPositions#UNFOUND}
+     * @return the last found prop position, if none have been found, returns {@link Location#UNFOUND}
      */
-    public PropPositions getRecordedPropPosition() {
+    public Location getLocation() {
         return recordedPropPosition;
     }
 
@@ -243,25 +234,12 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
         return largestContour;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
-    }
-
     public void close() {
         hierarchy.release();
-        sel1.release();
-        sel2.release();
-    }
-
-    @Override
-    public void getFrameBitmap(Continuation<? extends Consumer<Bitmap>> continuation) {
-        continuation.dispatch(bitmapConsumer -> bitmapConsumer.accept(lastFrame.get()));
     }
 
     // the enum that stores the 4 possible prop positions
-    public enum PropPositions {
+    public enum Location {
         LEFT,
         CENTER,
         RIGHT,

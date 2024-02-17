@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
-import org.firstinspires.ftc.teamcode.subsystems.vision.TeamElementCVProcessor;
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.TeamElementCVProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
 
 @Disabled // remove this line to have this show up on your robot

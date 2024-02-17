@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.subsystems.vision;
+package org.firstinspires.ftc.teamcode.subsystems.vision.pipelines;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

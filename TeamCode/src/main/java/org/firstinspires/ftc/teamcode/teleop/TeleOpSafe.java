@@ -112,15 +112,15 @@ public class TeleOpSafe extends LinearOpMode {
                 robot.smartClawOpen(Claw.Side.LEFT);
             }
 
-            if (gamepad1.square && !previousSquare) {
+            if (gamepad1.cross && !previousSquare) {
                 robot.claw.wrist.setAngle(70);
             }
             if (gamepad1.triangle && !previousTriangle) {
-                robot.claw.wrist.setAngle(35);
-            }
-            if (gamepad1.circle && !previousCircle) {
                 robot.claw.wrist.setAngle(176);
             }
+//            if (gamepad1.circle && !previousCircle) {
+//                robot.claw.wrist.setAngle(176);
+//            }
             previousCircle = gamepad1.circle;
             previousTriangle = gamepad1.triangle;
             previousSquare = gamepad1.square;
