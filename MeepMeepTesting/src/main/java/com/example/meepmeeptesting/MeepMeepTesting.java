@@ -89,28 +89,35 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                                 drive.trajectorySequenceBuilder(new Pose2d(-62, -34, Math.toRadians(180)))
                                         .setReversed(true)
-                                        .addTemporalMarker(0, () -> {
-                                            //this.robot.farPos();
+                                        .splineToLinearHeading(new Pose2d(-25, -40, Math.toRadians(90)), Math.toRadians(90))
+                                        .waitSeconds(1)
+                                        //.splineToLinearHeading(new Pose2d(-48, 13, Math.toRadians(180)), Math.toRadians(0))
+                                        .addTemporalMarker(1.8, () -> {
+                                            //release pixel from intake
                                         })
-                                        .splineTo(new Vector2d(-38, -27), Math.toRadians(45))
-                                        .forward(17)
-                                        .turn(Math.toRadians(45))
-                                        .strafeRight(10)
-                                        .back(20)
-                                        .splineToConstantHeading(new Vector2d(-59, 20), Math.toRadians(90))
-                                        .splineToConstantHeading(new Vector2d(-38, 49), Math.toRadians(90))
+                                        //stack
+                                        .splineToSplineHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                                        .waitSeconds(1.5)
+
+       // TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
+                                        //break
+                                        .setReversed(true)
+                                        .splineToConstantHeading(new Vector2d(-60, -30), Math.toRadians(90))
+                                        .splineToConstantHeading(new Vector2d(-60, 15), Math.toRadians(90))
+                                        .splineToConstantHeading(new Vector2d(-42, 51), Math.toRadians(90))
                                         .addTemporalMarker(0, () -> {
-                                            //this.robot.intake.setAngle(120);
+                                           // this.robot.intake.setAngle(120);
+                                        })
+                                        .addTemporalMarker(2, () -> {
+                                           // robot.autoPreloadDepositPreset();
                                         })
                                         .addTemporalMarker(3, () -> {
-                                            //robot.autoPreloadDepositPreset();
+                                          //  robot.smartClawOpen();
                                         })
-                                        .addTemporalMarker(4, () -> {
-                                            //robot.smartClawOpen();
+                                        .addTemporalMarker(3.4, () -> {
+                                          //  robot.slides.runToPosition(0);
                                         })
-                                        .waitSeconds(2)
-                                        .strafeRight(20)
-                                        .back(10)
+                                        .waitSeconds(1)
                                         .build()
 
                 );
@@ -174,8 +181,8 @@ public class MeepMeepTesting {
 
 
         Image img = null;
-//        try { img = ImageIO.read(new File("/Users/zhimi/Downloads/field.png")); }
-        try { img = ImageIO.read(new File("/Users/siddharth/dev/Juice/CenterStage/MeepMeepTesting/src/main/java/com/example/meepmeeptesting/Juice-CENTERSTAGE-Dark.png")); }
+        try { img = ImageIO.read(new File("/Users/zhimi/Downloads/field.png")); }
+        //try { img = ImageIO.read(new File("/Users/siddharth/dev/Juice/CenterStage/MeepMeepTesting/src/main/java/com/example/meepmeeptesting/Juice-CENTERSTAGE-Dark.png")); }
         catch (IOException e) {}
 
         meepMeep.setBackground(img)
@@ -183,10 +190,10 @@ public class MeepMeepTesting {
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
 //                .addEntity(myBotCyclesUnsafeSide)
-//                .addEntity(myBotCyclesSafeRed)
+                .addEntity(myBotCyclesSafeRed)
 //                .addEntity(myBotCycleSafeBlue)
 //                .addEntity(myBotCyclesSafeOpti)
-                .addEntity(myBotRelocal)
+                //.addEntity(myBotRelocal)
                 .start();
     }
 }

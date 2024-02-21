@@ -45,6 +45,10 @@ public class AprilTagsRelocalization {
     }
 
     public AprilTagPoseFtc getRelativePose() {
+        if (aprilTagDetection == null) {
+            // return null if no tag in sight
+            return null;
+        }
         return aprilTagDetection.ftcPose;
     }
 
@@ -54,13 +58,12 @@ public class AprilTagsRelocalization {
             // return current estimate if cannot see tags
             return robotPose;
         }
-
         Pose2d tagPose;
 
         if (aprilTagDetection.id == 5) {
-            tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, robotPose.getHeading());
+            tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, robotPose.getHeading());
         } else {
-            tagPose = new Pose2d(32 - tagRPose.x, -51 - tagRPose.y, robotPose.getHeading());
+            tagPose = new Pose2d(29 - tagRPose.x, -48 - tagRPose.y, robotPose.getHeading());
         }
         aprilTagDetection = null;
 
@@ -77,9 +80,9 @@ public class AprilTagsRelocalization {
         Pose2d tagPose;
 
         if (aprilTagDetection.id == 5) {
-            tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, Math.toRadians(tagRPose.yaw - 90));
+            tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
         } else {
-            tagPose = new Pose2d(32 - tagRPose.x, -51 - tagRPose.y, Math.toRadians(tagRPose.yaw - 90));
+            tagPose = new Pose2d(29 - tagRPose.x, -48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
         }
         aprilTagDetection = null;
 
