@@ -37,7 +37,7 @@ public class AprilTagsRelocalization {
         aprilTagDetections = processor.getDetections();
 
         for (AprilTagDetection laprilTagDetection : aprilTagDetections) {
-            if (laprilTagDetection.metadata != null && laprilTagDetection.id == 5) {
+            if (laprilTagDetection.metadata != null && laprilTagDetection.id == 5 || laprilTagDetection.metadata != null && laprilTagDetection.id == 2) {
                 aprilTagID = laprilTagDetection.id;
                 aprilTagDetection = laprilTagDetection;
             }
@@ -50,12 +50,38 @@ public class AprilTagsRelocalization {
 
     public Pose2d getAbsolutePose2d(Pose2d robotPose) {
         AprilTagPoseFtc tagRPose = getRelativePose();
-//        if (tagRPose == null) {
-//            // return current estimate if cannot see tags
-//            return robotPose;
-//        }
-        AprilTagPoseRaw fieldPosition = aprilTagDetection.rawPose;
-        Pose2d tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
+        if (tagRPose == null) {
+            // return current estimate if cannot see tags
+            return robotPose;
+        }
+
+        Pose2d tagPose;
+
+        if (aprilTagDetection.id == 5) {
+            tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, robotPose.getHeading());
+        } else {
+            tagPose = new Pose2d(32 - tagRPose.x, -51 - tagRPose.y, robotPose.getHeading());
+        }
+        aprilTagDetection = null;
+
+        return tagPose;
+    }
+
+    public Pose2d getAbsolutePose2dWithHeading(Pose2d robotPose) {
+        AprilTagPoseFtc tagRPose = getRelativePose();
+        if (tagRPose == null) {
+            // return current estimate if cannot see tags
+            return robotPose;
+        }
+
+        Pose2d tagPose;
+
+        if (aprilTagDetection.id == 5) {
+            tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, Math.toRadians(tagRPose.yaw - 90));
+        } else {
+            tagPose = new Pose2d(32 - tagRPose.x, -51 - tagRPose.y, Math.toRadians(tagRPose.yaw - 90));
+        }
+        aprilTagDetection = null;
 
         return tagPose;
     }

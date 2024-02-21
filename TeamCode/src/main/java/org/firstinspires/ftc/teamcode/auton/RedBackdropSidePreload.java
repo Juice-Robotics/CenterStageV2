@@ -390,7 +390,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
         }
 
         // shuts down the camera once the match starts, we dont need to look any more
-        robot.cv.switchToAprilTags();
+        robot.cv.switchToAutoPipelines();
 
         robot.launchSubsystemThread(telemetry);
         switch (recordedPropPosition) {
