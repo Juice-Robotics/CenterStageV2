@@ -8,9 +8,10 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.subsystems.relocalization.AprilTagsRelocalization;
-import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.PreloadPipeline;
 import org.opencv.core.Scalar;
 
 public class CVMaster {
@@ -21,6 +22,7 @@ public class CVMaster {
     HardwareMap hardwareMap;
     AprilTagProcessor tagProcessor;
     AprilTagsRelocalization relocalization;
+    public PreloadPipeline preloadProcessor;
 
     public CVMaster(HardwareMap map) {
         hardwareMap = map;
@@ -69,6 +71,40 @@ public class CVMaster {
         relocalization = new AprilTagsRelocalization(tagProcessor);
     }
 
+    public void switchToAuton(AllianceColor allianceColor) {
+        kill();
+        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
+        visionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .addProcessors(tagProcessor, preloadProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
+//                .addProcessor(tagProcessor)
+                .build();
+        visionPortal.setProcessorEnabled(tagProcessor, true);
+        visionPortal.setProcessorEnabled(preloadProcessor, true);
+        relocalization = new AprilTagsRelocalization(tagProcessor);
+        startStreamingDashboard();
+    }
+
+    public void initPreload(AllianceColor allianceColor) {
+        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
+
+        visionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
+                .addProcessors(tagProcessor, preloadProcessor)
+//                .addProcessor(tagProcessor)
+                .build();
+        visionPortal.setProcessorEnabled(tagProcessor, true);
+        visionPortal.setProcessorEnabled(preloadProcessor, true);
+        relocalization = new AprilTagsRelocalization(tagProcessor);
+        startStreamingDashboard();
+    }
+
     public void initTags() {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
@@ -87,6 +123,10 @@ public class CVMaster {
         return relocalization.getAbsolutePose2d(currentPose);
     }
 
+    public YoinkP2Pipeline.PropPositions detectPreload() {
+        return preloadProcessor.getPreloadedZone();
+    }
+
     public void kill() {
         colourMassDetectionProcessor.close();
         visionPortal.close();
@@ -97,6 +137,6 @@ public class CVMaster {
     }
 
     public void startStreamingDashboard() {
-        FtcDashboard.getInstance().startCameraStream((CameraStreamSource) tagProcessor, 0);
+        FtcDashboard.getInstance().startCameraStream(preloadProcessor, 0);
     }
 }

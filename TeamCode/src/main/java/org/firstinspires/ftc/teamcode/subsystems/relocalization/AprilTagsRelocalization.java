@@ -45,17 +45,23 @@ public class AprilTagsRelocalization {
     }
 
     public AprilTagPoseFtc getRelativePose() {
+        if (aprilTagDetection == null) {
+            // return null if no tag in sight
+            return null;
+        }
         return aprilTagDetection.ftcPose;
     }
 
     public Pose2d getAbsolutePose2d(Pose2d robotPose) {
         AprilTagPoseFtc tagRPose = getRelativePose();
-//        if (tagRPose == null) {
-//            // return current estimate if cannot see tags
-//            return robotPose;
-//        }
+        if (tagRPose == null) {
+            // return current estimate if cannot see tags
+            return robotPose;
+        }
         AprilTagPoseRaw fieldPosition = aprilTagDetection.rawPose;
-        Pose2d tagPose = new Pose2d(32 - tagRPose.x, 51 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
+//        Pose2d tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
+        Pose2d tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
+        aprilTagDetection = null;
 
         return tagPose;
     }
