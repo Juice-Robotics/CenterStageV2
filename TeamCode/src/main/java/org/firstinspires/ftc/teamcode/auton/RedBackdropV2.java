@@ -5,7 +5,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
@@ -13,14 +12,12 @@ import org.firstinspires.ftc.teamcode.lib.PoseStorage;
 import org.firstinspires.ftc.teamcode.subsystems.vision.CVMaster;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.opencv.core.Scalar;
 
 @Config
 @Autonomous(group = "drive")
 
-public class BlueBackdropV2 extends LinearOpMode {
+public class RedBackdropV2 extends LinearOpMode {
     Robot robot;
     CVMaster cv;
 
@@ -32,11 +29,11 @@ public class BlueBackdropV2 extends LinearOpMode {
         double minArea = 3000; // the minimum area for the detection to consider for your prop
 
         cv = new CVMaster(hardwareMap);
-        cv.initProp(AllianceColor.BLUE);
+        cv.initProp(AllianceColor.RED);
 
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);
-        Pose2d startPose = new Pose2d(-62, 13, Math.toRadians(180));
+        Pose2d startPose = new Pose2d(62, 13, Math.toRadians(0));
         robot.initPos();
 
         drive.setPoseEstimate(startPose);
@@ -44,7 +41,7 @@ public class BlueBackdropV2 extends LinearOpMode {
         // PRELOAD PATHS
         TrajectorySequence preloadSpikeLeft = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-32, 32, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(32, 32, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
                 })
@@ -53,7 +50,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-44, 51, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(44, 49, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(0, () -> {
                     this.robot.intake.setAngle(120);
                 })
@@ -64,13 +61,13 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.smartClawOpen();
                 })
                 .waitSeconds(2)
-                .strafeRight(15)
+                .strafeLeft(15)
                 .back(8)
                 .build();
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-26, 25, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(26, 25, Math.toRadians(-90)), Math.toRadians(-90))
                 .waitSeconds(1)
                 //.splineToLinearHeading(new Pose2d(-48, 13, Math.toRadians(180)), Math.toRadians(0))
                 .addTemporalMarker(1.8, () -> {
@@ -80,7 +77,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-35, 51, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(35, 49, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(0, () -> {
                     this.robot.intake.setAngle(120);
                 })
@@ -91,14 +88,14 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.smartClawOpen();
                 })
                 .waitSeconds(2)
-                .strafeRight(23)
+                .strafeLeft(23)
                 .back(8)
                 .build();
 
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToSplineHeading(new Pose2d(-43, 14, Math.toRadians(260)), Math.toRadians(10))
-                .splineToSplineHeading(new Pose2d(-32, 11, Math.toRadians(270)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(43, 14, Math.toRadians(-80)), Math.toRadians(170))
+                .splineToSplineHeading(new Pose2d(32, 11, Math.toRadians(-90)), Math.toRadians(270))
                 .waitSeconds(1)
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
@@ -107,7 +104,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-29, 51, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(29, 49, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(0, () -> {
                     this.robot.intake.setAngle(120);
                 })
@@ -118,7 +115,7 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.smartClawOpen();
                 })
                 .waitSeconds(2)
-                .strafeRight(28)
+                .strafeLeft(28)
                 .back(8)
                 .build();
 
@@ -164,8 +161,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         recordedPropPosition = YoinkP2Pipeline.PropPositions.RIGHT;
         // shuts down the camera once the match starts, we dont need to look any more
-        cv.switchToAuton(AllianceColor.BLUE);
-        cv.preloadProcessor.setTargetAprilTagID(recordedPropPosition);
+        cv.switchToAuton(AllianceColor.RED);
 
         robot.launchSubsystemThread(telemetry);
         switch (recordedPropPosition) {

@@ -74,8 +74,8 @@ public class RedFarCycles extends LinearOpMode {
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(10, 20), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(29, 47.7), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(10, 25), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(38, 47.7), Math.toRadians(90))
                 .addTemporalMarker(0, () -> {
                     this.robot.intake.setAngle(120);
                 })
@@ -363,23 +363,14 @@ public class RedFarCycles extends LinearOpMode {
             case CENTER:
                 drive.followTrajectorySequence(preloadSpikeCenter);
                 drive.followTrajectorySequence(preloadBackdropCenter);
-                drive.followTrajectorySequence(centerCycle1);
-                drive.followTrajectorySequence(cycle2);
-                drive.followTrajectorySequence(park);
                 break;
             case LEFT:
                 drive.followTrajectorySequence(preloadSpikeRight);
                 drive.followTrajectorySequence(preloadBackdropRight);
-                drive.followTrajectorySequence(rightCycle1);
-                drive.followTrajectorySequence(cycle2);
-                drive.followTrajectorySequence(park);
                 break;
             case RIGHT:
                 drive.followTrajectorySequence(preloadSpikeLeft);
                 drive.followTrajectorySequence(preloadBackdropLeft);
-                drive.followTrajectorySequence(leftCycle1);
-                drive.followTrajectorySequence(cycle2);
-                drive.followTrajectorySequence(park);
                 break;
         }
 
