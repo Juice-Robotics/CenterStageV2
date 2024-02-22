@@ -8,11 +8,8 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.subsystems.relocalization.AprilTagsRelocalization;
-<<<<<<< HEAD
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.PreloadPipeline;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
-=======
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;

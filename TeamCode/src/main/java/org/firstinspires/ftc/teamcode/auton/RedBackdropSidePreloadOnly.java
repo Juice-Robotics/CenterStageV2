@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.CVMaster;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -49,7 +50,7 @@ public class RedBackdropSidePreloadOnly extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.3, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
 //                .addTemporalMarker(4, ()-> {
 //                    robot.slides.runToPosition(0);
@@ -75,7 +76,7 @@ public class RedBackdropSidePreloadOnly extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
 //                .addTemporalMarker(4, ()-> {
 //                    robot.slides.runToPosition(0);
@@ -101,7 +102,7 @@ public class RedBackdropSidePreloadOnly extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(1.7, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
 //                .addTemporalMarker(4, ()-> {
 //                    robot.slides.runToPosition(0);

@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -67,7 +68,7 @@ public class BlueBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.1, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(3, () -> {
                     robot.slides.runToPosition(0);
@@ -95,7 +96,7 @@ public class BlueBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.1, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(3, () -> {
                     robot.slides.runToPosition(0);
@@ -122,7 +123,7 @@ public class BlueBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.35, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(3, () -> {
                     robot.slides.runToPosition(0);

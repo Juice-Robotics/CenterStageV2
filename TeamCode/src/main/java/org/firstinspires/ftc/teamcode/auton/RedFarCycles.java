@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -83,7 +84,7 @@ public class RedFarCycles extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(3, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(3.4, () -> {
                     robot.slides.runToPosition(0);
@@ -126,7 +127,7 @@ public class RedFarCycles extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.1, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(2.5, () -> {
                     robot.slides.runToPosition(0);
@@ -166,7 +167,7 @@ public class RedFarCycles extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.1, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(2.5, () -> {
                     robot.slides.runToPosition(0);
@@ -193,7 +194,7 @@ public class RedFarCycles extends LinearOpMode {
 
                 .addTemporalMarker(5, () -> {
                     robot.startAutoIntake();
-                    robot.claw.setClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(6, () -> {
                     robot.stopIntake();
@@ -202,7 +203,7 @@ public class RedFarCycles extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(8, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(1.2)
                 .build();

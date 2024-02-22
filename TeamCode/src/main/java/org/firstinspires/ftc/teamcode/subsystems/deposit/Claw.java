@@ -100,6 +100,11 @@ public class Claw {
         }
     }
 
+    public void setClawOpen() {
+        this.depositServoLeft.setAngle(clawOpen);
+        this.depositServoRight.setAngle(clawOpen);
+    }
+
     public void setClawClose(Side side) {
         switch (side) {
             case LEFT:
@@ -112,6 +117,11 @@ public class Claw {
                 this.depositServoLeft.setAngle(clawClose);
                 this.depositServoRight.setAngle(clawClose);
         }
+    }
+
+    public void setClawClose() {
+        this.depositServoLeft.setAngle(clawClose);
+        this.depositServoRight.setAngle(clawClose);
     }
 
     public enum ClawStatus {
