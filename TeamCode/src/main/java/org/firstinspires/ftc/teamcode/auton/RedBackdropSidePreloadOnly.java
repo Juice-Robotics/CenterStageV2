@@ -151,7 +151,7 @@ public class RedBackdropSidePreloadOnly extends LinearOpMode {
         }
 
         // shuts down the camera once the match starts, we dont need to look any more
-        cv.switchToAprilTags();
+        cv.switchToAutoPipelines();
 
         robot.launchSubsystemThread(telemetry);
         Pose2d newPose = new Pose2d(0,0,0);

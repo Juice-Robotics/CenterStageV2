@@ -174,7 +174,7 @@ public class BlueSpikeFar extends LinearOpMode {
         if (isStopRequested()) return;
 
         // shuts down the camera once the match starts, we dont need to look any more
-        cv.switchToAprilTags();
+        cv.switchToAutoPipelines();
 
 
         // gets the recorded prop position

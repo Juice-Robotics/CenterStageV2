@@ -8,6 +8,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.subsystems.relocalization.AprilTagsRelocalization;
+<<<<<<< HEAD
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.PreloadPipeline;
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
+=======
+>>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
@@ -17,6 +22,7 @@ import org.opencv.core.Scalar;
 public class CVMaster {
     public VisionPortal visionPortal;
     public YoinkP2Pipeline colourMassDetectionProcessor;
+    public PreloadPipeline preloadPipeline;
     AprilTagProcessor processor;
     AllianceColor allianceColor;
     HardwareMap hardwareMap;
@@ -57,6 +63,21 @@ public class CVMaster {
                 .build();
 
         visionPortal.setProcessorEnabled(colourMassDetectionProcessor, true);
+    }
+
+    public void switchToAutoPipelines() {
+        kill();
+        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        preloadPipeline = new PreloadPipeline(tagProcessor, allianceColor);
+        visionPortal = new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .addProcessors(tagProcessor, preloadPipeline)
+//                .addProcessor(tagProcessor)
+                .build();
+        visionPortal.setProcessorEnabled(tagProcessor, true);
+        visionPortal.setProcessorEnabled(preloadPipeline, true);
+        FtcDashboard.getInstance().startCameraStream(preloadPipeline, 30);
+        relocalization = new AprilTagsRelocalization(tagProcessor);
     }
 
     public void switchToAprilTags() {
