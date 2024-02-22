@@ -222,15 +222,33 @@ public class Robot {
     public void smartClawOpen() {
         this.claw.setClawOpen(Claw.Side.BOTH);
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
-            Thread thread = new Thread(new Runnable() {
-                public void run() {
-                    sleep(300);
-                    arm.setAngleArm(30);
-                    arm.setAngleElbow(106);
-                    claw.runToWristPreset(Levels.INTAKE);
-                    sleep(300);
-                    slides.runToPosition(0);
-                }
+            Thread thread = new Thread(() -> {
+                sleep(300);
+                arm.setAngleArm(30);
+                arm.setAngleElbow(106);
+                claw.runToWristPreset(Levels.INTAKE);
+                sleep(300);
+                slides.runToPosition(0);
+            });
+            thread.start();
+        }
+    }
+
+    public void smartClawOrderedOpen() {
+        if (claw.isOpenLeft == Claw.ClawStatus.CLOSED) {
+            this.claw.setClawOpen(Claw.Side.LEFT);
+        } else if (claw.isOpenRight == Claw.ClawStatus.CLOSED) {
+            this.claw.setClawOpen(Claw.Side.RIGHT);
+        }
+
+        if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
+            Thread thread = new Thread(() -> {
+                sleep(300);
+                arm.setAngleArm(30);
+                arm.setAngleElbow(106);
+                claw.runToWristPreset(Levels.INTAKE);
+                sleep(300);
+                slides.runToPosition(0);
             });
             thread.start();
         }

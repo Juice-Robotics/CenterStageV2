@@ -60,10 +60,13 @@ public class TeleOpSafe extends LinearOpMode {
         boolean previousDpadUp = false;
         float previousLeftTriggerState = 0;
         boolean previousSquare = false;
-        boolean previousTriangle = false;
+        boolean previousCross = false;
         boolean previousCircle = false;
+        boolean previousGP2DUp = false;
 
         boolean[] detectedIndex;
+
+        boolean smartIntakeEnabled = true;
 
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -95,34 +98,25 @@ public class TeleOpSafe extends LinearOpMode {
             }
             robot.setDrivePower(-x, y, rx);
 
-
-            //ARM
-//            if (gamepad2.left_trigger > 0.1) {
-//                robot.arm.setAngleArm((int) (robot.arm.arm1.getAngle() + (0.1*gamepad2.left_trigger)));
-//            } else if (gamepad2.right_trigger > 0.1) {
-//                robot.arm.setAngleArm((int) (robot.arm.arm1.getAngle() - (0.1*gamepad2.right_trigger)));
-//            }
-
             //CLAW
-            if (gamepad1.circle) {
-                robot.smartClawOpen(Claw.Side.RIGHT);
+            if (gamepad1.cross && !previousCross) {
+                robot.smartClawOrderedOpen();
             }
 
-            if (gamepad1.square) {
-                robot.smartClawOpen(Claw.Side.LEFT);
+            if (gamepad1.square && !previousSquare) {
+                robot.claw.wrist.addAngle(-45);
             }
-
-            if (gamepad1.cross && !previousSquare) {
-                robot.claw.wrist.setAngle(70);
+            if (gamepad1.circle && !previousCircle) {
+                robot.claw.wrist.addAngle(45);
             }
-            if (gamepad1.triangle && !previousTriangle) {
-                robot.claw.wrist.setAngle(176);
+            if (gamepad1.right_trigger > 0.75) {
+                robot.claw.wrist.addAngle(180);
             }
 //            if (gamepad1.circle && !previousCircle) {
 //                robot.claw.wrist.setAngle(176);
 //            }
             previousCircle = gamepad1.circle;
-            previousTriangle = gamepad1.triangle;
+            previousCross = gamepad1.cross;
             previousSquare = gamepad1.square;
 
 
@@ -157,12 +151,6 @@ public class TeleOpSafe extends LinearOpMode {
             previousDpadLeftState = gamepad1.dpad_left;
             previousDpadRightState = gamepad1.dpad_right;
 
-            //WRIST
-//            if (gamepad2.right_stick_x > 0.2) {
-//                robot.arm.setAngleElbow(robot.arm.elbow.getAngle() + 70);
-//            } else if (gamepad2.right_stick_x < -0.2) {
-//                robot.arm.setAngleElbow(robot.arm.elbow.getAngle() - 70);
-//            }
 
             //DRONE
             if (gamepad2.triangle && !previousDroneState) {
@@ -180,14 +168,27 @@ public class TeleOpSafe extends LinearOpMode {
                 robot.startClimb();
             }
 
+            if (gamepad2.dpad_down) {
+                robot.slides.resetAllEncoders();
+            }
+
+            if (gamepad2.dpad_up && !previousGP2DUp) {
+                smartIntakeEnabled = !smartIntakeEnabled;
+                gamepad2.runRumbleEffect(new Gamepad.RumbleEffect.Builder()
+                        .addStep(1, 1, 250)
+                        .addStep(0,0,100)
+                        .addStep(1,1,200)
+                        .build()
+                );
+            }
+            previousGP2DUp = gamepad2.dpad_up;
+
 //            TIME ALERTS
             if (buzzers == 0 && matchTimer.time(TimeUnit.SECONDS) >= 75) {
                 gamepad1.rumble(500);
-//                gamepad2.rumble(500);
                 buzzers = 1;
             } else if (buzzers == 1 && matchTimer.time(TimeUnit.SECONDS) >= 90) {
                 gamepad1.rumble(800);
-//                gamepad2.rumble(800);
                 buzzers = 2;
             }
 
@@ -195,15 +196,16 @@ public class TeleOpSafe extends LinearOpMode {
             robot.antiJam();
             double loop = System.nanoTime();
 
-            detectedIndex = robot.intakeSensor.hasPixel();
-            if (detectedIndex[0] && detectedIndex[1] && robot.intaking){
-                gamepad1.rumble(1, 1, 250);
-                robot.stopIntake();
-            }
-            else if (detectedIndex[1]){
-                gamepad1.rumble(1, 0, 250);
-            } else if (detectedIndex[0]){
-                gamepad1.rumble(0, 1, 250);
+            if (smartIntakeEnabled) {
+                detectedIndex = robot.intakeSensor.hasPixel();
+                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
+                    gamepad1.rumble(1, 1, 250);
+                    robot.stopIntake();
+                } else if (detectedIndex[1]) {
+                    gamepad1.rumble(1, 0, 250);
+                } else if (detectedIndex[0]) {
+                    gamepad1.rumble(0, 1, 250);
+                }
             }
 
             telemetry.addData("hz ", 1000000000 / (loop - loopTime));
