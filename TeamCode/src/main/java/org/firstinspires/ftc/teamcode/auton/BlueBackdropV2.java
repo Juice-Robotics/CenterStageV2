@@ -21,17 +21,13 @@ import org.opencv.core.Scalar;
 
 public class BlueBackdropV2 extends LinearOpMode {
     Robot robot;
-    private VisionPortal visionPortal;
-    private YoinkP2Pipeline colourMassDetectionProcessor;
-    AprilTagProcessor processor;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        robot.cv.initProp(AllianceColor.RED);
-
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);
         Pose2d startPose = new Pose2d(-62, 13, Math.toRadians(180));
+        robot.cv.initProp(AllianceColor.RED);
         robot.initPos();
 
         drive.setPoseEstimate(startPose);
@@ -127,10 +123,10 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         while (!isStarted() && !isStopRequested()) {
 //            telemetry.addData("Camera State", visionPortal.getCameraState());
-            telemetry.addData("Currently Recorded Position", colourMassDetectionProcessor.getRecordedPropPosition());
-            telemetry.addData("Camera State", visionPortal.getCameraState());
-            telemetry.addData("Currently Detected Mass Center", "x: " + colourMassDetectionProcessor.getLargestContourX() + ", y: " + colourMassDetectionProcessor.getLargestContourY());
-            telemetry.addData("Currently Detected Mass Area", colourMassDetectionProcessor.getLargestContourArea());
+            telemetry.addData("Currently Recorded Position", robot.cv.colourMassDetectionProcessor.getRecordedPropPosition());
+            telemetry.addData("Camera State", robot.cv.visionPortal.getCameraState());
+            telemetry.addData("Currently Detected Mass Center", "x: " + robot.cv.colourMassDetectionProcessor.getLargestContourX() + ", y: " + robot.cv.colourMassDetectionProcessor.getLargestContourY());
+            telemetry.addData("Currently Detected Mass Area", robot.cv.colourMassDetectionProcessor.getLargestContourArea());
 
             telemetry.update();
         }
@@ -148,16 +144,11 @@ public class BlueBackdropV2 extends LinearOpMode {
         if (isStopRequested()) return;
 
         // shuts down the camera once the match starts, we dont need to look any more
-        colourMassDetectionProcessor.close();
-        visionPortal.close();
-        if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
-            visionPortal.stopLiveView();
-            visionPortal.stopStreaming();
-        }
+        robot.cv.kill();
 
 
         // gets the recorded prop position
-        YoinkP2Pipeline.PropPositions recordedPropPosition = colourMassDetectionProcessor.getRecordedPropPosition();
+        YoinkP2Pipeline.PropPositions recordedPropPosition = robot.cv.colourMassDetectionProcessor.getRecordedPropPosition();
 
         // now we can use recordedPropPosition to determine where the prop is! if we never saw a prop, your recorded position will be UNFOUND.
         // if it is UNFOUND, you can manually set it to any of the other positions to guess
@@ -189,7 +180,7 @@ public class BlueBackdropV2 extends LinearOpMode {
         PoseStorage.currentPose = drive.getPoseEstimate();
 
         robot.destroyThreads(telemetry);
-        visionPortal.close();
+        robot.cv.kill();
 
         while (!isStopRequested() && opModeIsActive()) ;
     }
