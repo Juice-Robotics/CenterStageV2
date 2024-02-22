@@ -139,14 +139,14 @@ public class Robot {
 
     public void stopIntake() {
         intaking = false;
-        this.arm.runtoPreset(Levels.CAPTURE);
+        intake.stopIntake();
+        intake.runToPreset(Levels.INTERMEDIATE);
+        arm.runtoPreset(Levels.CAPTURE);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(150);
                 claw.setClawClose(Claw.Side.BOTH);
                 sleep(350);
-                intake.stopIntake();
-                intake.runToPreset(Levels.INTERMEDIATE);
                 arm.runtoPreset(Levels.INTERMEDIATE);
             }});
         thread.start();
