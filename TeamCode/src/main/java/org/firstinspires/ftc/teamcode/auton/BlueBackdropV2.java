@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
+import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -26,21 +27,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Scalar lower = new Scalar(103, 120, 50); // the lower hsv threshold for your detection
-        Scalar upper = new Scalar(130, 255, 250); // the upper hsv threshold for your detection
-        double minArea = 3000; // the minimum area for the detection to consider for your prop
-
-        colourMassDetectionProcessor = new YoinkP2Pipeline(
-                lower,
-                upper,
-                () -> minArea, // these are lambda methods, in case we want to change them while the match is running, for us to tune them or something
-                () -> 213, // the left dividing line, in this case the left third of the frame
-                () -> 426 // the left dividing line, in this case the right third of the frame
-        );
-        visionPortal = new VisionPortal.Builder()
-                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .addProcessor(colourMassDetectionProcessor)
-                .build();
+        robot.cv.initProp(AllianceColor.RED);
 
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);

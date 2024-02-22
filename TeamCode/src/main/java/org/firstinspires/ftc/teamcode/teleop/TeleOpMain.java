@@ -270,6 +270,7 @@ public class TeleOpMain extends LinearOpMode {
 
 //            telemetry.addData("SENSOR1 ", robot.intakeSensor.getRangeSensor1());
 //            telemetry.addData("SENSOR2 ", robot.intakeSensor.getRangeSensor2());
+            telemetry.addData("CURRENT DRIVE MODE", currentMode);
             telemetry.addData("TIME LEFT: ", ((120-matchTimer.time(TimeUnit.SECONDS))));
             telemetry.addData("SLIDES TARGET: ", robot.slides.target);
             telemetry.addData("SLIDES POSITION: ", robot.slides.getPos());

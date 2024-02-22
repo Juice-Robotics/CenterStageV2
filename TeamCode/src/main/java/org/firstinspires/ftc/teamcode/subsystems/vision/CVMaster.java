@@ -35,26 +35,35 @@ public class CVMaster {
         this.allianceColor = allianceColor;
         Scalar lower = new Scalar(103, 120, 50);
         Scalar upper = new Scalar(130, 255, 250);
+        double leftDivider = 0;
+        double rightDivider = 0;
 
         if (allianceColor == AllianceColor.BLUE) {
             lower = new Scalar(103, 120, 50); // the lower hsv threshold for your detection
             upper = new Scalar(130, 255, 250); // the upper hsv threshold for your detection
+            leftDivider = 200;
+            rightDivider = 900;
         } else if (allianceColor == AllianceColor.RED) {
-            lower = new Scalar(125, 120, 50); // the lower hsv threshold for your detection
-            upper = new Scalar(190, 255, 250); // the upper hsv threshold for your detection
+            lower = new Scalar(0, 50, 50); // the lower hsv threshold for your detection
+            upper = new Scalar(10, 255, 250); // the upper hsv threshold for your detection
+            leftDivider = 200;
+            rightDivider = 900;
         }
         double minArea = 3000; // the minimum area for the detection to consider for your prop
 
+        double finalLeftDivider = leftDivider;
+        double finalRightDivider = rightDivider;
         colourMassDetectionProcessor = new YoinkP2Pipeline(
                 lower,
                 upper,
                 () -> minArea, // these are lambda methods, in case we want to change them while the match is running, for us to tune them or something
-                () -> 213, // the left dividing line, in this case the left third of the frame
-                () -> 426 // the left dividing line, in this case the right third of the frame
+                () -> finalLeftDivider, // the left dividing line, in this case the left third of the frame
+                () -> finalRightDivider // the left dividing line, in this case the right third of the frame
         );
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessor(colourMassDetectionProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
@@ -68,6 +77,7 @@ public class CVMaster {
         preloadPipeline = new PreloadPipeline(tagProcessor, allianceColor);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor, preloadPipeline)
 //                .addProcessor(tagProcessor)
                 .build();
@@ -82,6 +92,7 @@ public class CVMaster {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
@@ -95,6 +106,7 @@ public class CVMaster {
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor, preloadProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
@@ -112,6 +124,7 @@ public class CVMaster {
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
                 .addProcessors(tagProcessor, preloadProcessor)
@@ -127,6 +140,7 @@ public class CVMaster {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
                 .addProcessors(tagProcessor)

@@ -276,6 +276,12 @@ public class Robot {
         this.subsystemState = Levels.DEPOSIT;
     }
 
+    public void ejectSpike() {
+        this.intake.reverse();
+        sleep(200);
+        this.intake.stopIntake();
+    }
+
     public void autoPreloadDepositPreset() {
         this.slides.runToPosition(200);
         Thread thread = new Thread(new Runnable() {
