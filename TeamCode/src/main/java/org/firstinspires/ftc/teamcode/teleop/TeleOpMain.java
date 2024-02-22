@@ -78,6 +78,8 @@ public class TeleOpMain extends LinearOpMode {
         boolean previousCross = false;
         boolean previousCircle = false;
         boolean previousGP2DUp = false;
+        boolean previousAutoAlignState = false;
+        boolean previousRelocalizeState = false;
 
         boolean[] detectedIndex;
 
@@ -122,7 +124,7 @@ public class TeleOpMain extends LinearOpMode {
                 case ALIGN_TO_POINT:
                     Pose2d poseEstimate = robot.drive.getLocalizer().getPoseEstimate();
                     // If x is pressed, we break out of the automatic following
-                    if (gamepad2.cross) {
+                    if (gamepad2.square) {
                         robot.drive.breakFollowing();
                         currentMode = Mode.NORMAL_CONTROL;
                     }
@@ -193,6 +195,23 @@ public class TeleOpMain extends LinearOpMode {
                 robot.drone.launch();
             }
             previousDroneState = gamepad1.triangle;
+
+            // AUTO ALIGN
+            if (gamepad2.square && !previousAutoAlignState && currentMode != Mode.ALIGN_TO_POINT) {
+                currentMode = Mode.ALIGN_TO_POINT;
+                Trajectory traj1 = robot.drive.trajectoryBuilder(robot.drive.getPoseEstimate())
+                        .lineToLinearHeading(new Pose2d(0,30, Math.toRadians(270)))
+                        .build();
+
+                robot.drive.followTrajectoryAsync(traj1);
+            }
+            previousAutoAlignState = gamepad2.square;
+
+            if (gamepad2.circle && !previousRelocalizeState) {
+                relocalizePoseEstimate = cv.relocalizeUsingBackdrop(robot.drive.getPoseEstimate());
+                robot.drive.setPoseEstimate(relocalizePoseEstimate);
+            }
+            previousRelocalizeState = gamepad2.circle;
 
             // CLIMB
             if (gamepad1.dpad_up && !previousDpadUp) {
