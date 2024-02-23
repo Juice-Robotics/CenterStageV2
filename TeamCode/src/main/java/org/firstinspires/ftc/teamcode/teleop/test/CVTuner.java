@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teleop.test;
 
+import android.util.Size;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -58,6 +60,7 @@ public class CVTuner extends LinearOpMode {
         // the camera on your robot is named "Webcam 1" by default
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .addProcessor(colourMassDetectionProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)

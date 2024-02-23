@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.vision;
 
+import android.util.Size;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -63,6 +65,7 @@ public class CVMaster {
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessor(colourMassDetectionProcessor)
 //                .addProcessor(tagProcessor)
@@ -77,6 +80,7 @@ public class CVMaster {
         preloadPipeline = new PreloadPipeline(tagProcessor, allianceColor);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor, preloadPipeline)
 //                .addProcessor(tagProcessor)
@@ -92,6 +96,7 @@ public class CVMaster {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor)
 //                .addProcessor(tagProcessor)
@@ -106,6 +111,7 @@ public class CVMaster {
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor, preloadProcessor)
                 .enableLiveView(true)
@@ -124,6 +130,7 @@ public class CVMaster {
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
@@ -140,6 +147,7 @@ public class CVMaster {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
