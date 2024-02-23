@@ -32,8 +32,8 @@ public class Slides {
     double maxvel = 6000;
     double maxaccel = 6000;
 
-    public double p = 0.015, i = 0.00, d = 0.0001;
-    public double f = 0.012;
+    public double p = 0.01, i = 0.00, d = 0.0001;
+    public double f = 0.006;
     double voltageCompensation;
 
     public double target = 0;

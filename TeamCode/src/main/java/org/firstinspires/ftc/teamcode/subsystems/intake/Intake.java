@@ -16,9 +16,9 @@ public class Intake {
 
     public float OFFSET = 0;
 
-    public float intakeDown = 188 - OFFSET;
+    public float intakeDown = 176 - OFFSET;
 
-    public float intakeUp = intakeDown - 90 - OFFSET;
+    public float intakeUp = 320 - OFFSET;
 
     public MotorEx intakeMotor;
 
@@ -44,7 +44,7 @@ public class Intake {
 
     public void reverseIntake(){
         intakeServo1.setAngle(intakeUp);
-        intakeMotor.setSpeed(-0.4F);
+        intakeMotor.setSpeed(-0.6F);
     }
 
     public void setAngle(float angle) {

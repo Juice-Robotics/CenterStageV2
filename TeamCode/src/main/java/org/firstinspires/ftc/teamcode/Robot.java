@@ -78,7 +78,7 @@ public class Robot {
                 new StepperServo(1, "claw1", map),                 //9
                 new StepperServo(1, "claw2", map),                 // 10
                 new StepperServo(1, "wrist", map),                   //11
-                new MotorEx(1, "intakeMotor", map, false),   //12
+                new MotorEx(1, "intake", map, false),   //12
                 new StepperServo(1, "intakeServo1", map),            //13
                 new StepperServo(1, "intakeServo2", map),            //14
 

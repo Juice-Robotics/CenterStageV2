@@ -20,7 +20,7 @@ public class SlidesPIDFTuner extends OpMode {
     private PIDController controller1;
 
     public static double p = 0.01, i = 0, d = 0.0001;
-    public static double f = 0.012;
+    public static double f = 0.006;
 
     public static int target = 0;
     private final double ticks_in_degrees = 700 / 180.0;

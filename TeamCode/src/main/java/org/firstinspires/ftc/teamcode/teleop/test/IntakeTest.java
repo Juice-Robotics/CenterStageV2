@@ -38,27 +38,27 @@ public class IntakeTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        motor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-        elbow = new StepperServo(0, "elbow", hardwareMap);
-        wrist2 = new StepperServo(0, "wrist", hardwareMap);
-        arm1 = new StepperServo(0, "arm1", hardwareMap);
-        arm2 = new StepperServo(0, "arm2", hardwareMap);
+        motor = hardwareMap.get(DcMotorEx.class, "intake");
+//        elbow = new StepperServo(0, "elbow", hardwareMap);
+//        wrist2 = new StepperServo(0, "wrist", hardwareMap);
+//        arm1 = new StepperServo(0, "arm1", hardwareMap);
+//        arm2 = new StepperServo(0, "arm2", hardwareMap);
         intakeDeploy1 = new StepperServo(0, "intakeServo1", hardwareMap);
         intakeDeploy2 = new StepperServo(0, "intakeServo2", hardwareMap);
-        claw = new StepperServo(0, "claw", hardwareMap);
+//        claw = new StepperServo(0, "claw", hardwareMap);
 
         // Initialize your own robot class
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive() && !isStopRequested()) {
             motor.setPower(MOT_POWER);
-            elbow.setAngle((float) ELBOW);
-            wrist2.setAngle((float) WRIST_PIVOT);
-            arm1.setAngle((float) ARM_POS);
-            arm2.setAngle((float) ARM_POS);
+//            elbow.setAngle((float) ELBOW);
+//            wrist2.setAngle((float) WRIST_PIVOT);
+//            arm1.setAngle((float) ARM_POS);
+//            arm2.setAngle((float) ARM_POS);
             intakeDeploy1.setAngle((float) INTAKE_DEPLOY);
             intakeDeploy2.setAngle((float) INTAKE_DEPLOY);
-            claw.setAngle((float) CLAW);
+//            claw.setAngle((float) CLAW);
 
             telemetry.addData("current draw", motor.getCurrent(CurrentUnit.AMPS));
             telemetry.addData("velocity", motor.getVelocity());

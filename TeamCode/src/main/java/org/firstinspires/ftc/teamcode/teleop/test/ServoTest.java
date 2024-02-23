@@ -44,8 +44,8 @@ public class ServoTest extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             one.setAngle((float) ARM_POS);
             two.setAngle((float) ARM_POS);
-//            three.setAngle((float) CLAW_POS);
-//            four.setAngle((float) CLAW_POS);
+            three.setAngle((float) CLAW_POS);
+            four.setAngle((float) CLAW_POS);
             five.setAngle((float) INTAKE_POS);
             six.setAngle((float) INTAKE_POS);
             seven.setAngle((float) WRIST_POS);
@@ -58,6 +58,6 @@ public class ServoTest extends LinearOpMode {
 // arm: 90
 // claw open (hold): 70
 // claw close (drop): 180
-// intake lock: 320;
+// intake lock: 320; 176 intake down
 // elbow (capture): 280, wrist 200
 // arm intermediate: 100
