@@ -46,7 +46,6 @@ public class IntakeTest extends LinearOpMode {
         intakeDeploy1 = new StepperServo(0, "intakeServo1", hardwareMap);
         intakeDeploy2 = new StepperServo(0, "intakeServo2", hardwareMap);
         claw = new StepperServo(0, "claw", hardwareMap);
-        intakeDeploy2.servo.setDirection(Servo.Direction.REVERSE);
 
         // Initialize your own robot class
         waitForStart();

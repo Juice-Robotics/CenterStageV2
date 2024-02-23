@@ -25,10 +25,7 @@ public class Intake {
     public Intake(StepperServo intakeServo1, StepperServo intakeServo2, MotorEx intakeMotor) {
         this.intakeServo1 = intakeServo1;
         this.intakeServo2 = intakeServo2;
-
         this.intakeMotor = intakeMotor;
-        intakeServo2.servo.setDirection(Servo.Direction.REVERSE);
-        // intakeMotor.motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void startIntake(){
