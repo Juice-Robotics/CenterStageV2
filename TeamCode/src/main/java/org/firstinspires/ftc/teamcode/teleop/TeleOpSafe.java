@@ -189,6 +189,7 @@ public class TeleOpSafe extends LinearOpMode {
                 buzzers = 1;
             } else if (buzzers == 1 && matchTimer.time(TimeUnit.SECONDS) >= 90) {
                 gamepad1.rumble(800);
+                gamepad2.rumble(800);
                 buzzers = 2;
             }
 
