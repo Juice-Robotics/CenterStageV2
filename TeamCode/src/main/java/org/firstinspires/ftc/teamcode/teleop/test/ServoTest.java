@@ -55,9 +55,9 @@ public class ServoTest extends LinearOpMode {
 }
 
 
-// arm: 90
+// arm: 85
 // claw open (hold): 70
 // claw close (drop): 180
 // intake lock: 320; 176 intake down
-// elbow (capture): 280, wrist 200
+// elbow (capture): 280, wrist 272
 // arm intermediate: 100

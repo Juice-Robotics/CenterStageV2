@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.intake;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.lib.Levels;
@@ -26,6 +27,7 @@ public class Intake {
         this.intakeServo1 = intakeServo1;
         this.intakeServo2 = intakeServo2;
         this.intakeMotor = intakeMotor;
+        intakeMotor.motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void startIntake(){
