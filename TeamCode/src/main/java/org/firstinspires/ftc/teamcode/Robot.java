@@ -168,13 +168,12 @@ public class Robot {
 
     public void initPos() {
         intaking = false;
-        this.claw.runToWristPreset(Levels.DEPOSIT);
+        this.claw.runToWristPreset(Levels.INTAKE);
         this.intake.runToPreset(Levels.INIT);
         sleep(500);
         this.arm.runtoPreset(Levels.INIT);
         sleep(2000);
         this.claw.setClawClose(Claw.Side.BOTH);
-//        this.intake.setAngle(50);
         this.subsystemState = Levels.INIT;
     }
 
@@ -211,8 +210,8 @@ public class Robot {
             Thread thread = new Thread(new Runnable() {
                 public void run() {
                     sleep(300);
-                    arm.setAngleArm(30);
-                    arm.setAngleElbow(106);
+                    arm.setAngleArm(90);
+                    arm.setAngleElbow(280);
                     claw.runToWristPreset(Levels.INTAKE);
                     sleep(300);
                     slides.runToPosition(0);
@@ -227,8 +226,8 @@ public class Robot {
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
             Thread thread = new Thread(() -> {
                 sleep(300);
-                arm.setAngleArm(30);
-                arm.setAngleElbow(106);
+                arm.setAngleArm(90);
+                arm.setAngleElbow(280);
                 claw.runToWristPreset(Levels.INTAKE);
                 sleep(300);
                 slides.runToPosition(0);
@@ -280,9 +279,13 @@ public class Robot {
     }
 
     public void ejectSpike() {
-        this.intake.reverse();
-        sleep(200);
-        this.intake.stopIntake();
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                intake.reverseIntakeSpike();
+                sleep(1500);
+                intake.stopIntake();
+            }});
+        thread.start();
     }
 
     public void autoPreloadDepositPreset() {

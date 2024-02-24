@@ -66,9 +66,9 @@ public class CVMaster {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .setCameraResolution(new Size(1280, 800))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessor(colourMassDetectionProcessor)
-//                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
 
         visionPortal.setProcessorEnabled(colourMassDetectionProcessor, true);
@@ -81,13 +81,13 @@ public class CVMaster {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .setCameraResolution(new Size(1280, 800))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .addProcessors(tagProcessor, preloadPipeline)
-//                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadPipeline, true);
-        FtcDashboard.getInstance().startCameraStream(preloadPipeline, 30);
+//        FtcDashboard.getInstance().startCameraStream(preloadPipeline, 30);
         relocalization = new AprilTagsRelocalization(tagProcessor);
     }
 
@@ -97,9 +97,9 @@ public class CVMaster {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .setCameraResolution(new Size(1280, 800))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .addProcessors(tagProcessor)
-//                .addProcessor(tagProcessor)
+                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
@@ -148,10 +148,9 @@ public class CVMaster {
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .setCameraResolution(new Size(1280, 800))
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .addProcessor(tagProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
-                .addProcessors(tagProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);

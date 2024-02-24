@@ -28,7 +28,7 @@ public class BlueBackdropV2 extends LinearOpMode {
         robot = new Robot(hardwareMap, true);
         Pose2d startPose = new Pose2d(-62, 13, Math.toRadians(180));
         robot.cv.initProp(AllianceColor.BLUE);
-//        robot.initPos();
+        robot.initPos();
 
         drive.setPoseEstimate(startPose);
 
@@ -49,16 +49,26 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-26, 25, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-23.5, 32, Math.toRadians(-90)), Math.toRadians(-90))
+                .addTemporalMarker(1.5, () -> {
+                    robot.ejectSpike();
+                })
                 .waitSeconds(1)
                 .build();
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-35, 51, Math.toRadians(-90)), Math.toRadians(90))
-                .waitSeconds(2)
+                .splineToLinearHeading(new Pose2d(-35, 50.5, Math.toRadians(-90)), Math.toRadians(90))
+                .addTemporalMarker(1, () -> {
+                    robot.depositPreset();
+                })
+                .addTemporalMarker(2.5, () -> {
+                    robot.smartClawOpen();
+                })
+                .waitSeconds(2.5)
+                .forward(4)
                 .strafeRight(23)
-                .back(8)
+                .back(10)
                 .build();
 
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
