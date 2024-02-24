@@ -125,7 +125,9 @@ public class CVMaster {
     }
 
     public void initPreload(AllianceColor allianceColor) {
-        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        tagProcessor = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(549.651, 549.6551, 317.108, 236.644)
+                .build();
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
 
         visionPortal = new VisionPortal.Builder()

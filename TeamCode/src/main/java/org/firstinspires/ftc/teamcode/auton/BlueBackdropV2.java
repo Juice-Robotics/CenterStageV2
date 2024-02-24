@@ -49,7 +49,7 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-23.5, 32, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-23, 32, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.5, () -> {
                     robot.ejectSpike();
                 })
@@ -58,9 +58,9 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-35, 50.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-37, 51, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
-                    robot.depositPreset();
+                    robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.5, () -> {
                     robot.smartClawOpen();

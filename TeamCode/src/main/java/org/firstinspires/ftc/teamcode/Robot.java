@@ -301,10 +301,10 @@ public class Robot {
     }
 
     public void autoCycleDepositPreset() {
-        this.slides.runToPosition(300);
+        this.slides.runToPosition(440);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(300);
+                sleep(700);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
             }});

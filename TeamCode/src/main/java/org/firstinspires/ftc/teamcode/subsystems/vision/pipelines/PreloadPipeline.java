@@ -75,8 +75,8 @@ public class PreloadPipeline implements VisionProcessor, CameraStreamSource {
                         int exclusionZoneWidth = (int) (tagWidth * 0.28);
                         int exclusionZoneHeight = (int) (tagHeight * 0.28);
 
-                        Rect leftInclusionZone = new Rect(tagCenterX - inclusionZoneWidth, tagCenterY + 30, inclusionZoneWidth, inclusionZoneHeight);
-                        Rect rightInclusionZone = new Rect(tagCenterX, tagCenterY + 30, inclusionZoneWidth, inclusionZoneHeight);
+                        Rect leftInclusionZone = new Rect(tagCenterX - inclusionZoneWidth, tagCenterY - 170, inclusionZoneWidth, inclusionZoneHeight);
+                        Rect rightInclusionZone = new Rect(tagCenterX, tagCenterY - 170, inclusionZoneWidth, inclusionZoneHeight);
 
                         Rect leftExclusionZone = new Rect(tagCenterX - (int) (inclusionZoneWidth * 0.64), tagCenterY - 90, exclusionZoneWidth, exclusionZoneHeight);
                         Rect rightExclusionZone = new Rect(tagCenterX + (int) (inclusionZoneWidth * 0.28), tagCenterY - 90, exclusionZoneWidth, exclusionZoneHeight);
@@ -90,7 +90,7 @@ public class PreloadPipeline implements VisionProcessor, CameraStreamSource {
 //                        System.out.println("LEFTAVG " + leftZoneAverage);
 //                        System.out.println("RIGHTAVG " + rightZoneAverage);
 
-                        preloadedZone = (leftZoneAverage > rightZoneAverage) ? YoinkP2Pipeline.PropPositions.LEFT : YoinkP2Pipeline.PropPositions.RIGHT;
+                        preloadedZone = (leftZoneAverage > rightZoneAverage) ? YoinkP2Pipeline.PropPositions.RIGHT : YoinkP2Pipeline.PropPositions.LEFT;
                         System.out.println("PRELOADED ZONE: " + preloadedZone);
 //                        Globals.PRELOAD = preloadedZone;
                     }
