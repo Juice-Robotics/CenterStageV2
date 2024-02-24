@@ -121,7 +121,7 @@ public class Robot {
     public void startIntake() {
         intaking = true;
         this.intake.startIntake();
-        this.arm.runtoPreset(Levels.INTAKE);
+        this.arm.runtoPreset(Levels.INTERMEDIATE);
         this.claw.setClawOpen(Claw.Side.BOTH);
         this.intake.runToPreset(Levels.INTAKE);
         this.claw.runToWristPreset(Levels.INTAKE);
@@ -148,7 +148,7 @@ public class Robot {
                 claw.setClawClose(Claw.Side.BOTH);
                 sleep(350);
                 arm.runtoPreset(Levels.INTERMEDIATE);
-                intake.runToPreset(Levels.INTAKE);
+                intake.runToPreset(Levels.INTERMEDIATE);
             }});
         thread.start();
         subsystemState = Levels.INTERMEDIATE;
