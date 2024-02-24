@@ -29,27 +29,27 @@ public class ServoTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        one = new StepperServo(0, "arm1", hardwareMap);
-        two = new StepperServo(0, "arm2", hardwareMap);
+//        one = new StepperServo(0, "arm1", hardwareMap);
+//        two = new StepperServo(0, "arm2", hardwareMap);
         three = new StepperServo(0, "claw1", hardwareMap);
         four = new StepperServo(0, "claw2", hardwareMap);
-        five = new StepperServo(0, "intakeServo1", hardwareMap);
-        six = new StepperServo(0, "intakeServo2", hardwareMap);
+//        five = new StepperServo(0, "intakeServo1", hardwareMap);
+//        six = new StepperServo(0, "intakeServo2", hardwareMap);
         seven = new StepperServo(0, "wrist", hardwareMap);
-        eight = new StepperServo(0, "elbow", hardwareMap);
+//        eight = new StepperServo(0, "elbow", hardwareMap);
 
         // Initialize your own robot class
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive() && !isStopRequested()) {
-            one.setAngle((float) ARM_POS);
-            two.setAngle((float) ARM_POS);
+//            one.setAngle((float) ARM_POS);
+//            two.setAngle((float) ARM_POS);
             three.setAngle((float) CLAW_POS);
             four.setAngle((float) CLAW_POS);
-            five.setAngle((float) INTAKE_POS);
-            six.setAngle((float) INTAKE_POS);
+//            five.setAngle((float) INTAKE_POS);
+//            six.setAngle((float) INTAKE_POS);
             seven.setAngle((float) WRIST_POS);
-            eight.setAngle((float) ELBOW_POS);
+//            eight.setAngle((float) ELBOW_POS);
         }
     }
 }
