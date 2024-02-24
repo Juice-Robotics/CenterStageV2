@@ -282,14 +282,14 @@ public class Robot {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 intake.reverseIntakeSpike();
-                sleep(1500);
+                sleep(2000);
                 intake.stopIntake();
             }});
         thread.start();
     }
 
     public void autoPreloadDepositPreset() {
-        this.slides.runToPosition(200);
+        this.slides.runToPosition(400);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(300);
@@ -301,7 +301,7 @@ public class Robot {
     }
 
     public void autoCycleDepositPreset() {
-        this.slides.runToPosition(440);
+        this.slides.runToPosition(800);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(700);

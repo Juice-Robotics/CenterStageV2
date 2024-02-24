@@ -107,21 +107,24 @@ public class CVMaster {
 
     public void switchToAuton(AllianceColor allianceColor) {
         kill();
-        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        tagProcessor = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(549.651, 549.6551, 317.108, 236.644)
+                .build();
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
+
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .addProcessors(tagProcessor, preloadProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
+                .addProcessors(tagProcessor, preloadProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
-        startStreamingDashboard();
+//        startStreamingDashboard();
     }
 
     public void initPreload(AllianceColor allianceColor) {
@@ -142,7 +145,7 @@ public class CVMaster {
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
-        startStreamingDashboard();
+//        startStreamingDashboard();
     }
 
     public void initTags() {
