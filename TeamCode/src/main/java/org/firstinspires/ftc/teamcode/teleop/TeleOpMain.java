@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.teleop.deprecated;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -64,16 +64,26 @@ public class TeleOpMain extends LinearOpMode {
         ElapsedTime matchTimer;
 
         int buzzers = 0;
-        double intakePreviousPos = 0;
-        boolean previousDpadUp = false;
-        boolean autoClosePreviousState = false;
-        boolean previousClawState = false;
+        double loopTime = 0.0;
+        long sumLoop = 0;
+        long loopIterations = 0;
+
+        boolean previousDpadLeftState = false;
+        boolean previousDpadRightState = false;
         boolean previousDroneState = false;
         boolean previousIntakeState = false;
+        boolean previousDpadUp = false;
+        float previousLeftTriggerState = 0;
+        boolean previousSquare = false;
+        boolean previousCross = false;
+        boolean previousCircle = false;
+        boolean previousGP2DUp = false;
         boolean previousAutoAlignState = false;
         boolean previousRelocalizeState = false;
-        float previousLeftTriggerState = 0;
-        int dronePressed = 0;
+
+        boolean[] detectedIndex;
+
+        boolean smartIntakeEnabled = true;
 
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -114,7 +124,7 @@ public class TeleOpMain extends LinearOpMode {
                 case ALIGN_TO_POINT:
                     Pose2d poseEstimate = robot.drive.getLocalizer().getPoseEstimate();
                     // If x is pressed, we break out of the automatic following
-                    if (gamepad2.cross) {
+                    if (gamepad2.square) {
                         robot.drive.breakFollowing();
                         currentMode = Mode.NORMAL_CONTROL;
                     }
@@ -126,33 +136,35 @@ public class TeleOpMain extends LinearOpMode {
                     break;
             }
 
-            //ARM
-            if (gamepad2.left_trigger > 0.1) {
-                robot.arm.setAngleArm((int) (robot.arm.arm1.getAngle() + (0.1*gamepad2.left_trigger)));
-            } else if (gamepad2.right_trigger > 0.1) {
-                robot.arm.setAngleArm((int) (robot.arm.arm1.getAngle() - (0.1*gamepad2.right_trigger)));
+            //CLAW
+            if (gamepad1.cross && !previousCross) {
+                robot.smartClawOrderedOpen();
             }
 
-            //CLAW
-            boolean isPressed = gamepad1.cross;
-            if (isPressed && !previousClawState) {
-//                robot.claw.toggle();
+            if (gamepad1.square && !previousSquare) {
+                robot.claw.wrist.addAngle(-45);
             }
-            previousClawState = isPressed;
+            if (gamepad1.circle && !previousCircle) {
+                robot.claw.wrist.addAngle(45);
+            }
+            if (gamepad1.right_trigger > 0.75) {
+                robot.claw.wrist.addAngle(180);
+            }
+//            if (gamepad1.circle && !previousCircle) {
+//                robot.claw.wrist.setAngle(176);
+//            }
+            previousCircle = gamepad1.circle;
+            previousCross = gamepad1.cross;
+            previousSquare = gamepad1.square;
 
 
             //INTAKE
-            if ((gamepad1.right_bumper) && (gamepad1.right_bumper != previousIntakeState)){
+            if (gamepad1.right_bumper && (gamepad1.right_bumper != previousIntakeState)){
                 if (robot.intaking) {
                     robot.stopIntake();
                 } else {
                     robot.startIntake();
                 }
-            }
-            previousIntakeState = gamepad1.right_bumper;
-
-            if ((gamepad1.right_trigger >0.2)){
-                robot.smartIntakeUpdate();
             }
             previousIntakeState = gamepad1.right_bumper;
 
@@ -163,37 +175,26 @@ public class TeleOpMain extends LinearOpMode {
             }
             previousLeftTriggerState = gamepad1.left_trigger;
 
-
             //DEPOSIT
             if (gamepad1.left_bumper) {
                 robot.depositPreset();
             }
 
             //SLIDES
-            if (gamepad1.dpad_left) {
-                robot.slides.runToPosition((int) (robot.slides.slides1.motor.getCurrentPosition() + 70));
-            } else if (gamepad1.dpad_right) {
-                robot.slides.runToPosition((int) (robot.slides.slides1.motor.getCurrentPosition() - 70));
+            if (gamepad1.dpad_left && !previousDpadLeftState) {
+                robot.slides.incrementBackdropTarget(-70);
+            } else if (gamepad1.dpad_right && !previousDpadRightState) {
+                robot.slides.incrementBackdropTarget(70);
             }
+            previousDpadLeftState = gamepad1.dpad_left;
+            previousDpadRightState = gamepad1.dpad_right;
 
-            //WRIST
-            if (gamepad2.right_stick_x > 0.2) {
-                robot.arm.setAngleElbow(robot.arm.elbow.getAngle() + 70);
-            } else if (gamepad2.right_stick_x < -0.2) {
-                robot.arm.setAngleElbow(robot.arm.elbow.getAngle() - 70);
-            }
 
             //DRONE
-            boolean isPressed2 = gamepad1.triangle;
-            if (gamepad1.triangle && !previousDroneState && (dronePressed==0)) {
-                robot.drone.prime();
-                dronePressed = 1;
-            }
-            else if (gamepad1.triangle && !previousDroneState && (dronePressed==1)) {
+            if (gamepad2.triangle && !previousDroneState) {
                 robot.drone.launch();
-                dronePressed = 2;
             }
-            previousDroneState = isPressed2;
+            previousDroneState = gamepad1.triangle;
 
             // AUTO ALIGN
             if (gamepad2.square && !previousAutoAlignState && currentMode != Mode.ALIGN_TO_POINT) {
@@ -214,11 +215,7 @@ public class TeleOpMain extends LinearOpMode {
 
             // CLIMB
             if (gamepad1.dpad_up && !previousDpadUp) {
-                if (!robot.flags.contains(RobotFlags.CLIMB_ENGAGED)) {
-                    robot.climbExtend();
-                } else {
-                    robot.climbRetract();
-                }
+                robot.climbExtend();
             }
             previousDpadUp = gamepad1.dpad_up;
 
@@ -226,45 +223,60 @@ public class TeleOpMain extends LinearOpMode {
                 robot.startClimb();
             }
 
-            //TIME ALERTS
+            if (gamepad2.dpad_down) {
+                robot.slides.resetAllEncoders();
+            }
+
+            if (gamepad2.dpad_up && !previousGP2DUp) {
+                smartIntakeEnabled = !smartIntakeEnabled;
+                gamepad2.runRumbleEffect(new Gamepad.RumbleEffect.Builder()
+                        .addStep(1, 1, 250)
+                        .addStep(0,0,100)
+                        .addStep(1,1,200)
+                        .build()
+                );
+            }
+            previousGP2DUp = gamepad2.dpad_up;
+
+//            TIME ALERTS
             if (buzzers == 0 && matchTimer.time(TimeUnit.SECONDS) >= 75) {
                 gamepad1.rumble(500);
-                gamepad2.rumble(500);
                 buzzers = 1;
             } else if (buzzers == 1 && matchTimer.time(TimeUnit.SECONDS) >= 90) {
                 gamepad1.rumble(800);
-                gamepad2.rumble(800);
                 buzzers = 2;
             }
 
-            //autoClosePreviousState = gamepad1.circle;
             robot.slides.update();
-            robot.smartIntakeUpdate();
-            robot.drive.getLocalizer().update();
-//            telemetry.addData("TIME LEFT: ", ((120-matchTimer.time(TimeUnit.SECONDS))));
-//            telemetry.addData("CLAW POSITION: ", (robot.claw.depositServo.getAngle()));
-//            //telemetry.addData("ARM TARGET: ", (robot.arm.v4b1.servo.getPosition()*180));
-//            telemetry.addData("ARM POSITION: ", robot.arm.arm1.getAngle());
-//            telemetry.addData("SLIDES TARGET: ", robot.slides.target);
-//            telemetry.addData("SLIDES POSITION: ", robot.slides.slides1.motor.getCurrentPosition());
-//            telemetry.addData("LEVEL: ", robot.slides.currentLevel);
-            Pose2d poseEstimate = robot.drive.getPoseEstimate();
+            robot.antiJam();
+            double loop = System.nanoTime();
 
-            // Print pose to telemetry
-            telemetry.addData("old pose", poseEstimate);
-            telemetry.addData("new pose", relocalizePoseEstimate);
-            telemetry.addData("mode", currentMode);
-            telemetry.addData("x", poseEstimate.getX());
-            telemetry.addData("y", poseEstimate.getY());
-            telemetry.addData("heading", poseEstimate.getHeading());
+            if (smartIntakeEnabled) {
+                detectedIndex = robot.intakeSensor.hasPixel();
+                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
+                    gamepad1.rumble(1, 1, 250);
+                    robot.stopIntake();
+                } else if (detectedIndex[1]) {
+                    gamepad1.rumble(1, 0, 250);
+                } else if (detectedIndex[0]) {
+                    gamepad1.rumble(0, 1, 250);
+                }
+            }
+
+            telemetry.addData("hz ", 1000000000 / (loop - loopTime));
+            sumLoop += 1000000000 / (loop - loopTime);
+            loopIterations += 1;
+            telemetry.addData("avg hz", (sumLoop / loopIterations));
+
+//            telemetry.addData("SENSOR1 ", robot.intakeSensor.getRangeSensor1());
+//            telemetry.addData("SENSOR2 ", robot.intakeSensor.getRangeSensor2());
+            telemetry.addData("CURRENT DRIVE MODE", currentMode);
+            telemetry.addData("TIME LEFT: ", ((120-matchTimer.time(TimeUnit.SECONDS))));
+            telemetry.addData("SLIDES TARGET: ", robot.slides.target);
+            telemetry.addData("SLIDES POSITION: ", robot.slides.getPos());
+            telemetry.addData("LEVEL: ", robot.slides.currentLevel);
+            loopTime = loop;
             telemetry.update();
-
-            // Update the drive class
-            robot.drive.update();
-
-//            PhotonCore.CONTROL_HUB.clearBulkCache();
-//            PhotonCore.EXPANSION_HUB.clearBulkCache();
-
         }
     }
 }

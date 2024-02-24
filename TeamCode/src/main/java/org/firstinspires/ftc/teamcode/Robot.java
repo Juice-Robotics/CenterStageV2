@@ -139,14 +139,14 @@ public class Robot {
 
     public void stopIntake() {
         intaking = false;
-        this.arm.runtoPreset(Levels.CAPTURE);
+        intake.stopIntake();
+        intake.runToPreset(Levels.INTERMEDIATE);
+        arm.runtoPreset(Levels.CAPTURE);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(150);
                 claw.setClawClose(Claw.Side.BOTH);
                 sleep(350);
-                intake.stopIntake();
-                intake.runToPreset(Levels.INTERMEDIATE);
                 arm.runtoPreset(Levels.INTERMEDIATE);
             }});
         thread.start();
@@ -219,6 +219,41 @@ public class Robot {
         }
     }
 
+    public void smartClawOpen() {
+        this.claw.setClawOpen(Claw.Side.BOTH);
+        if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
+            Thread thread = new Thread(() -> {
+                sleep(300);
+                arm.setAngleArm(30);
+                arm.setAngleElbow(106);
+                claw.runToWristPreset(Levels.INTAKE);
+                sleep(300);
+                slides.runToPosition(0);
+            });
+            thread.start();
+        }
+    }
+
+    public void smartClawOrderedOpen() {
+        if (claw.isOpenLeft == Claw.ClawStatus.CLOSED) {
+            this.claw.setClawOpen(Claw.Side.LEFT);
+        } else if (claw.isOpenRight == Claw.ClawStatus.CLOSED) {
+            this.claw.setClawOpen(Claw.Side.RIGHT);
+        }
+
+        if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
+            Thread thread = new Thread(() -> {
+                sleep(300);
+                arm.setAngleArm(30);
+                arm.setAngleElbow(106);
+                claw.runToWristPreset(Levels.INTAKE);
+                sleep(300);
+                slides.runToPosition(0);
+            });
+            thread.start();
+        }
+    }
+
     public void smartIntakeUpdate() {
         if (intaking) {
             boolean[] state = intakeSensor.hasPixel();
@@ -239,6 +274,12 @@ public class Robot {
             }});
         thread.start();
         this.subsystemState = Levels.DEPOSIT;
+    }
+
+    public void ejectSpike() {
+        this.intake.reverse();
+        sleep(200);
+        this.intake.stopIntake();
     }
 
     public void autoPreloadDepositPreset() {

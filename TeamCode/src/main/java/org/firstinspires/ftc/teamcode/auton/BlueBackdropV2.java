@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
-import org.firstinspires.ftc.teamcode.subsystems.vision.CVMaster;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -22,21 +21,13 @@ import org.opencv.core.Scalar;
 
 public class BlueBackdropV2 extends LinearOpMode {
     Robot robot;
-    CVMaster cv;
-
 
     @Override
     public void runOpMode() throws InterruptedException {
-        Scalar lower = new Scalar(103, 120, 50); // the lower hsv threshold for your detection
-        Scalar upper = new Scalar(130, 255, 250); // the upper hsv threshold for your detection
-        double minArea = 3000; // the minimum area for the detection to consider for your prop
-
-        cv = new CVMaster(hardwareMap);
-        cv.initProp(AllianceColor.BLUE);
-
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);
         Pose2d startPose = new Pose2d(-62, 13, Math.toRadians(180));
+        robot.cv.initProp(AllianceColor.RED);
         robot.initPos();
 
         drive.setPoseEstimate(startPose);
@@ -132,10 +123,10 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         while (!isStarted() && !isStopRequested()) {
 //            telemetry.addData("Camera State", visionPortal.getCameraState());
-            telemetry.addData("Currently Recorded Position", cv.colourMassDetectionProcessor.getRecordedPropPosition());
-            telemetry.addData("Camera State", cv.visionPortal.getCameraState());
-            telemetry.addData("Currently Detected Mass Center", "x: " + cv.colourMassDetectionProcessor.getLargestContourX() + ", y: " + cv.colourMassDetectionProcessor.getLargestContourY());
-            telemetry.addData("Currently Detected Mass Area", cv.colourMassDetectionProcessor.getLargestContourArea());
+            telemetry.addData("Currently Recorded Position", robot.cv.colourMassDetectionProcessor.getRecordedPropPosition());
+            telemetry.addData("Camera State", robot.cv.visionPortal.getCameraState());
+            telemetry.addData("Currently Detected Mass Center", "x: " + robot.cv.colourMassDetectionProcessor.getLargestContourX() + ", y: " + robot.cv.colourMassDetectionProcessor.getLargestContourY());
+            telemetry.addData("Currently Detected Mass Area", robot.cv.colourMassDetectionProcessor.getLargestContourArea());
 
             telemetry.update();
         }
@@ -152,9 +143,12 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         if (isStopRequested()) return;
 
+        // shuts down the camera once the match starts, we dont need to look any more
+        robot.cv.kill();
+
 
         // gets the recorded prop position
-        YoinkP2Pipeline.PropPositions recordedPropPosition = cv.colourMassDetectionProcessor.getRecordedPropPosition();
+        YoinkP2Pipeline.PropPositions recordedPropPosition = robot.cv.colourMassDetectionProcessor.getRecordedPropPosition();
 
         // now we can use recordedPropPosition to determine where the prop is! if we never saw a prop, your recorded position will be UNFOUND.
         // if it is UNFOUND, you can manually set it to any of the other positions to guess
@@ -162,28 +156,19 @@ public class BlueBackdropV2 extends LinearOpMode {
             recordedPropPosition = YoinkP2Pipeline.PropPositions.CENTER;
         }
 
-        recordedPropPosition = YoinkP2Pipeline.PropPositions.RIGHT;
-        // shuts down the camera once the match starts, we dont need to look any more
-        cv.switchToAuton(AllianceColor.BLUE);
-        cv.preloadProcessor.setTargetAprilTagID(recordedPropPosition);
-
         robot.launchSubsystemThread(telemetry);
         switch (recordedPropPosition) {
             case CENTER:
                 drive.followTrajectorySequence(preloadSpikeCenter);
                 drive.followTrajectorySequence(preloadBackdropCenter);
-//                drive.followTrajectorySequence(centerCycle1);
-//                drive.followTrajectorySequence(centerCycle2);
                 break;
             case LEFT:
                 drive.followTrajectorySequence(preloadSpikeRight);
                 drive.followTrajectorySequence(preloadBackdropRight);
-                //drive.followTrajectorySequence(rightCycle1);
                 break;
             case RIGHT:
                 drive.followTrajectorySequence(preloadSpikeLeft);
                 drive.followTrajectorySequence(preloadBackdropLeft);
-                //drive.followTrajectorySequence(leftCycle1);
                 break;
         }
 
@@ -195,7 +180,7 @@ public class BlueBackdropV2 extends LinearOpMode {
         PoseStorage.currentPose = drive.getPoseEstimate();
 
         robot.destroyThreads(telemetry);
-        cv.kill();
+        robot.cv.kill();
 
         while (!isStopRequested() && opModeIsActive()) ;
     }

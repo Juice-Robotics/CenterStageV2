@@ -18,6 +18,11 @@ public class StepperServo extends Component{
         servo.setPosition(angle/255);
     }
 
+    public void addAngle(float angle) {
+        this.angle += angle % 360;
+        servo.setPosition(angle/255);
+    }
+
     public float getAngle(){
         return (float) servo.getPosition();
     }

@@ -3,10 +3,6 @@ package org.firstinspires.ftc.teamcode.subsystems.vision.pipelines;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
-<<<<<<< HEAD
-=======
-import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 import org.firstinspires.ftc.robotcore.external.function.Consumer;
 import org.firstinspires.ftc.robotcore.external.function.Continuation;
 import org.firstinspires.ftc.robotcore.external.stream.CameraStreamSource;
@@ -15,10 +11,7 @@ import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.vision.VisionProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-<<<<<<< HEAD
-=======
 import org.opencv.android.Utils;
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
@@ -47,11 +40,7 @@ public class PreloadPipeline implements VisionProcessor, CameraStreamSource {
 
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
-<<<<<<< HEAD
-
-=======
         lastFrame.set(Bitmap.createBitmap(1120, 630, Bitmap.Config.RGB_565));
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
     }
 
     @Override
@@ -86,13 +75,8 @@ public class PreloadPipeline implements VisionProcessor, CameraStreamSource {
                         int exclusionZoneWidth = (int) (tagWidth * 0.28);
                         int exclusionZoneHeight = (int) (tagHeight * 0.28);
 
-<<<<<<< HEAD
-                        Rect leftInclusionZone = new Rect(tagCenterX - inclusionZoneWidth, tagCenterY - 110, inclusionZoneWidth, inclusionZoneHeight);
-                        Rect rightInclusionZone = new Rect(tagCenterX, tagCenterY - 110, inclusionZoneWidth, inclusionZoneHeight);
-=======
                         Rect leftInclusionZone = new Rect(tagCenterX - inclusionZoneWidth, tagCenterY + 30, inclusionZoneWidth, inclusionZoneHeight);
                         Rect rightInclusionZone = new Rect(tagCenterX, tagCenterY + 30, inclusionZoneWidth, inclusionZoneHeight);
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 
                         Rect leftExclusionZone = new Rect(tagCenterX - (int) (inclusionZoneWidth * 0.64), tagCenterY - 90, exclusionZoneWidth, exclusionZoneHeight);
                         Rect rightExclusionZone = new Rect(tagCenterX + (int) (inclusionZoneWidth * 0.28), tagCenterY - 90, exclusionZoneWidth, exclusionZoneHeight);
@@ -108,24 +92,15 @@ public class PreloadPipeline implements VisionProcessor, CameraStreamSource {
 
                         preloadedZone = (leftZoneAverage > rightZoneAverage) ? YoinkP2Pipeline.PropPositions.LEFT : YoinkP2Pipeline.PropPositions.RIGHT;
                         System.out.println("PRELOADED ZONE: " + preloadedZone);
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 //                        Globals.PRELOAD = preloadedZone;
                     }
                 }
             }
         }
 
-<<<<<<< HEAD
-=======
         Bitmap b = Bitmap.createBitmap(frame.width(), frame.height(), Bitmap.Config.RGB_565);
         Utils.matToBitmap(frame, b);
         lastFrame.set(b);
-
->>>>>>> 7968afc6a37f278c43ae444f3a284bfbd0414c23
 
         return null;
     }

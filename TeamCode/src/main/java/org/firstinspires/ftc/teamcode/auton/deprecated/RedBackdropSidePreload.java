@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auton;
+package org.firstinspires.ftc.teamcode.auton.deprecated;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
@@ -45,7 +46,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2.3, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(0.8)
                 .build();
@@ -66,7 +67,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(0.2)
                 .build();
@@ -87,7 +88,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(1.7, () -> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(3)
                 .build();
@@ -122,7 +123,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(30, 47.5), Math.toRadians(90))
                 .addTemporalMarker(7, () -> {
                     robot.startIntake();
-                    robot.claw.setClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(8, () -> {
                     robot.stopIntake();
@@ -136,7 +137,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(12.7, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(2)
                 .build();
@@ -166,7 +167,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(30, 47.4), Math.toRadians(90))
                 .addTemporalMarker(5.5, () -> {
                     robot.startAutoIntake();
-                    robot.claw.setClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
                 .addTemporalMarker(6, () -> {
                     robot.stopIntake();
@@ -176,7 +177,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(8.5, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(2)
                 .build();
@@ -219,7 +220,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(9, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(1.2)
                 .build();
@@ -264,7 +265,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(8, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(1.2)
                 .build();
@@ -305,7 +306,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(8, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(1.2)
                 .build();
@@ -346,7 +347,7 @@ public class RedBackdropSidePreload extends LinearOpMode {
                     robot.autoCycleDepositPreset();
                 })
                 .addTemporalMarker(8, ()-> {
-                    robot.smartClawOpen();
+                    robot.smartClawOpen(Claw.Side.BOTH);
                 })
                 .waitSeconds(1.2)
                 .build();

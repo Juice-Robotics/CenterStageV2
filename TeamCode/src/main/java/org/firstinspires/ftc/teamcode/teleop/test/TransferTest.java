@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.lib.StepperServo;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 
 @TeleOp(group = "competition")
 @Config
@@ -30,7 +31,7 @@ public class TransferTest extends LinearOpMode {
         robot.startIntake();
         robot.slides.resetAllEncoders();
         robot.arm.setAngleArm(6);
-        robot.claw.setPositionClaw(140);
+        robot.claw.setPositionClaw(140, Claw.Side.BOTH);
         robot.intake.setAngle(192);
         robot.claw.wrist.setAngle(123);
         robot.arm.setAngleElbow(112);
@@ -46,7 +47,7 @@ public class TransferTest extends LinearOpMode {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                robot.claw.setPositionClaw(215);
+                robot.claw.setPositionClaw(215, Claw.Side.BOTH);
                 robot.intake.stopIntake();
                 robot.intake.setAngle(130);
                 try {
