@@ -121,7 +121,7 @@ public class Robot {
     public void startIntake() {
         intaking = true;
         this.intake.startIntake();
-        this.arm.runtoPreset(Levels.INTAKE);
+        this.arm.runtoPreset(Levels.INTERMEDIATE);
         this.claw.setClawOpen(Claw.Side.BOTH);
         this.intake.runToPreset(Levels.INTAKE);
         this.claw.runToWristPreset(Levels.INTAKE);
@@ -139,15 +139,18 @@ public class Robot {
 
     public void stopIntake() {
         intaking = false;
-        intake.stopIntake();
-        intake.runToPreset(Levels.INTERMEDIATE);
-        arm.runtoPreset(Levels.CAPTURE);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(150);
+                intake.stopIntake();
+                intake.intakeMotor.setSpeed(0.6F);
+                sleep(500);
+                arm.runtoPreset(Levels.CAPTURE);
                 claw.setClawClose(Claw.Side.BOTH);
-                sleep(350);
-                arm.runtoPreset(Levels.INTERMEDIATE);
+                sleep(800);
+                arm.setAngleArm(140);
+                intake.runToPreset(Levels.INTAKE);
+                intake.intakeMotor.setSpeed(0);
+                sleep(500);
             }});
         thread.start();
         subsystemState = Levels.INTERMEDIATE;
@@ -165,13 +168,12 @@ public class Robot {
 
     public void initPos() {
         intaking = false;
-        this.claw.runToWristPreset(Levels.DEPOSIT);
+        this.claw.runToWristPreset(Levels.INTAKE);
         this.intake.runToPreset(Levels.INIT);
         sleep(500);
         this.arm.runtoPreset(Levels.INIT);
         sleep(2000);
         this.claw.setClawClose(Claw.Side.BOTH);
-//        this.intake.setAngle(50);
         this.subsystemState = Levels.INIT;
     }
 
@@ -208,8 +210,8 @@ public class Robot {
             Thread thread = new Thread(new Runnable() {
                 public void run() {
                     sleep(300);
-                    arm.setAngleArm(30);
-                    arm.setAngleElbow(106);
+                    arm.setAngleArm(90);
+                    arm.setAngleElbow(280);
                     claw.runToWristPreset(Levels.INTAKE);
                     sleep(300);
                     slides.runToPosition(0);
@@ -224,8 +226,8 @@ public class Robot {
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
             Thread thread = new Thread(() -> {
                 sleep(300);
-                arm.setAngleArm(30);
-                arm.setAngleElbow(106);
+                arm.setAngleArm(90);
+                arm.setAngleElbow(280);
                 claw.runToWristPreset(Levels.INTAKE);
                 sleep(300);
                 slides.runToPosition(0);
@@ -244,8 +246,8 @@ public class Robot {
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
             Thread thread = new Thread(() -> {
                 sleep(300);
-                arm.setAngleArm(30);
-                arm.setAngleElbow(106);
+                arm.setAngleArm(90);
+                arm.setAngleElbow(280);
                 claw.runToWristPreset(Levels.INTAKE);
                 sleep(300);
                 slides.runToPosition(0);
@@ -277,13 +279,17 @@ public class Robot {
     }
 
     public void ejectSpike() {
-        this.intake.reverse();
-        sleep(200);
-        this.intake.stopIntake();
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                intake.reverseIntakeSpike();
+                sleep(2000);
+                intake.stopIntake();
+            }});
+        thread.start();
     }
 
     public void autoPreloadDepositPreset() {
-        this.slides.runToPosition(200);
+        this.slides.runToPosition(400);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(300);
@@ -295,10 +301,10 @@ public class Robot {
     }
 
     public void autoCycleDepositPreset() {
-        this.slides.runToPosition(300);
+        this.slides.runToPosition(800);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(300);
+                sleep(700);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
             }});

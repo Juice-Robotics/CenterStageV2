@@ -19,7 +19,7 @@ public class Intake {
 
     public float intakeDown = 176 - OFFSET;
 
-    public float intakeUp = 320 - OFFSET;
+    public float intakeUp = 315 - OFFSET;
 
     public MotorEx intakeMotor;
 
@@ -33,6 +33,7 @@ public class Intake {
     public void startIntake(){
         intakeMotor.setSpeed(1);
         intakeServo1.setAngle(intakeDown);
+        intakeServo2.setAngle(intakeUp);
     }
     public void autoStartIntake(){
         intakeMotor.setSpeed(1);
@@ -42,11 +43,19 @@ public class Intake {
     public void stopIntake(){
         intakeMotor.setSpeed(0);
         intakeServo1.setAngle(intakeUp);
+        intakeServo2.setAngle(intakeUp);
     }
 
     public void reverseIntake(){
-        intakeServo1.setAngle(intakeUp);
+        intakeServo1.setAngle(intakeDown);
+        intakeServo2.setAngle(intakeDown);
         intakeMotor.setSpeed(-0.6F);
+    }
+
+    public void reverseIntakeSpike(){
+        intakeServo1.setAngle(intakeDown);
+        intakeServo2.setAngle(intakeDown);
+        intakeMotor.setSpeed(-0.3F);
     }
 
     public void setAngle(float angle) {
@@ -64,7 +73,7 @@ public class Intake {
         } else if (level == Levels.CLIMB_EXTEND) {
             setAngle(intakeUp);
         } else if (level == Levels.INIT) {
-            setAngle(0);
+            setAngle(intakeUp);
         }
     }
 

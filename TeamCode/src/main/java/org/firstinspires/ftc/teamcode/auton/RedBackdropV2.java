@@ -19,7 +19,7 @@ import org.opencv.core.Scalar;
 @Config
 @Autonomous(group = "drive")
 
-public class BlueBackdropV2 extends LinearOpMode {
+public class RedBackdropV2 extends LinearOpMode {
     Robot robot;
 
     @Override
@@ -27,7 +27,7 @@ public class BlueBackdropV2 extends LinearOpMode {
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);
         Pose2d startPose = new Pose2d(-62, 13, Math.toRadians(180));
-        robot.cv.initProp(AllianceColor.BLUE);
+        robot.cv.initProp(AllianceColor.RED);
         robot.initPos();
 
         drive.setPoseEstimate(startPose);

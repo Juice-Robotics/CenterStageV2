@@ -19,11 +19,11 @@ import org.firstinspires.ftc.teamcode.lib.StepperServo;
 public class IntakeTest extends LinearOpMode {
     DcMotorEx motor;
     public static double MOT_POWER = 0;
-    public static double ARM_POS = 27;
-    public static double ELBOW = 110;
-    public static double WRIST_PIVOT = 123;
-    public static double INTAKE_DEPLOY = 197;
-    public static double CLAW = 185;
+    public static double ARM_POS = 90;
+    public static double ELBOW = 275;
+    public static double WRIST_PIVOT = 19;
+    public static double INTAKE_DEPLOY = 176;
+    public static double CLAW = 150;
 
 
 

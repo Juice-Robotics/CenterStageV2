@@ -64,10 +64,8 @@ public class CVTuner extends LinearOpMode {
         // the camera on your robot is named "Webcam 1" by default
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .setCameraResolution(new Size(1920, 1080))
-//                .addProcessor(colourMassDetectionProcessor)
-                .addProcessors(preload, aprilTagProcessor)
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(1280, 800))
+                .addProcessor(colourMassDetectionProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
                 .build();

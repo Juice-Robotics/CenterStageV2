@@ -12,12 +12,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Robot;
+import org.firstinspires.ftc.teamcode.lib.Levels;
 import org.firstinspires.ftc.teamcode.lib.StepperServo;
 import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 
 @TeleOp(group = "competition")
 @Config
-@Disabled
+//@Disabled
 public class TransferTest extends LinearOpMode {
 
     @Override
@@ -27,66 +28,33 @@ public class TransferTest extends LinearOpMode {
 
         // Initialize your own robot class
         waitForStart();
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                robot.startIntake();
+                sleep(2000);
+                robot.intake.stopIntake();
+                robot.intake.intakeMotor.setSpeed(0.6F);
+                sleep(500);
+                robot.arm.runtoPreset(Levels.CAPTURE);
+                robot.claw.setClawClose(Claw.Side.BOTH);
+                sleep(500);
+                robot.arm.setAngleArm(140);
+                robot.intake.runToPreset(Levels.INTAKE);
+                robot.intake.intakeMotor.setSpeed(0.6F);
+            }});
+        thread.start();
+
         if (isStopRequested()) return;
-        robot.startIntake();
         robot.slides.resetAllEncoders();
-        robot.arm.setAngleArm(6);
-        robot.claw.setPositionClaw(140, Claw.Side.BOTH);
-        robot.intake.setAngle(192);
-        robot.claw.wrist.setAngle(123);
-        robot.arm.setAngleElbow(112);
+        robot.arm.setAngleArm(90);
+        robot.claw.setPositionClaw(150, Claw.Side.BOTH);
+        robot.intake.setAngle(176);
+        robot.claw.wrist.setAngle(19);
+        robot.arm.setAngleElbow(275);
         robot.slides.runToPosition(0);
-        boolean previousX = gamepad1.cross;
+        boolean previousX = gamepad1.right_bumper;
         boolean previousBumper = gamepad1.left_bumper;
         while (opModeIsActive() && !isStopRequested()) {
-
-            if (gamepad1.cross && !previousX) {
-                robot.arm.setAngleArm(0);
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                robot.claw.setPositionClaw(215, Claw.Side.BOTH);
-                robot.intake.stopIntake();
-                robot.intake.setAngle(130);
-                try {
-                    Thread.sleep(250);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                robot.arm.setAngleArm(15);
-                robot.arm.setAngleElbow(115);
-//                ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-//                double start = timer.time();
-//                while (timer.time() - start <= 200) {
-//                    robot.slides.update();
-//                }
-//                robot.slides.runToPosition(100);
-//                try {'mm
-//                    Thread.sleep(75);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                robot.arm.setAngleArm(135);
-//                try {
-//                    Thread.sleep(75);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                robot.slides.runToPosition(0);
-            }
-
-            if (gamepad1.left_bumper && !previousBumper) {
-                robot.slides.runToPosition(400);
-                ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
-                double start = timer.time();
-                while (timer.time() - start <= 600) {
-                    robot.slides.update();
-                }
-                robot.arm.setAngleArm(150);
-                robot.arm.setAngleElbow(180);
-            }
 
             previousX = gamepad1.cross;
             previousBumper = gamepad2.left_bumper;

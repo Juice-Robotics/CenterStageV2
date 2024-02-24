@@ -11,11 +11,11 @@ import org.firstinspires.ftc.teamcode.lib.StepperServo;
 @TeleOp(group = "competition")
 @Config
 public class ServoTest extends LinearOpMode {
-    public static double CLAW_POS = 177.5;
-    public static double ARM_POS = 177.5;
-    public static double INTAKE_POS = 177.5;
-    public static double ELBOW_POS = 177.5;
-    public static double WRIST_POS = 177.5;
+    public static double ARM_POS = 90;
+    public static double CLAW_POS = 150;
+    public static double ELBOW_POS = 275;
+    public static double INTAKE_POS = 176;
+    public static double WRIST_POS = 19;
 
 
     StepperServo one;

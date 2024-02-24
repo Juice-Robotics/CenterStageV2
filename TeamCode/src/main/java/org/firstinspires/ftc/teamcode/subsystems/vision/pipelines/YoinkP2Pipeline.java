@@ -179,9 +179,9 @@ public class YoinkP2Pipeline implements VisionProcessor, CameraStreamSource {
         if (largestContour == null) {
             propPosition = PropPositions.LEFT;
         } else if (largestContourX < left.getAsDouble()) {
-            propPosition = PropPositions.RIGHT;
-        } else if (largestContourX > right.getAsDouble()) {
             propPosition = PropPositions.LEFT;
+        } else if (largestContourX > right.getAsDouble()) {
+            propPosition = PropPositions.RIGHT;
         } else {
             propPosition = PropPositions.CENTER;
         }

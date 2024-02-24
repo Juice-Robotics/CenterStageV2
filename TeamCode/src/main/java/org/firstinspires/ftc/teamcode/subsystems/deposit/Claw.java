@@ -9,11 +9,11 @@ public class Claw {
     public StepperServo wrist;
 
     public ClawStatus isOpenLeft = ClawStatus.OPEN; // if open, true
-    public ClawStatus isOpenRight = ClawStatus.CLOSED; // if open, true
+    public ClawStatus isOpenRight = ClawStatus.OPEN; // if open, true
 
     // CONSTANTS
-    public float clawOpen = 130;
-    public float clawClose = 250; //larger = tighter
+    public float clawOpen = 150;
+    public float clawClose = 60; //smaller = tighter
 
     public Claw(StepperServo depositServo1, StepperServo depositServo2,  StepperServo wrist) {
         this.depositServoLeft = depositServo1;
@@ -80,9 +80,9 @@ public class Claw {
         if (level == Levels.ZERO) {
             setPositionWrist(0);
         } else if (level == Levels.INTAKE) {
-            setPositionWrist(123);
+            setPositionWrist(19);
         } else if (level == Levels.DEPOSIT) {
-            setPositionWrist(123);
+            setPositionWrist(119);
         }
     }
 
@@ -90,38 +90,52 @@ public class Claw {
         switch (side) {
             case LEFT:
                 this.depositServoLeft.setAngle(clawOpen);
+                isOpenLeft = ClawStatus.OPEN;
                 break;
             case RIGHT:
                 this.depositServoRight.setAngle(clawOpen);
+                isOpenRight = ClawStatus.OPEN;
                 break;
             case BOTH:
                 this.depositServoLeft.setAngle(clawOpen);
                 this.depositServoRight.setAngle(clawOpen);
+                isOpenRight = ClawStatus.OPEN;
+                isOpenLeft = ClawStatus.OPEN;
+                break;
         }
     }
 
     public void setClawOpen() {
         this.depositServoLeft.setAngle(clawOpen);
         this.depositServoRight.setAngle(clawOpen);
+        isOpenRight = ClawStatus.OPEN;
+        isOpenLeft = ClawStatus.OPEN;
     }
 
     public void setClawClose(Side side) {
         switch (side) {
             case LEFT:
                 this.depositServoLeft.setAngle(clawClose);
+                isOpenLeft = ClawStatus.CLOSED;
                 break;
             case RIGHT:
                 this.depositServoRight.setAngle(clawClose);
+                isOpenRight = ClawStatus.CLOSED;
                 break;
             case BOTH:
                 this.depositServoLeft.setAngle(clawClose);
                 this.depositServoRight.setAngle(clawClose);
+                isOpenRight = ClawStatus.CLOSED;
+                isOpenLeft = ClawStatus.CLOSED;
+                break;
         }
     }
 
     public void setClawClose() {
         this.depositServoLeft.setAngle(clawClose);
         this.depositServoRight.setAngle(clawClose);
+        isOpenRight = ClawStatus.CLOSED;
+        isOpenLeft = ClawStatus.CLOSED;
     }
 
     public enum ClawStatus {
