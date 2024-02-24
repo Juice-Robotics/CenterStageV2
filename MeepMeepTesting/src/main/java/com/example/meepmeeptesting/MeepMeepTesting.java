@@ -21,24 +21,51 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity myBotCycleSafeBlue = new DefaultBotBuilder(meepMeep)
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-62, -34, Math.toRadians(180)))
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(-32, -34, Math.toRadians(90)), Math.toRadians(90))
-                        .addTemporalMarker(1.8, () -> {
-                            //release pixel from intake
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(-180)))
+                        .setReversed(false)
+                        .splineToLinearHeading(new Pose2d(22, 33, Math.toRadians(90)), Math.toRadians(90))
+                        .addTemporalMarker(1.7, () -> {
+//                            robot.ejectSpike();
                         })
-                        .waitSeconds(1)
-                        //stack
-                        .splineToLinearHeading(new Pose2d(-12, -57, Math.toRadians(-90)), Math.toRadians(-90))
-                        .waitSeconds(1.5)
-
-                        .addTemporalMarker(0.7, () -> {
-                            //intake
+                        .waitSeconds(1.3)
+                        .setReversed(false)
+                        .splineToLinearHeading(new Pose2d(37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
+                        .addTemporalMarker(1, () -> {
+//                            robot.autoPreloadDepositPreset();
                         })
-                        .addTemporalMarker(2.1, () -> {
-                            //robot.stopIntake();
+                        .addTemporalMarker(2, () -> {
+//                            robot.smartClawOpen();
                         })
+                        .waitSeconds(1.8)
+                        .forward(4)
+                        .strafeRight(23)
+                        .back(10)
                         .build()
+                );
+
+        RoadRunnerBotEntity myBotCycleSafeRed = new DefaultBotBuilder(meepMeep)
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setDimensions(14, 17)
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(-180)))
+                        .setReversed(true)
+                        .splineToLinearHeading(new Pose2d(-22, 33, Math.toRadians(-90)), Math.toRadians(-90))
+                        .addTemporalMarker(1.7, () -> {
+//                            robot.ejectSpike();
+                        })
+                        .waitSeconds(1.3)
+                        .setReversed(true)
+                        .splineToLinearHeading(new Pose2d(-37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
+                        .addTemporalMarker(1, () -> {
+                            robot.autoPreloadDepositPreset();
+                        })
+                        .addTemporalMarker(2, () -> {
+                            robot.smartClawOpen();
+                        })
+                        .waitSeconds(1.8)
+                        .forward(4)
+                        .strafeRight(23)
+                        .back(10)
+                                .build()
                 );
 
         Image img = null;
