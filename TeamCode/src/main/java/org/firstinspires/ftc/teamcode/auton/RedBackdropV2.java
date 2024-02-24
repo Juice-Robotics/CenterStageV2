@@ -38,7 +38,7 @@ public class RedBackdropV2 extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(43, 20, Math.toRadians(270)), Math.toRadians(180))
                 .splineToSplineHeading(new Pose2d(30, 16, Math.toRadians(270)), Math.toRadians(90))
                 .addTemporalMarker(1.4, () -> {
-                            robot.ejectSpike();
+                    robot.ejectSpike();
                 })
                 .waitSeconds(1.3)
                 .build();
@@ -47,10 +47,10 @@ public class RedBackdropV2 extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(30, 50.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
-                            robot.autoPreloadDepositPreset();
+                    robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2, () -> {
-                            robot.smartClawOpen();
+                    robot.smartClawOpen();
                 })
                 .waitSeconds(1.8)
                 .forward(4)
@@ -62,7 +62,7 @@ public class RedBackdropV2 extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(22, 33, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.7, () -> {
-                            robot.ejectSpike();
+                    robot.ejectSpike();
                 })
                 .waitSeconds(1.3)
                 .build();
@@ -71,10 +71,10 @@ public class RedBackdropV2 extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
-                            robot.autoPreloadDepositPreset();
+                    robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2, () -> {
-                            robot.smartClawOpen();
+                    robot.smartClawOpen();
                 })
                 .waitSeconds(1.8)
                 .forward(4)
@@ -86,7 +86,7 @@ public class RedBackdropV2 extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(22, 33, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.7, () -> {
-                            robot.ejectSpike();
+                    robot.ejectSpike();
                 })
                 .waitSeconds(1.3)
                 .build();
@@ -95,10 +95,10 @@ public class RedBackdropV2 extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
-                            robot.autoPreloadDepositPreset();
+                    robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(2, () -> {
-                            robot.smartClawOpen();
+                    robot.smartClawOpen();
                 })
                 .waitSeconds(1.8)
                 .forward(4)

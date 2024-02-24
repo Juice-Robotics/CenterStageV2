@@ -123,16 +123,15 @@ public class Robot {
         this.intake.startIntake();
         this.arm.runtoPreset(Levels.INTERMEDIATE);
         this.claw.setClawOpen(Claw.Side.BOTH);
-        this.intake.runToPreset(Levels.INTAKE);
         this.claw.runToWristPreset(Levels.INTAKE);
         this.slides.runToPosition(0);
     }
 
     public void startAutoIntake() {
         intaking = true;
-        this.intake.startIntake();
-        this.arm.runtoPreset(Levels.INTAKE);
-        this.intake.runToPreset(Levels.INTAKE);
+        this.intake.autoStartIntake();
+        this.arm.runtoPreset(Levels.INTERMEDIATE);
+        this.claw.setClawOpen(Claw.Side.BOTH);
         this.claw.runToWristPreset(Levels.INTAKE);
         this.slides.runToPosition(0);
     }
