@@ -21,8 +21,8 @@ public class AprilTagsRelocalization {
     List<AprilTagDetection> aprilTagDetections;
     int aprilTagID;
 
-    double fcameraOffsetX = 0.35;
-    double fcameraOffsetY= -17.875;
+    double fcameraOffsetX = 0.5;
+    double fcameraOffsetY= -7.875;
     double fcameraOffsetRotation = -90.0;
 
     double rcameraOffsetX = 0.0;
@@ -61,7 +61,7 @@ public class AprilTagsRelocalization {
         Pose2d tagPose;
 
         if (aprilTagDetection.id == 5) {
-            tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, robotPose.getHeading());
+            tagPose = new Pose2d(32 -fcameraOffsetX- tagRPose.x, 52-fcameraOffsetY - tagRPose.y, robotPose.getHeading());
         } else {
             tagPose = new Pose2d(29 - tagRPose.x, -48 - tagRPose.y, robotPose.getHeading());
         }
@@ -80,7 +80,7 @@ public class AprilTagsRelocalization {
         Pose2d tagPose;
 
         if (aprilTagDetection.id == 5) {
-            tagPose = new Pose2d(29 - tagRPose.x, 48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
+            tagPose = new Pose2d(32 -fcameraOffsetX- tagRPose.x, 52-fcameraOffsetY - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
         } else {
             tagPose = new Pose2d(29 - tagRPose.x, -48 - tagRPose.y, Math.toRadians(tagRPose.yaw-90));
         }

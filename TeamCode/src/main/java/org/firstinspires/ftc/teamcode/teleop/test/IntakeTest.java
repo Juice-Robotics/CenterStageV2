@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,11 +19,11 @@ import org.firstinspires.ftc.teamcode.lib.StepperServo;
 public class IntakeTest extends LinearOpMode {
     DcMotorEx motor;
     public static double MOT_POWER = 0;
-    public static double ARM_POS = 27;
-    public static double ELBOW = 110;
-    public static double WRIST_PIVOT = 123;
-    public static double INTAKE_DEPLOY = 197;
-    public static double CLAW = 185;
+    public static double ARM_POS = 90;
+    public static double ELBOW = 275;
+    public static double WRIST_PIVOT = 19;
+    public static double INTAKE_DEPLOY = 176;
+    public static double CLAW = 150;
 
 
 
@@ -34,19 +35,22 @@ public class IntakeTest extends LinearOpMode {
 
     StepperServo intakeDeploy1;
     StepperServo intakeDeploy2;
-    StepperServo claw;
+    StepperServo claw1;
+    StepperServo claw2;
+
     @Override
     public void runOpMode() throws InterruptedException {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        motor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
+        motor = hardwareMap.get(DcMotorEx.class, "intake");
+        motor.setDirection(DcMotorSimple.Direction.REVERSE);
         elbow = new StepperServo(0, "elbow", hardwareMap);
         wrist2 = new StepperServo(0, "wrist", hardwareMap);
         arm1 = new StepperServo(0, "arm1", hardwareMap);
         arm2 = new StepperServo(0, "arm2", hardwareMap);
         intakeDeploy1 = new StepperServo(0, "intakeServo1", hardwareMap);
         intakeDeploy2 = new StepperServo(0, "intakeServo2", hardwareMap);
-        claw = new StepperServo(0, "claw", hardwareMap);
-        intakeDeploy2.servo.setDirection(Servo.Direction.REVERSE);
+        claw1 = new StepperServo(0, "claw1", hardwareMap);
+        claw2 = new StepperServo(0, "claw2", hardwareMap);
 
         // Initialize your own robot class
         waitForStart();
@@ -59,7 +63,8 @@ public class IntakeTest extends LinearOpMode {
             arm2.setAngle((float) ARM_POS);
             intakeDeploy1.setAngle((float) INTAKE_DEPLOY);
             intakeDeploy2.setAngle((float) INTAKE_DEPLOY);
-            claw.setAngle((float) CLAW);
+            claw1.setAngle((float) CLAW);
+            claw2.setAngle((float) CLAW);
 
             telemetry.addData("current draw", motor.getCurrent(CurrentUnit.AMPS));
             telemetry.addData("velocity", motor.getVelocity());

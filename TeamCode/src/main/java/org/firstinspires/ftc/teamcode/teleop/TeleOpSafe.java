@@ -80,22 +80,11 @@ public class TeleOpSafe extends LinearOpMode {
         robot.drone.prime();
 
         while (opModeIsActive() && !isStopRequested()) {
-//
-//            if (gamepad1.dpad_up) {
-//                robot.slides.resetAllEncoders();
-//            }
 
-            //DRIVE
-            if (gamepad1.right_trigger > 0.5) {
-                x = -gamepad1.left_stick_x * (1 - 0.66 * gamepad1.right_trigger);
-                y = -gamepad1.left_stick_y * (1 - 0.66 * gamepad1.right_trigger);
-                rx = gamepad1.right_stick_x * (1 - 0.66 * gamepad1.right_trigger);
+            x = -gamepad1.left_stick_x;
+            y = -gamepad1.left_stick_y;
+            rx = gamepad1.right_stick_x;
 
-            } else {
-                x = -gamepad1.left_stick_x;
-                y = -gamepad1.left_stick_y;
-                rx = gamepad1.right_stick_x;
-            }
             robot.setDrivePower(-x, y, rx);
 
             //CLAW
@@ -189,6 +178,7 @@ public class TeleOpSafe extends LinearOpMode {
                 buzzers = 1;
             } else if (buzzers == 1 && matchTimer.time(TimeUnit.SECONDS) >= 90) {
                 gamepad1.rumble(800);
+                gamepad2.rumble(800);
                 buzzers = 2;
             }
 
@@ -196,17 +186,17 @@ public class TeleOpSafe extends LinearOpMode {
             robot.antiJam();
             double loop = System.nanoTime();
 
-            if (smartIntakeEnabled) {
-                detectedIndex = robot.intakeSensor.hasPixel();
-                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
-                    gamepad1.rumble(1, 1, 250);
-                    robot.stopIntake();
-                } else if (detectedIndex[1]) {
-                    gamepad1.rumble(1, 0, 250);
-                } else if (detectedIndex[0]) {
-                    gamepad1.rumble(0, 1, 250);
-                }
-            }
+//            if (smartIntakeEnabled) {
+//                detectedIndex = robot.intakeSensor.hasPixel();
+//                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
+//                    gamepad1.rumble(1, 1, 250);
+//                    robot.stopIntake();
+//                } else if (detectedIndex[1]) {
+//                    gamepad1.rumble(1, 0, 250);
+//                } else if (detectedIndex[0]) {
+//                    gamepad1.rumble(0, 1, 250);
+//                }
+//            }
 
             telemetry.addData("hz ", 1000000000 / (loop - loopTime));
             sumLoop += 1000000000 / (loop - loopTime);

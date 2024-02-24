@@ -33,7 +33,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         SampleMecanumDriveCancelable drive = new SampleMecanumDriveCancelable(hardwareMap);
         robot = new Robot(hardwareMap, true);
-        Pose2d startPose = new Pose2d(62, 13, Math.toRadians(0));
+        Pose2d startPose = new Pose2d(62, 12, Math.toRadians(0));
         robot.initPos();
 
         drive.setPoseEstimate(startPose);

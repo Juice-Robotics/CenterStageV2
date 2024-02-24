@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.vision;
 
+import android.util.Size;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -39,15 +41,15 @@ public class CVMaster {
         double rightDivider = 0;
 
         if (allianceColor == AllianceColor.BLUE) {
-            lower = new Scalar(103, 120, 50); // the lower hsv threshold for your detection
-            upper = new Scalar(130, 255, 250); // the upper hsv threshold for your detection
-            leftDivider = 200;
-            rightDivider = 900;
+            lower = new Scalar(100, 120, 100); // the lower hsv threshold for your detection
+            upper = new Scalar(120, 255, 255); // the upper hsv threshold for your detection
+            leftDivider = 603;
+            rightDivider = 1000;
         } else if (allianceColor == AllianceColor.RED) {
-            lower = new Scalar(0, 50, 50); // the lower hsv threshold for your detection
-            upper = new Scalar(10, 255, 250); // the upper hsv threshold for your detection
-            leftDivider = 200;
-            rightDivider = 900;
+            lower = new Scalar(0, 150, 20); // the lower hsv threshold for your detection
+            upper = new Scalar(3, 255, 255); // the upper hsv threshold for your detection
+            leftDivider = 603;
+            rightDivider = 1000;
         }
         double minArea = 3000; // the minimum area for the detection to consider for your prop
 
@@ -63,9 +65,10 @@ public class CVMaster {
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(1280, 800))
                 .addProcessor(colourMassDetectionProcessor)
-//                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
 
         visionPortal.setProcessorEnabled(colourMassDetectionProcessor, true);
@@ -77,13 +80,14 @@ public class CVMaster {
         preloadPipeline = new PreloadPipeline(tagProcessor, allianceColor);
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(1280, 800))
                 .addProcessors(tagProcessor, preloadPipeline)
-//                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadPipeline, true);
-        FtcDashboard.getInstance().startCameraStream(preloadPipeline, 30);
+//        FtcDashboard.getInstance().startCameraStream(preloadPipeline, 30);
         relocalization = new AprilTagsRelocalization(tagProcessor);
     }
 
@@ -92,9 +96,10 @@ public class CVMaster {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .addProcessors(tagProcessor)
-//                .addProcessor(tagProcessor)
+                .setCameraResolution(new Size(1280, 800))
+                .addProcessor(tagProcessor)
+                .enableLiveView(true)
+                .setAutoStopLiveView(true)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
@@ -102,28 +107,35 @@ public class CVMaster {
 
     public void switchToAuton(AllianceColor allianceColor) {
         kill();
-        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        tagProcessor = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(549.651, 549.6551, 317.108, 236.644)
+                .build();
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
+
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
-                .addProcessors(tagProcessor, preloadProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
+                .addProcessors(tagProcessor, preloadProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
-        startStreamingDashboard();
+//        startStreamingDashboard();
     }
 
     public void initPreload(AllianceColor allianceColor) {
-        tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        tagProcessor = new AprilTagProcessor.Builder()
+                .setLensIntrinsics(549.651, 549.6551, 317.108, 236.644)
+                .build();
         preloadProcessor = new PreloadPipeline(tagProcessor, allianceColor);
 
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
+                .setCameraResolution(new Size(1280, 800))
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
@@ -133,17 +145,17 @@ public class CVMaster {
         visionPortal.setProcessorEnabled(tagProcessor, true);
         visionPortal.setProcessorEnabled(preloadProcessor, true);
         relocalization = new AprilTagsRelocalization(tagProcessor);
-        startStreamingDashboard();
+//        startStreamingDashboard();
     }
 
     public void initTags() {
         tagProcessor = AprilTagProcessor.easyCreateWithDefaults();
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
-                .setStreamFormat(VisionPortal.StreamFormat.MJPEG)
+                .setCameraResolution(new Size(1280, 800))
+                .addProcessor(tagProcessor)
                 .enableLiveView(true)
                 .setAutoStopLiveView(true)
-                .addProcessors(tagProcessor)
 //                .addProcessor(tagProcessor)
                 .build();
         visionPortal.setProcessorEnabled(tagProcessor, true);
