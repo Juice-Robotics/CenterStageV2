@@ -28,6 +28,22 @@ public class TransferTest extends LinearOpMode {
 
         // Initialize your own robot class
         waitForStart();
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                robot.startIntake();
+                sleep(2000);
+                robot.intake.stopIntake();
+                robot.intake.intakeMotor.setSpeed(0.6F);
+                sleep(500);
+                robot.arm.runtoPreset(Levels.CAPTURE);
+                robot.claw.setClawClose(Claw.Side.BOTH);
+                sleep(500);
+                robot.arm.setAngleArm(140);
+                robot.intake.runToPreset(Levels.INTAKE);
+                robot.intake.intakeMotor.setSpeed(0.6F);
+            }});
+        thread.start();
+
         if (isStopRequested()) return;
         robot.slides.resetAllEncoders();
         robot.arm.setAngleArm(90);
@@ -39,26 +55,6 @@ public class TransferTest extends LinearOpMode {
         boolean previousX = gamepad1.right_bumper;
         boolean previousBumper = gamepad1.left_bumper;
         while (opModeIsActive() && !isStopRequested()) {
-
-            if (gamepad1.right_bumper && !previousX) {
-                Thread thread = new Thread(new Runnable() {
-                    public void run() {
-                        robot.intake.stopIntake();
-                        robot.intake.intakeMotor.setSpeed(0.6F);
-                        sleep(500);
-                        robot.arm.runtoPreset(Levels.CAPTURE);
-                        robot.claw.setClawClose(Claw.Side.BOTH);
-                        sleep(500);
-                        robot.arm.setAngleArm(140);
-                        robot.intake.runToPreset(Levels.INTAKE);
-                        robot.intake.intakeMotor.setSpeed(0.6F);
-                    }});
-                thread.start();
-            }
-
-            if (gamepad1.left_bumper && !previousBumper) {
-                robot.startIntake();
-            }
 
             previousX = gamepad1.cross;
             previousBumper = gamepad2.left_bumper;

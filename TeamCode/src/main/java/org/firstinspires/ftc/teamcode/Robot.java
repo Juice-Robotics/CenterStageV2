@@ -146,10 +146,11 @@ public class Robot {
                 sleep(500);
                 arm.runtoPreset(Levels.CAPTURE);
                 claw.setClawClose(Claw.Side.BOTH);
-                sleep(500);
+                sleep(800);
                 arm.setAngleArm(140);
                 intake.runToPreset(Levels.INTAKE);
                 intake.intakeMotor.setSpeed(0);
+                sleep(500);
             }});
         thread.start();
         subsystemState = Levels.INTERMEDIATE;
