@@ -41,15 +41,15 @@ public class CVMaster {
         double rightDivider = 0;
 
         if (allianceColor == AllianceColor.BLUE) {
-            lower = new Scalar(103, 120, 50); // the lower hsv threshold for your detection
-            upper = new Scalar(130, 255, 250); // the upper hsv threshold for your detection
-            leftDivider = 200;
-            rightDivider = 900;
+            lower = new Scalar(100, 120, 100); // the lower hsv threshold for your detection
+            upper = new Scalar(120, 255, 255); // the upper hsv threshold for your detection
+            leftDivider = 603;
+            rightDivider = 1000;
         } else if (allianceColor == AllianceColor.RED) {
-            lower = new Scalar(0, 50, 50); // the lower hsv threshold for your detection
-            upper = new Scalar(10, 255, 250); // the upper hsv threshold for your detection
-            leftDivider = 200;
-            rightDivider = 900;
+            lower = new Scalar(0, 150, 20); // the lower hsv threshold for your detection
+            upper = new Scalar(3, 255, 255); // the upper hsv threshold for your detection
+            leftDivider = 603;
+            rightDivider = 1000;
         }
         double minArea = 3000; // the minimum area for the detection to consider for your prop
 
