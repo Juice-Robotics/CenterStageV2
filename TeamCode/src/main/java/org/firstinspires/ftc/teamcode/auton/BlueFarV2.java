@@ -52,7 +52,7 @@ public class BlueFarV2 extends LinearOpMode {
                 })
                 .waitSeconds(1)
                 //stack
-                .splineToLinearHeading(new Pose2d(-12, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
                 .waitSeconds(1.5)
 
                 .addTemporalMarker(0.7, () -> {
@@ -73,30 +73,31 @@ public class BlueFarV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-8, 12), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-35, 12), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-40, 47), Math.toRadians(90))
                 .waitSeconds(1)
                 .build();
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .back(48)
+                .splineToLinearHeading(new Pose2d(-25, -44, Math.toRadians(90)), Math.toRadians(90))
                 .waitSeconds(1)
                 //.splineToLinearHeading(new Pose2d(-48, 13, Math.toRadians(180)), Math.toRadians(0))
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
                 })
                 //stack
-                .strafeLeft(8)
-                .splineToSplineHeading(new Pose2d(-12, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
                 .waitSeconds(1.5)
                 .build();
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 //break
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-8, 12), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-35, 12), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-36, 47), Math.toRadians(90))
                 .waitSeconds(1)
                 .build();
 

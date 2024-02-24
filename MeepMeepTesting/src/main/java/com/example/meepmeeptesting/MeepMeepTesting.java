@@ -27,33 +27,66 @@ public class MeepMeepTesting {
                 .setDimensions(15, 17)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, -34, Math.toRadians(0)))
                         .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(22, -47, Math.toRadians(0)), Math.toRadians(0))
+                        .splineToLinearHeading(new Pose2d(-34, -32, Math.toRadians(235)), Math.toRadians(30))
+                        .forward(12)
+                        .turn(Math.toRadians(35))
+
+    //    TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
+                        .strafeRight(6)
+                        //.splineToLinearHeading(new Pose2d(-48, -40, Math.toRadians(235)), Math.toRadians(30))
+                        //.splineToLinearHeading(new Pose2d(-57, -40, Math.toRadians(-90)), Math.toRadians(-90))
+                        //.setReversed(false)
+                        //.splineToConstantHeading(new Vector2d(-57, -25), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(-57, 10), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(-39, 50), Math.toRadians(90))
+                        .addTemporalMarker(0, () -> {
+                           // this.robot.intake.setAngle(120);
+                        })
+                        .addTemporalMarker(2, () -> {
+                           // robot.autoPreloadDepositPreset();
+                        })
+                        .addTemporalMarker(3.5, () -> {
+                           // robot.smartClawOpen();
+                        })
+                        .waitSeconds(3)
+
+                                .build()
+
+                );
+
+
+        RoadRunnerBotEntity myBotCycleSafeBlue = new DefaultBotBuilder(meepMeep)
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setDimensions(14, 17)
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-62, -34, Math.toRadians(180)))
+                        .setReversed(true)
+                        .splineToLinearHeading(new Pose2d(-39, -47, Math.toRadians(0)), Math.toRadians(0))
                         .waitSeconds(1)
 
                         .addTemporalMarker(1.8, () -> {
                             //release pixel from intake
                         })
                         //stack
-                        .splineToLinearHeading(new Pose2d(12, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                        .back(5)
+                        .turn(Math.PI/2)
+                        .splineToSplineHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
                         .waitSeconds(1.5)
-                        .addTemporalMarker(3.5, () -> {
-                            //this.robot.intake.setAngle(120);
-                        })
                         .addTemporalMarker(3.7, () -> {
                             //intake
                         })
                         .addTemporalMarker(5.2, () -> {
                             //robot.stopIntake();
                         })
-        //TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
-                        .splineToConstantHeading(new Vector2d(10, 25), Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(42, 47.7), Math.toRadians(90))
+                        .setReversed(true)
+                        .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(-36, 47), Math.toRadians(90))
                         .waitSeconds(1)
-                                .build()
-
+                        .build()
                 );
 
         Image img = null;
+       // try { img = ImageIO.read(new File("/Users/huntert/Downloads/Juice-CENTERSTAGE-Dark.png")); }
         try { img = ImageIO.read(new File("/Users/zhimi/Downloads/field.png")); }
         //try { img = ImageIO.read(new File("/Users/siddharth/dev/Juice/CenterStage/MeepMeepTesting/src/main/java/com/example/meepmeeptesting/Juice-CENTERSTAGE-Dark.png")); }
         catch (IOException e) {}
@@ -62,11 +95,7 @@ public class MeepMeepTesting {
 //        meepMeep.setBackground(MeepMeep.Background.FIELD_POWERPLAY_OFFICIAL)
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-//                .addEntity(myBotCyclesUnsafeSide)
-                .addEntity(myBotCyclesSafeRed)
-//                .addEntity(myBotCycleSafeBlue)
-//                .addEntity(myBotCyclesSafeOpti)
-                //.addEntity(myBotRelocal)
+                .addEntity(myBotCycleSafeBlue)
                 .start();
     }
 }
