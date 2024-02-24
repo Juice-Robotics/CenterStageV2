@@ -103,14 +103,16 @@ public class BlueFarV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-22, -47, Math.toRadians(180)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-39, -47, Math.toRadians(0)), Math.toRadians(0))
                 .waitSeconds(1)
 
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
                 })
                 //stack
-                .splineToLinearHeading(new Pose2d(-12, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                .back(5)
+                .splineToLinearHeading(new Pose2d(-39, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                .strafeLeft(3)
                 .waitSeconds(1.5)
                 .addTemporalMarker(3.7, () -> {
                     //intake
@@ -123,8 +125,10 @@ public class BlueFarV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-8, 12), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-35, 12), Math.toRadians(90))
+                .strafeRight(0.01)
+                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-30, 47), Math.toRadians(90))
                 .waitSeconds(1)
                 .build();
         TrajectorySequence l1 = drive.trajectorySequenceBuilder(preloadBackdropLeft.end())
