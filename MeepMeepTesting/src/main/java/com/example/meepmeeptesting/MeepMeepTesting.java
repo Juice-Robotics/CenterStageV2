@@ -21,15 +21,23 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity myBotCycleSafeBlue = new DefaultBotBuilder(meepMeep)
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-62, 13, Math.toRadians(180)))
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(-62, -34, Math.toRadians(180)))
                         .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(-32, 32, Math.toRadians(-90)), Math.toRadians(-90))
+                        .splineToLinearHeading(new Pose2d(-32, -34, Math.toRadians(90)), Math.toRadians(90))
+                        .addTemporalMarker(1.8, () -> {
+                            //release pixel from intake
+                        })
                         .waitSeconds(1)
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(-44, 51, Math.toRadians(-90)), Math.toRadians(90))
-                        .waitSeconds(2)
-                        .strafeRight(15)
-                        .back(8)
+                        //stack
+                        .splineToLinearHeading(new Pose2d(-12, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                        .waitSeconds(1.5)
+
+                        .addTemporalMarker(0.7, () -> {
+                            //intake
+                        })
+                        .addTemporalMarker(2.1, () -> {
+                            //robot.stopIntake();
+                        })
                         .build()
                 );
 
