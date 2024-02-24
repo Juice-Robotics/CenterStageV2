@@ -44,13 +44,14 @@ public class TransferTest extends LinearOpMode {
                 Thread thread = new Thread(new Runnable() {
                     public void run() {
                         robot.intake.stopIntake();
+                        robot.intake.intakeMotor.setSpeed(0.6F);
                         sleep(500);
                         robot.arm.runtoPreset(Levels.CAPTURE);
-                        sleep(500);
                         robot.claw.setClawClose(Claw.Side.BOTH);
                         sleep(500);
-                        robot.arm.runtoPreset(Levels.INTERMEDIATE);
+                        robot.arm.setAngleArm(140);
                         robot.intake.runToPreset(Levels.INTAKE);
+                        robot.intake.intakeMotor.setSpeed(0.6F);
                     }});
                 thread.start();
             }

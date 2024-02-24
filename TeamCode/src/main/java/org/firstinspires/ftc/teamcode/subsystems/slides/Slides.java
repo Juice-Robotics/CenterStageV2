@@ -49,7 +49,7 @@ public class Slides {
     public VoltageSensor voltageSensor;
     private double HEIGHT_CLIMB = 500;
     //public boolean climbing = false;
-    public int backdropTarget = 300;
+    public int backdropTarget = 500;
 
     private boolean threadState = false;
     public boolean climbing = false;
