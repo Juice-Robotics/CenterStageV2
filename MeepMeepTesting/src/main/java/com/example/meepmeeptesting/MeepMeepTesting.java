@@ -67,9 +67,16 @@ public class MeepMeepTesting {
                             //release pixel from intake
                         })
                         //stack
-                        .back(5)
-                        .turn(Math.PI/2)
-                        .splineToSplineHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                        //.lineToLinearHeading(new Pose2d(-36, -57, Math.toRadians(-90)))
+//                        .lineTo(new Vector2d(-36, -57))
+//
+//                        .turn(-Math.PI/2)
+
+                       // .setReversed(false)
+                        //.splineToConstantHeading(new Vector2d(-36, -57), Math.toRadians(-90))
+                                .back(5)
+                        .splineToLinearHeading(new Pose2d(-39, -57, Math.toRadians(-90)), Math.toRadians(-90))
+                                .strafeLeft(3)
                         .waitSeconds(1.5)
                         .addTemporalMarker(3.7, () -> {
                             //intake
@@ -78,11 +85,13 @@ public class MeepMeepTesting {
                             //robot.stopIntake();
                         })
                         .setReversed(true)
+                         .strafeRight(0.01)
                         .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
                         .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
-                        .splineToConstantHeading(new Vector2d(-36, 47), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(-30, 47), Math.toRadians(90))
                         .waitSeconds(1)
-                        .build()
+                                .splineToConstantHeading(new Vector2d(-28, 48), Math.toRadians(90))
+                                .build()
                 );
 
         Image img = null;
