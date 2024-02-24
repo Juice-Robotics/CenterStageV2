@@ -22,8 +22,10 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.StepperServo;
 import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
+import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.PreloadPipeline;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.opencv.core.Scalar;
 
 @TeleOp(group = "competition")
@@ -57,6 +59,8 @@ public class CVTuner extends LinearOpMode {
                 () -> LEFT_BOUNDARY, // the left dividing line, in this case the left third of the frame
                 () -> RIGHT_BOUNDARY // the left dividing line, in this case the right third of the frame
         );
+        AprilTagProcessor aprilTagProcessor = AprilTagProcessor.easyCreateWithDefaults();
+        PreloadPipeline preload = new PreloadPipeline(aprilTagProcessor, AllianceColor.BLUE);
         // the camera on your robot is named "Webcam 1" by default
         VisionPortal visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
@@ -66,21 +70,21 @@ public class CVTuner extends LinearOpMode {
                 .setAutoStopLiveView(true)
                 .build();
 
-        FtcDashboard.getInstance().startCameraStream(colourMassDetectionProcessor, 0);
+        FtcDashboard.getInstance().startCameraStream(preload, 0);
 
         // Initialize your own robot class
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive() && !isStopRequested()) {
-            Scalar lower = new Scalar(lowerH, lowerS, lowerV); // the lower hsv threshold for your detection
-            Scalar upper = new Scalar(upperH, upperS, upperV); // the upper hsv threshold for your detection
-            colourMassDetectionProcessor.changeConstants(
-                    lower,
-                    upper,
-                    () -> minArea,
-                    () -> LEFT_BOUNDARY,
-                    () -> RIGHT_BOUNDARY
-            );
+//            Scalar lower = new Scalar(lowerH, lowerS, lowerV); // the lower hsv threshold for your detection
+//            Scalar upper = new Scalar(upperH, upperS, upperV); // the upper hsv threshold for your detection
+//            colourMassDetectionProcessor.changeConstants(
+//                    lower,
+//                    upper,
+//                    () -> minArea,
+//                    () -> LEFT_BOUNDARY,
+//                    () -> RIGHT_BOUNDARY
+//            );
 
             telemetry.addData("Currently Recorded Position", colourMassDetectionProcessor.getRecordedPropPosition());
             telemetry.addData("Camera State", visionPortal.getCameraState());
