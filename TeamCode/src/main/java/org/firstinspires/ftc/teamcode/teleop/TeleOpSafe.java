@@ -197,17 +197,17 @@ public class TeleOpSafe extends LinearOpMode {
             robot.antiJam();
             double loop = System.nanoTime();
 
-            if (smartIntakeEnabled) {
-                detectedIndex = robot.intakeSensor.hasPixel();
-                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
-                    gamepad1.rumble(1, 1, 250);
-                    robot.stopIntake();
-                } else if (detectedIndex[1]) {
-                    gamepad1.rumble(1, 0, 250);
-                } else if (detectedIndex[0]) {
-                    gamepad1.rumble(0, 1, 250);
-                }
-            }
+//            if (smartIntakeEnabled) {
+//                detectedIndex = robot.intakeSensor.hasPixel();
+//                if (detectedIndex[0] && detectedIndex[1] && robot.intaking) {
+//                    gamepad1.rumble(1, 1, 250);
+//                    robot.stopIntake();
+//                } else if (detectedIndex[1]) {
+//                    gamepad1.rumble(1, 0, 250);
+//                } else if (detectedIndex[0]) {
+//                    gamepad1.rumble(0, 1, 250);
+//                }
+//            }
 
             telemetry.addData("hz ", 1000000000 / (loop - loopTime));
             sumLoop += 1000000000 / (loop - loopTime);
