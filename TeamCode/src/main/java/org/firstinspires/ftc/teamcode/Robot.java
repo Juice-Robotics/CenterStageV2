@@ -139,8 +139,8 @@ public class Robot {
 
     public void stopIntake() {
         intaking = false;
+        arm.runtoPreset(Levels.INTERMEDIATE);
         intake.stopIntake();
-        intake.runToPreset(Levels.INTERMEDIATE);
         arm.runtoPreset(Levels.CAPTURE);
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -148,6 +148,7 @@ public class Robot {
                 claw.setClawClose(Claw.Side.BOTH);
                 sleep(350);
                 arm.runtoPreset(Levels.INTERMEDIATE);
+                intake.runToPreset(Levels.INTAKE);
             }});
         thread.start();
         subsystemState = Levels.INTERMEDIATE;

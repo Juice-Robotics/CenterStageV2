@@ -19,7 +19,7 @@ public class Intake {
 
     public float intakeDown = 176 - OFFSET;
 
-    public float intakeUp = 320 - OFFSET;
+    public float intakeUp = 330 - OFFSET;
 
     public MotorEx intakeMotor;
 

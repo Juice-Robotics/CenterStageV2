@@ -9,11 +9,11 @@ public class Claw {
     public StepperServo wrist;
 
     public ClawStatus isOpenLeft = ClawStatus.OPEN; // if open, true
-    public ClawStatus isOpenRight = ClawStatus.CLOSED; // if open, true
+    public ClawStatus isOpenRight = ClawStatus.OPEN; // if open, true
 
     // CONSTANTS
-    public float clawOpen = 130;
-    public float clawClose = 250; //larger = tighter
+    public float clawOpen = 150;
+    public float clawClose = 60; //smaller = tighter
 
     public Claw(StepperServo depositServo1, StepperServo depositServo2,  StepperServo wrist) {
         this.depositServoLeft = depositServo1;
@@ -80,9 +80,9 @@ public class Claw {
         if (level == Levels.ZERO) {
             setPositionWrist(0);
         } else if (level == Levels.INTAKE) {
-            setPositionWrist(123);
+            setPositionWrist(19);
         } else if (level == Levels.DEPOSIT) {
-            setPositionWrist(123);
+            setPositionWrist(119);
         }
     }
 
