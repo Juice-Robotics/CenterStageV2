@@ -47,7 +47,7 @@ public class Slides {
     public Motor slides1;
     public Motor slides2;
     public VoltageSensor voltageSensor;
-    private double HEIGHT_CLIMB = 500;
+    private double HEIGHT_CLIMB = 880;
     //public boolean climbing = false;
     public int backdropTarget = 500;
 
@@ -126,7 +126,7 @@ public class Slides {
 
     public void startClimb(){
         climbing = true;
-        profile = MotionProfileGenerator.generateSimpleMotionProfile(new MotionState(getPos(), 0.25), new MotionState(100, 0), maxvel, maxaccel);
+        profile = MotionProfileGenerator.generateSimpleMotionProfile(new MotionState(getPos(), 0), new MotionState(200, 0), maxvel, maxaccel);
         timer.reset();
     }
 
