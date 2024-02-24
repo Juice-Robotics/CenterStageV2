@@ -80,22 +80,11 @@ public class TeleOpSafe extends LinearOpMode {
         robot.drone.prime();
 
         while (opModeIsActive() && !isStopRequested()) {
-//
-//            if (gamepad1.dpad_up) {
-//                robot.slides.resetAllEncoders();
-//            }
 
-            //DRIVE
-            if (gamepad1.right_trigger > 0.5) {
-                x = -gamepad1.left_stick_x * (1 - 0.66 * gamepad1.right_trigger);
-                y = -gamepad1.left_stick_y * (1 - 0.66 * gamepad1.right_trigger);
-                rx = gamepad1.right_stick_x * (1 - 0.66 * gamepad1.right_trigger);
+            x = -gamepad1.left_stick_x;
+            y = -gamepad1.left_stick_y;
+            rx = gamepad1.right_stick_x;
 
-            } else {
-                x = -gamepad1.left_stick_x;
-                y = -gamepad1.left_stick_y;
-                rx = gamepad1.right_stick_x;
-            }
             robot.setDrivePower(-x, y, rx);
 
             //CLAW
