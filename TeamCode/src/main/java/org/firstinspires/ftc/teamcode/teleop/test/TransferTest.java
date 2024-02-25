@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 
 @TeleOp(group = "competition")
 @Config
-@Disabled
+//@Disabled
 public class TransferTest extends LinearOpMode {
     public static double ARM_POS = 70;
     public static double ELBOW_POS = 285;

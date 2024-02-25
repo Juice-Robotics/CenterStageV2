@@ -21,7 +21,7 @@ public class Intake {
     public float autoIntake = 200 - OFFSET;
 
 
-    public float intakeUp = 315 - OFFSET;
+    public float intakeUp = 320 - OFFSET;
 
     public MotorEx intakeMotor;
 
