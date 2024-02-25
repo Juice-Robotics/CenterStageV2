@@ -45,7 +45,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(28, 48.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(28, 49.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
@@ -69,7 +69,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(32, 48.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(34.5, 49.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
@@ -78,7 +78,7 @@ public class RedBackdropV2 extends LinearOpMode {
                 })
                 .waitSeconds(1.8)
                 .forward(4)
-                .strafeLeft(23)
+                .strafeLeft(25)
                 .back(10)
                 .build();
 
@@ -93,7 +93,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(39, 48.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(39, 49.5, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
@@ -146,7 +146,7 @@ public class RedBackdropV2 extends LinearOpMode {
         // now we can use recordedPropPosition to determine where the prop is! if we never saw a prop, your recorded position will be UNFOUND.
         // if it is UNFOUND, you can manually set it to any of the other positions to guess
         if (recordedPropPosition == YoinkP2Pipeline.PropPositions.UNFOUND) {
-            recordedPropPosition = YoinkP2Pipeline.PropPositions.CENTER;
+            recordedPropPosition = YoinkP2Pipeline.PropPositions.RIGHT;
         }
 
         robot.launchSubsystemThread(telemetry);
