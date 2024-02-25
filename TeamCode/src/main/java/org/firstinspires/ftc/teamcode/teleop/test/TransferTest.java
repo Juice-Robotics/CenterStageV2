@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 
 @TeleOp(group = "competition")
 @Config
-//@Disabled
+@Disabled
 public class TransferTest extends LinearOpMode {
 
     @Override

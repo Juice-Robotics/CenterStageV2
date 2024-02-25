@@ -28,7 +28,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp
-//@Disabled
+@Disabled
 public class PreloadPipelineTest extends LinearOpMode {
     Motor backLeft;
     Motor backRight;

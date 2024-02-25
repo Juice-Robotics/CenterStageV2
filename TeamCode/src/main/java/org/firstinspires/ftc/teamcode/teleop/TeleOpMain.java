@@ -28,6 +28,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagPoseFtc;
 
 import java.util.concurrent.TimeUnit;
 
+@Disabled
 @TeleOp(group = "competition")
 public class TeleOpMain extends LinearOpMode {
     // Define 2 states, driver control or alignment control

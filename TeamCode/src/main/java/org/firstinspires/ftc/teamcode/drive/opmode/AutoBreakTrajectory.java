@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
  * This sample utilizes the SampleMecanumDriveCancelable.java and TrajectorySequenceRunnerCancelable.java
  * classes. Please ensure that these files are copied into your own project.
  */
-//@Disabled
+@Disabled
 @Autonomous(group = "advanced")
 public class AutoBreakTrajectory extends LinearOpMode {
 
