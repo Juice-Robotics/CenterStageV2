@@ -37,25 +37,27 @@ public class BlueFarV2 extends LinearOpMode {
         TrajectorySequence preloadSpikeLeft = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(-32, -34, Math.toRadians(90)), Math.toRadians(90))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(-58, -30, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(0.5, () -> {
                     robot.ejectSpike();
                 })
                 .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(-33, -55, Math.toRadians(-90)), Math.toRadians(-90))
-                .addTemporalMarker(5, () -> {
-                    robot.startAutoIntake();
-                })
-                .waitSeconds(1)
-                .forward(2.5)
-                .addTemporalMarker(6.5, () -> {
-                    robot.stopIntake();
-                })
-                .waitSeconds(3)
+//                .splineToLinearHeading(new Pose2d(-33, -55, Math.toRadians(-90)), Math.toRadians(-90))
+//                .addTemporalMarker(5, () -> {
+//                    robot.startAutoIntake();
+//                })
+//                .waitSeconds(1)
+//                .forward(2.5)
+//                .addTemporalMarker(6.5, () -> {
+//                    robot.stopIntake();
+//                })
+//                .waitSeconds(3)
                 .build();
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                //.splineToConstantHeading(new Vector2d(-58, -28), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-40, 40), Math.toRadians(90))
                 .waitSeconds(3)
@@ -63,21 +65,23 @@ public class BlueFarV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-25, -44, Math.toRadians(90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-35, -36, Math.toRadians(0)), Math.toRadians(0))
+
                 .waitSeconds(1)
+                .splineToLinearHeading(new Pose2d(-58, -25, Math.toRadians(-90)), Math.toRadians(90))
                 //.splineToLinearHeading(new Pose2d(-48, 13, Math.toRadians(180)), Math.toRadians(0))
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
                 })
-                //stack
-                .splineToLinearHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
-                .waitSeconds(1.5)
+//                //stack
+//                .splineToLinearHeading(new Pose2d(-36, -57, Math.toRadians(-90)), Math.toRadians(-90))
+//                .waitSeconds(1.5)
                 .build();
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 //break
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                //.splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-36, 47), Math.toRadians(90))
                 .waitSeconds(1)
@@ -85,30 +89,30 @@ public class BlueFarV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-39, -47, Math.toRadians(0)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(-32, -36, Math.toRadians(-90)), Math.toRadians(0))
                 .waitSeconds(1)
 
                 .addTemporalMarker(1.8, () -> {
                     //release pixel from intake
                 })
                 //stack
-                .back(5)
-                .splineToLinearHeading(new Pose2d(-39, -57, Math.toRadians(-90)), Math.toRadians(-90))
-                .strafeLeft(3)
-                .waitSeconds(1.5)
-                .addTemporalMarker(3.7, () -> {
-                    //intake
-                })
-                .addTemporalMarker(5.2, () -> {
-                    //robot.stopIntake();
-                })
+//                .back(5)
+//                .splineToLinearHeading(new Pose2d(-39, -57, Math.toRadians(-90)), Math.toRadians(-90))
+//                .strafeLeft(3)
+//                .waitSeconds(1.5)
+//                .addTemporalMarker(3.7, () -> {
+//                    //intake
+//                })
+//                .addTemporalMarker(5.2, () -> {
+//                    //robot.stopIntake();
+//                })
                 .build();
 
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .strafeRight(0.01)
-                .splineToConstantHeading(new Vector2d(-58, -25), Math.toRadians(90))
+                .strafeRight(3)
+                .splineToConstantHeading(new Vector2d(-58, -29), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-58, 15), Math.toRadians(90))
                 .splineToConstantHeading(new Vector2d(-30, 47), Math.toRadians(90))
                 .waitSeconds(1)
