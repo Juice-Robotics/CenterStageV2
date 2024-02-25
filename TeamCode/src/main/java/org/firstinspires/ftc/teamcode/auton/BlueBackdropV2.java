@@ -35,11 +35,11 @@ public class BlueBackdropV2 extends LinearOpMode {
         // PRELOAD PATHS
         TrajectorySequence preloadSpikeLeft = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-31, 37, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-31, 40, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.7, () -> {
                     robot.ejectSpike();
                 })
-                .waitSeconds(1.3)
+                .waitSeconds(1)
                 .build();
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
@@ -48,10 +48,10 @@ public class BlueBackdropV2 extends LinearOpMode {
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
+                .addTemporalMarker(1.7, () -> {
                     robot.smartClawOpen();
                 })
-                .waitSeconds(1.8)
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeRight(17)
                 .back(10)
@@ -59,11 +59,11 @@ public class BlueBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-22, 33, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(-24, 33, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.7, () -> {
                     robot.ejectSpike();
                 })
-                .waitSeconds(1.3)
+                .waitSeconds(1)
                 .build();
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
@@ -72,10 +72,10 @@ public class BlueBackdropV2 extends LinearOpMode {
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
+                .addTemporalMarker(1.7, () -> {
                     robot.smartClawOpen();
                 })
-                .waitSeconds(1.8)
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeRight(23)
                 .back(10)
@@ -84,23 +84,23 @@ public class BlueBackdropV2 extends LinearOpMode {
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(-43, 20, Math.toRadians(270)), Math.toRadians(10))
-                .splineToSplineHeading(new Pose2d(-30, 16, Math.toRadians(270)), Math.toRadians(270))
-                .addTemporalMarker(1.4, () -> {
+                .splineToSplineHeading(new Pose2d(-30, 16.9, Math.toRadians(270)), Math.toRadians(270))
+                .addTemporalMarker(1.6, () -> {
                     robot.ejectSpike();
                 })
-                .waitSeconds(1.3)
+                .waitSeconds(1)
                 .build();
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(-30, 50.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(-30, 51.24, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
+                .addTemporalMarker(1.7, () -> {
                     robot.smartClawOpen();
                 })
-                .waitSeconds(1.8)
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeRight(29)
                 .back(10)
