@@ -20,6 +20,8 @@ import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 @Config
 @Disabled
 public class TransferTest extends LinearOpMode {
+    public static double ARM_POS = 70;
+    public static double ELBOW_POS = 285;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,23 +37,17 @@ public class TransferTest extends LinearOpMode {
                 robot.intake.stopIntake();
                 robot.intake.intakeMotor.setSpeed(0.6F);
                 sleep(500);
-                robot.arm.runtoPreset(Levels.CAPTURE);
+                robot.arm.setAngleArm(ARM_POS);
+                robot.arm.setAngleElbow(ELBOW_POS);
                 robot.claw.setClawClose(Claw.Side.BOTH);
-                sleep(500);
+                sleep(800);
                 robot.arm.setAngleArm(140);
                 robot.intake.runToPreset(Levels.INTAKE);
-                robot.intake.intakeMotor.setSpeed(0.6F);
+                robot.intake.intakeMotor.setSpeed(0);
             }});
         thread.start();
 
         if (isStopRequested()) return;
-        robot.slides.resetAllEncoders();
-        robot.arm.setAngleArm(90);
-        robot.claw.setPositionClaw(150, Claw.Side.BOTH);
-        robot.intake.setAngle(176);
-        robot.claw.wrist.setAngle(19);
-        robot.arm.setAngleElbow(275);
-        robot.slides.runToPosition(0);
         boolean previousX = gamepad1.right_bumper;
         boolean previousBumper = gamepad1.left_bumper;
         while (opModeIsActive() && !isStopRequested()) {
