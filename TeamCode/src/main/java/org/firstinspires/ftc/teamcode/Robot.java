@@ -236,10 +236,10 @@ public class Robot {
     }
 
     public void smartClawOrderedOpen() {
-        if (claw.isOpenLeft == Claw.ClawStatus.CLOSED) {
-            this.claw.setClawOpen(Claw.Side.LEFT);
-        } else if (claw.isOpenRight == Claw.ClawStatus.CLOSED) {
+        if (claw.isOpenRight == Claw.ClawStatus.CLOSED) {
             this.claw.setClawOpen(Claw.Side.RIGHT);
+        } else if (claw.isOpenLeft == Claw.ClawStatus.CLOSED) {
+            this.claw.setClawOpen(Claw.Side.LEFT);
         }
 
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {

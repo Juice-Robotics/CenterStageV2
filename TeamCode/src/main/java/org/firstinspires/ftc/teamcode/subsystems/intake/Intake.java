@@ -18,7 +18,7 @@ public class Intake {
     public float OFFSET = 0;
 
     public float intakeDown = 176 - OFFSET;
-    public float autoIntake = 205 - OFFSET;
+    public float autoIntake = 200 - OFFSET;
 
 
     public float intakeUp = 315 - OFFSET;
@@ -38,7 +38,6 @@ public class Intake {
         intakeServo2.setAngle(intakeDown);
     }
     public void autoStartIntake(){
-        intakeMotor.setSpeed(1);
         intakeServo1.setAngle(autoIntake);
         intakeServo2.setAngle(autoIntake);
     }

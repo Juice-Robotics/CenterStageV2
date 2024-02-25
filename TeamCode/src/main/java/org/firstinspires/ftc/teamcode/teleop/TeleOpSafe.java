@@ -59,7 +59,9 @@ public class TeleOpSafe extends LinearOpMode {
         boolean previousIntakeState = false;
         boolean previousDpadUp = false;
         float previousLeftTriggerState = 0;
+        float previousRightTriggerState = 0;
         boolean previousSquare = false;
+        boolean previousTriangle = false;
         boolean previousCross = false;
         boolean previousCircle = false;
         boolean previousGP2DUp = false;
@@ -88,25 +90,30 @@ public class TeleOpSafe extends LinearOpMode {
             robot.setDrivePower(-x, y, rx);
 
             //CLAW
-            if (gamepad1.cross && !previousCross) {
+            if (gamepad1.triangle && !previousTriangle) {
                 robot.smartClawOrderedOpen();
             }
 
+            if (gamepad1.cross && !previousCross) {
+                robot.smartClawOpen();
+            }
+
             if (gamepad1.square && !previousSquare) {
-                robot.claw.wrist.addAngle(-45);
+                robot.claw.wrist.setAngle(69);
             }
             if (gamepad1.circle && !previousCircle) {
-                robot.claw.wrist.addAngle(45);
+                robot.claw.wrist.setAngle(169);
             }
-            if (gamepad1.right_trigger > 0.75) {
-                robot.claw.wrist.addAngle(180);
-            }
+//            if (gamepad1.right_trigger > 0.75) {
+//                robot.claw.wrist.addAngle(180);
+//            }
 //            if (gamepad1.circle && !previousCircle) {
 //                robot.claw.wrist.setAngle(176);
 //            }
             previousCircle = gamepad1.circle;
-            previousCross = gamepad1.cross;
+            previousTriangle = gamepad1.triangle;
             previousSquare = gamepad1.square;
+            previousCross = gamepad1.cross;
 
 
             //INTAKE
@@ -120,11 +127,17 @@ public class TeleOpSafe extends LinearOpMode {
             previousIntakeState = gamepad1.right_bumper;
 
             if ((gamepad1.left_trigger > 0.2)){
-                robot.intake.reverse();
-            } else if ((gamepad1.left_trigger<0.2)  && (gamepad1.left_trigger != previousLeftTriggerState)){
+                robot.intake.reverseIntake();
+            } else if ((gamepad1.left_trigger < 0.2)  && (gamepad1.left_trigger != previousLeftTriggerState)){
                 robot.intake.stopIntake();
             }
             previousLeftTriggerState = gamepad1.left_trigger;
+
+            if ((gamepad1.right_trigger > 0.2) && previousRightTriggerState < 0.2){
+                robot.intake.autoStartIntake(); ;
+            }
+
+            previousRightTriggerState = gamepad1.right_trigger;
 
             //DEPOSIT
             if (gamepad1.left_bumper) {
@@ -133,9 +146,9 @@ public class TeleOpSafe extends LinearOpMode {
 
             //SLIDES
             if (gamepad1.dpad_left && !previousDpadLeftState) {
-                robot.slides.incrementBackdropTarget(-70);
+                robot.slides.incrementBackdropTarget(-90);
             } else if (gamepad1.dpad_right && !previousDpadRightState) {
-                robot.slides.incrementBackdropTarget(70);
+                robot.slides.incrementBackdropTarget(90);
             }
             previousDpadLeftState = gamepad1.dpad_left;
             previousDpadRightState = gamepad1.dpad_right;
