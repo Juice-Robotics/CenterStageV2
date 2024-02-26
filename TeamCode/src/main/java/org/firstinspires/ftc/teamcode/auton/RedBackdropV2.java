@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -36,7 +37,7 @@ public class RedBackdropV2 extends LinearOpMode {
         TrajectorySequence preloadSpikeLeft = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
                 .splineToSplineHeading(new Pose2d(43, 20, Math.toRadians(270)), Math.toRadians(150))
-                .splineToSplineHeading(new Pose2d(30, 16, Math.toRadians(270)), Math.toRadians(230))
+                .splineToSplineHeading(new Pose2d(34, 14.8, Math.toRadians(270)), Math.toRadians(230))
                 .addTemporalMarker(1.4, () -> {
                     robot.ejectSpike();
                 })
@@ -45,14 +46,17 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropLeft = drive.trajectorySequenceBuilder(preloadSpikeLeft.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(28, 49.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(27, 51, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
-                    robot.smartClawOpen();
+                .addTemporalMarker(1.9, () -> {
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
-                .waitSeconds(1.8)
+                .addTemporalMarker(3.5, () -> {
+                    robot.intakePreset();
+                })
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeLeft(29)
                 .back(10)
@@ -60,7 +64,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeCenter = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(22, 34, Math.toRadians(-90)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(22, 32, Math.toRadians(-90)), Math.toRadians(-90))
                 .addTemporalMarker(1.7, () -> {
                     robot.ejectSpike();
                 })
@@ -69,14 +73,17 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropCenter = drive.trajectorySequenceBuilder(preloadSpikeCenter.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(34.5, 49.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(34, 51, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
-                    robot.smartClawOpen();
+                .addTemporalMarker(1.9, () -> {
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
-                .waitSeconds(1.8)
+                .addTemporalMarker(3.5, () -> {
+                    robot.intakePreset();
+                })
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeLeft(25)
                 .back(10)
@@ -84,7 +91,7 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadSpikeRight = drive.trajectorySequenceBuilder(startPose)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(31, 42, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(31, 38, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1.7, () -> {
                     robot.ejectSpike();
                 })
@@ -93,14 +100,17 @@ public class RedBackdropV2 extends LinearOpMode {
 
         TrajectorySequence preloadBackdropRight = drive.trajectorySequenceBuilder(preloadSpikeRight.end())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(39, 49.5, Math.toRadians(-90)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(40, 51, Math.toRadians(-90)), Math.toRadians(90))
                 .addTemporalMarker(1, () -> {
                     robot.autoPreloadDepositPreset();
                 })
-                .addTemporalMarker(2, () -> {
-                    robot.smartClawOpen();
+                .addTemporalMarker(1.9, () -> {
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
                 })
-                .waitSeconds(1.8)
+                .addTemporalMarker(3.5, () -> {
+                    robot.intakePreset();
+                })
+                .waitSeconds(1.2)
                 .forward(4)
                 .strafeLeft(23)
                 .back(10)
@@ -137,7 +147,8 @@ public class RedBackdropV2 extends LinearOpMode {
         if (isStopRequested()) return;
 
         // shuts down the camera once the match starts, we dont need to look any more
-        robot.cv.switchToAuton(AllianceColor.BLUE);
+//        robot.cv.switchToAuton(AllianceColor.RED);
+        robot.cv.kill();
 
 
         // gets the recorded prop position

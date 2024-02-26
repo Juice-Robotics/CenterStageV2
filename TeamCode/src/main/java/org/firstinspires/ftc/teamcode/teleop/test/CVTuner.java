@@ -30,7 +30,7 @@ import org.opencv.core.Scalar;
 
 @TeleOp(group = "competition")
 @Config
-@Disabled
+//@Disabled
 public class CVTuner extends LinearOpMode {
     public static double minArea = 3000; // the minimum area for the detection to consider for your prop
     public static double lowerH = 103;

@@ -109,13 +109,10 @@ public class Robot {
 
     // INTAKE
     public void intakePreset() {
-        //turning to get through the thingy
-        this.slides.runToPreset(Levels.INTAKE);
-        this.arm.runtoPreset(Levels.INTAKE);
+        this.arm.runtoPreset(Levels.INTERMEDIATE);
         this.claw.setClawOpen(Claw.Side.BOTH);
         this.claw.runToWristPreset(Levels.INTAKE);
-        this.intake.runToPreset(Levels.INTAKE);
-        this.subsystemState = Levels.INTAKE;
+        this.slides.runToPosition(0);
     }
 
     public void startIntake() {
@@ -300,7 +297,7 @@ public class Robot {
     }
 
     public void autoCycleDepositPreset() {
-        this.slides.runToPosition(450);
+        this.slides.runToPosition(480);
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 sleep(700);

@@ -46,8 +46,8 @@ public class CVMaster {
             leftDivider = 603;
             rightDivider = 1000;
         } else if (allianceColor == AllianceColor.RED) {
-            lower = new Scalar(0, 150, 20); // the lower hsv threshold for your detection
-            upper = new Scalar(3, 255, 255); // the upper hsv threshold for your detection
+            lower = new Scalar(0, 120, 5); // the lower hsv threshold for your detection
+            upper = new Scalar(20, 255, 255); // the upper hsv threshold for your detection
             leftDivider = 603;
             rightDivider = 1000;
         }

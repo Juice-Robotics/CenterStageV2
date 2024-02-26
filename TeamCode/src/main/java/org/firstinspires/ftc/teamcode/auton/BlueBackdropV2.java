@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.Robot;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDriveCancelable;
 import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import org.firstinspires.ftc.teamcode.lib.PoseStorage;
+import org.firstinspires.ftc.teamcode.subsystems.deposit.Claw;
 import org.firstinspires.ftc.teamcode.subsystems.vision.pipelines.YoinkP2Pipeline;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -49,7 +50,10 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(1.7, () -> {
-                    robot.smartClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
+                })
+                .addTemporalMarker(3, () -> {
+                    robot.intakePreset();
                 })
                 .waitSeconds(1.2)
                 .forward(4)
@@ -73,7 +77,10 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(1.7, () -> {
-                    robot.smartClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
+                })
+                .addTemporalMarker(3, () -> {
+                    robot.intakePreset();
                 })
                 .waitSeconds(1.2)
                 .forward(4)
@@ -98,7 +105,10 @@ public class BlueBackdropV2 extends LinearOpMode {
                     robot.autoPreloadDepositPreset();
                 })
                 .addTemporalMarker(1.7, () -> {
-                    robot.smartClawOpen();
+                    robot.claw.setClawOpen(Claw.Side.BOTH);
+                })
+                .addTemporalMarker(3, () -> {
+                    robot.intakePreset();
                 })
                 .waitSeconds(1.2)
                 .forward(4)
@@ -137,7 +147,8 @@ public class BlueBackdropV2 extends LinearOpMode {
         if (isStopRequested()) return;
 
         // shuts down the camera once the match starts, we dont need to look any more
-        robot.cv.switchToAuton(AllianceColor.BLUE);
+//        robot.cv.switchToAuton(AllianceColor.BLUE);
+        robot.cv.kill();
 
 
         // gets the recorded prop position
