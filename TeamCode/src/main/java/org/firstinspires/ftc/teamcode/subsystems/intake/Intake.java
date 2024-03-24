@@ -22,6 +22,7 @@ public class Intake {
 
 
     public float intakeUp = 320 - OFFSET;
+    public int intakeUpMotorPosition = 0;
 
     public MotorEx intakeMotor;
 
@@ -33,7 +34,7 @@ public class Intake {
     }
 
     public void startIntake(){
-        intakeMotor.setSpeed(1);
+        setSpeed(1);
         intakeServo1.setAngle(intakeDown);
         intakeServo2.setAngle(intakeDown);
     }
@@ -43,7 +44,8 @@ public class Intake {
     }
 
     public void stopIntake(){
-        intakeMotor.setSpeed(0);
+        setSpeed(0);
+        runToIntakePositionGlobal(intakeUpMotorPosition);
         intakeServo1.setAngle(intakeUp);
         intakeServo2.setAngle(intakeUp);
     }
@@ -51,13 +53,13 @@ public class Intake {
     public void reverseIntake(){
         intakeServo1.setAngle(intakeDown);
         intakeServo2.setAngle(intakeDown);
-        intakeMotor.setSpeed(-0.6F);
+        setSpeed(-0.6F);
     }
 
     public void reverseIntakeSpike(){
         intakeServo1.setAngle(intakeDown);
         intakeServo2.setAngle(intakeDown);
-        intakeMotor.setSpeed(-0.3F);
+        setSpeed(-0.3F);
     }
 
     public void setAngle(float angle) {
@@ -77,6 +79,30 @@ public class Intake {
         } else if (level == Levels.INIT) {
             setAngle(intakeUp);
         }
+    }
+
+    public void runToIntakePosition(int ticks) {
+        if (intakeMotor.motor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
+            intakeMotor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        }
+        intakeMotor.motor.setTargetPosition(ticks);
+    }
+
+    public void setSpeed(float power) {
+        if (intakeMotor.motor.getMode() != DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
+            intakeMotor.motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+        intakeMotor.setSpeed(power);
+    }
+
+    /**
+    * This function accounts for the wrapovers for the intake when it completes a full revolution, and will go to the nearest tick position to achieve the same physical intake position
+     */
+    public void runToIntakePositionGlobal(int ticks) {
+        // math.floor gets us how many revolutions we went thru, and we multiply by 28 to get the tick position of the lowest position in the rev
+        int target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 28.0) * 28) + ticks;
+
+        runToIntakePosition(target);
     }
 
     public void reverse(){
