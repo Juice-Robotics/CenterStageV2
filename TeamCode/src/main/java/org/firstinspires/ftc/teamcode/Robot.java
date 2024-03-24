@@ -138,15 +138,16 @@ public class Robot {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 intake.stopIntake();
-                intake.intakeMotor.setSpeed(0.6F);
+//                intake.intakeMotor.setSpeed(0.6F);
                 sleep(500);
                 arm.runtoPreset(Levels.CAPTURE);
-                claw.setClawClose(Claw.Side.BOTH);
-                sleep(800);
-                arm.setAngleArm(140);
-                intake.runToPreset(Levels.INTAKE);
-                intake.intakeMotor.setSpeed(0);
                 sleep(500);
+                claw.setClawClose(Claw.Side.BOTH);
+                sleep(500);
+                arm.setAngleArm(140);
+//                intake.runToPreset(Levels.INTAKE);
+//                intake.intakeMotor.setSpeed(0);
+//                sleep(500);
             }});
         thread.start();
         subsystemState = Levels.INTERMEDIATE;
@@ -206,6 +207,7 @@ public class Robot {
             Thread thread = new Thread(new Runnable() {
                 public void run() {
                     sleep(300);
+                    intake.runToPreset(Levels.INTAKE);
                     arm.setAngleArm(90);
                     arm.setAngleElbow(280);
                     claw.runToWristPreset(Levels.INTAKE);
@@ -222,6 +224,7 @@ public class Robot {
         if (claw.isOpenLeft == Claw.ClawStatus.OPEN && claw.isOpenRight == Claw.ClawStatus.OPEN) {
             Thread thread = new Thread(() -> {
                 sleep(300);
+                intake.runToPreset(Levels.INTAKE);
                 arm.setAngleArm(90);
                 arm.setAngleElbow(280);
                 claw.runToWristPreset(Levels.INTAKE);

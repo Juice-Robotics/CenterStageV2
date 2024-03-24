@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.lib.StepperServo;
 
 @TeleOp(group = "competition")
 @Config
-@Disabled
+//@Disabled
 public class ServoTest extends LinearOpMode {
     public static double ARM_POS = 90;
     public static double CLAW_POS = 150;

@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.lib.StepperServo;
 
 @TeleOp(group = "competition")
 @Config
-@Disabled
+//@Disabled
 public class IntakeTest extends LinearOpMode {
     DcMotorEx motor;
     public static double MOT_POWER = 0;
