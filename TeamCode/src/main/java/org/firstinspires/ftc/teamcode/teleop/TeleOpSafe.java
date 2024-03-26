@@ -135,7 +135,16 @@ public class TeleOpSafe extends LinearOpMode {
             previousLeftTriggerState = gamepad1.left_trigger;
 
             if ((gamepad1.right_trigger > 0.2) && previousRightTriggerState < 0.2){
-                robot.intake.autoStartIntake(); ;
+//                robot.intake.autoStartIntake(); ;
+                if (robot.slides.target == 215) {
+                    robot.slides.runToPosition(215 - 17);
+                } else if (robot.slides.target == 198) {
+                    robot.slides.runToPosition(198 - 17);
+                } else if (robot.slides.target == 181) {
+                    robot.slides.runToPosition(177);
+                } else {
+                    robot.slides.runToPosition(215);
+                }
             }
 
             previousRightTriggerState = gamepad1.right_trigger;
