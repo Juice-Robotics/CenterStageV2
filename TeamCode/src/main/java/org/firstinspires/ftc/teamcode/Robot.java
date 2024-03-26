@@ -340,7 +340,7 @@ public class Robot {
             if (this.intake.intakeMotor.getCurrent() > 4.5 && !flags.contains(RobotFlags.ANTI_JAM_IN_PROGRESS) && antiJamCooldown.time(TimeUnit.MILLISECONDS) >= 250) {
                 flags.add(RobotFlags.INTAKE_JAMMED);
                 flags.add(RobotFlags.ANTI_JAM_IN_PROGRESS);
-                this.intake.setAngle(100);
+                this.intake.runToPreset(Levels.INTAKE);
                 this.intake.reverse();
                 sleep(250);
                 this.intake.runToPreset(Levels.INTAKE);

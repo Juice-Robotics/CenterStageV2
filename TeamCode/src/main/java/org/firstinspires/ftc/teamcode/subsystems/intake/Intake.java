@@ -86,6 +86,7 @@ public class Intake {
             intakeMotor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         intakeMotor.motor.setTargetPosition(ticks);
+        intakeMotor.motor.setPower(-1);
     }
 
     public void setSpeed(float power) {
