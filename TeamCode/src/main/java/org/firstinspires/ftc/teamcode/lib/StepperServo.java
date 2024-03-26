@@ -27,4 +27,8 @@ public class StepperServo extends Component{
         return (float) servo.getPosition();
     }
 
+    public float getAngleDeg() {
+        return angle;
+    }
+
 }

@@ -69,7 +69,7 @@ public class Intake {
     }
 
     public float getAngle() {
-        return intakeServo1.getAngle();
+        return intakeServo1.getAngleDeg();
     }
 
     public void runToPreset(Levels level) {
