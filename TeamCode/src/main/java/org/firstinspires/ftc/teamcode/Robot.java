@@ -144,7 +144,7 @@ public class Robot {
                 sleep(600);
                 claw.setClawClose(Claw.Side.BOTH);
                 sleep(300);
-                arm.setAngleArm(140);
+                arm.setAngleArm(120);
 //                intake.runToPreset(Levels.INTAKE);
 //                intake.intakeMotor.setSpeed(0);
 //                sleep(500);
