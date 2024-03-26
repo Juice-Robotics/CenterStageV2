@@ -17,7 +17,7 @@ public class Intake {
 
     public float OFFSET = 0;
 
-    public float intakeDown = 175 - OFFSET;
+    public float intakeDown = 177 - OFFSET;
     public float autoIntake = 200 - OFFSET;
 
 
@@ -102,7 +102,7 @@ public class Intake {
      */
     public void runToIntakePositionGlobal(int ticks) {
         // math.floor gets us how many revolutions we went thru, and we multiply by 28 to get the tick position of the lowest position in the rev
-        target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 28.0) * 28) + ticks;
+        target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 141.351724138) * 141.351724138) + ticks;
 
         runToIntakePosition(target);
     }
