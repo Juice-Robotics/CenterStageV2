@@ -79,6 +79,7 @@ public class TeleOpSafe extends LinearOpMode {
         //intakePreviousPos = robot.intake.intakeMotor.getCurrentPosition();
         robot.slides.runToPosition(0);
         robot.slides.resetAllEncoders();
+        robot.intake.resetAllEncoders();
         robot.drone.prime();
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -220,6 +221,7 @@ public class TeleOpSafe extends LinearOpMode {
 //            telemetry.addData("SENSOR2 ", robot.intakeSensor.getRangeSensor2());
             telemetry.addData("TIME LEFT: ", ((120-matchTimer.time(TimeUnit.SECONDS))));
             telemetry.addData("SLIDES TARGET: ", robot.slides.target);
+            telemetry.addData("INTAKE: ", robot.intake.intakeMotor.motor.getCurrentPosition());
             telemetry.addData("SLIDES POSITION: ", robot.slides.getPos());
             telemetry.addData("LEVEL: ", robot.slides.currentLevel);
             loopTime = loop;

@@ -17,7 +17,7 @@ public class Intake {
 
     public float OFFSET = 0;
 
-    public float intakeDown = 176 - OFFSET;
+    public float intakeDown = 175 - OFFSET;
     public float autoIntake = 200 - OFFSET;
 
 
@@ -103,6 +103,10 @@ public class Intake {
         int target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 28.0) * 28) + ticks;
 
         runToIntakePosition(target);
+    }
+
+    public void resetAllEncoders(){
+        intakeMotor.resetEncoder();
     }
 
     public void reverse(){
