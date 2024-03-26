@@ -68,6 +68,10 @@ public class Intake {
         intakeServo2.setAngle(angle);
     }
 
+    public float getAngle() {
+        return intakeServo1.getAngle();
+    }
+
     public void runToPreset(Levels level) {
         if (level == Levels.ZERO) {
             setAngle(0);

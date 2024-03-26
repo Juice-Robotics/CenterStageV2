@@ -136,14 +136,14 @@ public class TeleOpSafe extends LinearOpMode {
 
             if ((gamepad1.right_trigger > 0.2) && previousRightTriggerState < 0.2){
 //                robot.intake.autoStartIntake(); ;
-                if (robot.slides.target == 215) {
-                    robot.slides.runToPosition(215 - 17);
-                } else if (robot.slides.target == 198) {
-                    robot.slides.runToPosition(198 - 17);
-                } else if (robot.slides.target == 181) {
-                    robot.slides.runToPosition(177);
+                if (robot.intake.getAngle() == 215) {
+                    robot.intake.setAngle(215 - 17);
+                } else if (robot.intake.getAngle() == 198) {
+                    robot.intake.setAngle(198 - 17);
+                } else if (robot.intake.getAngle() == 181) {
+                    robot.intake.setAngle(177);
                 } else {
-                    robot.slides.runToPosition(215);
+                    robot.intake.setAngle(215);
                 }
             }
 
