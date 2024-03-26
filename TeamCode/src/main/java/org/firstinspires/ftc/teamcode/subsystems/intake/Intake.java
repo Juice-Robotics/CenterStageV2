@@ -25,6 +25,7 @@ public class Intake {
     public int intakeUpMotorPosition = 0;
 
     public MotorEx intakeMotor;
+    public int target;
 
     public Intake(StepperServo intakeServo1, StepperServo intakeServo2, MotorEx intakeMotor) {
         this.intakeServo1 = intakeServo1;
@@ -101,7 +102,7 @@ public class Intake {
      */
     public void runToIntakePositionGlobal(int ticks) {
         // math.floor gets us how many revolutions we went thru, and we multiply by 28 to get the tick position of the lowest position in the rev
-        int target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 28.0) * 28) + ticks;
+        target = (int) (Math.floor(intakeMotor.motor.getCurrentPosition() / 28.0) * 28) + ticks;
 
         runToIntakePosition(target);
     }
