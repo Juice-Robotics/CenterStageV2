@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.subsystems.intake;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.lib.Levels;
@@ -89,6 +90,7 @@ public class Intake {
     public void runToIntakePosition(int ticks) {
         if (intakeMotor.motor.getMode() != DcMotor.RunMode.RUN_TO_POSITION) {
             intakeMotor.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            intakeMotor.motor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, new PIDFCoefficients(0, 0, 0, 0));
         }
         intakeMotor.motor.setTargetPosition(ticks);
         intakeMotor.motor.setPower(-1);
