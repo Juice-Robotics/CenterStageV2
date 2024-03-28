@@ -136,7 +136,7 @@ public class SampleMecanumDriveCancelable extends MecanumDrive {
         // TODO: if desired, use setLocalizer() to change the localization method
         // setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap, lastTrackingEncPositions, lastTrackingEncVels));
 
-        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap,lastTrackingEncPositions,lastTrackingEncVels));
+        setLocalizer(new StandardTrackingWheelLocalizer(hardwareMap, lastTrackingEncPositions, lastTrackingEncVels));
 
         trajectorySequenceRunner = new TrajectorySequenceRunnerCancelable(
                 follower, HEADING_PID, batteryVoltageSensor,
