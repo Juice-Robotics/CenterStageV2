@@ -12,7 +12,7 @@ public class Claw {
     public ClawStatus isOpenRight = ClawStatus.OPEN; // if open, true
 
     // CONSTANTS
-    public float clawOpen = 150;
+    public float clawOpen = 125;
     public float clawClose = 60; //smaller = tighter
 
     public Claw(StepperServo depositServo1, StepperServo depositServo2,  StepperServo wrist) {
