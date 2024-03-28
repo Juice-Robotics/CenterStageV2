@@ -139,11 +139,11 @@ public class Robot {
             public void run() {
                 intake.stopIntake();
 //                intake.intakeMotor.setSpeed(0.6F);
-                sleep(600);
+                sleep(250);
                 arm.runtoPreset(Levels.CAPTURE);
-                sleep(600);
+                sleep(250);
                 claw.setClawClose(Claw.Side.BOTH);
-                sleep(300);
+                sleep(200);
                 arm.setAngleArm(120);
 //                intake.runToPreset(Levels.INTAKE);
 //                intake.intakeMotor.setSpeed(0);
