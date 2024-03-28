@@ -269,7 +269,7 @@ public class Robot {
         this.slides.runToPreset(Levels.DEPOSIT);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(400);
+                sleep(350);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
             }});

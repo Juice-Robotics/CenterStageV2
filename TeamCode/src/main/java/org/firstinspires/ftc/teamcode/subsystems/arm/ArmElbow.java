@@ -42,8 +42,7 @@ public class ArmElbow {
     }
 
     public void setAngleElbow(double angle) {
-        this.elbow.setAngle((float) angle);
-        this.currentAngle = angle;
+        elbow.setAngle((float) angle);
     }
 
     public double getAngle() {
