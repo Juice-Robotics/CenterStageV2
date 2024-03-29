@@ -208,8 +208,7 @@ public class Robot {
                 public void run() {
                     sleep(300);
                     intake.runToPreset(Levels.INTAKE);
-                    arm.setAngleArm(90);
-                    arm.setAngleElbow(280);
+                    arm.runtoPreset(Levels.INTERMEDIATE);
                     claw.runToWristPreset(Levels.INTAKE);
                     sleep(300);
                     slides.runToPosition(0);
@@ -225,8 +224,7 @@ public class Robot {
             Thread thread = new Thread(() -> {
                 sleep(300);
                 intake.runToPreset(Levels.INTAKE);
-                arm.setAngleArm(90);
-                arm.setAngleElbow(280);
+                arm.runtoPreset(Levels.INTERMEDIATE);
                 claw.runToWristPreset(Levels.INTAKE);
                 sleep(300);
                 slides.runToPosition(0);
@@ -288,10 +286,10 @@ public class Robot {
     }
 
     public void autoPreloadDepositPreset() {
-        this.slides.runToPosition(450);
+        this.slides.runToPosition(300);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(300);
+                sleep(350);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
             }});
@@ -300,10 +298,10 @@ public class Robot {
     }
 
     public void autoCycleDepositPreset() {
-        this.slides.runToPosition(480);
+        this.slides.runToPosition(600);
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                sleep(700);
+                sleep(350);
                 arm.runtoPreset(Levels.DEPOSIT);
                 claw.runToWristPreset(Levels.DEPOSIT);
             }});
@@ -337,7 +335,7 @@ public class Robot {
 
     public void antiJam(){
         if (intaking) {
-            if (this.intake.intakeMotor.getCurrent() > 4 && !flags.contains(RobotFlags.ANTI_JAM_IN_PROGRESS) && antiJamCooldown.time(TimeUnit.MILLISECONDS) >= 250) {
+            if (this.intake.intakeMotor.getCurrent() > 10 && !flags.contains(RobotFlags.ANTI_JAM_IN_PROGRESS) && antiJamCooldown.time(TimeUnit.MILLISECONDS) >= 250) {
                 flags.add(RobotFlags.INTAKE_JAMMED);
                 flags.add(RobotFlags.ANTI_JAM_IN_PROGRESS);
                 this.intake.reverse();
