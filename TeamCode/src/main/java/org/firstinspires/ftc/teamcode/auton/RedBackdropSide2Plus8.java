@@ -85,11 +85,11 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                     this.robot.startAutoIntake();
                     this.robot.intake.setAngle(198);
                 })
-                .addTemporalMarker(2.3, () -> {
+                .addTemporalMarker(2.4, () -> {
                     this.robot.intake.setAngle(181);
                 })
                 .splineToConstantHeading(new Vector2d(36, 20), Math.toRadians(-90))
-                .splineToConstantHeading(new Vector2d(35.1, -57.5), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(35, -57.3), Math.toRadians(-90))
                 .waitSeconds(0.5)
                 .build();
 
@@ -108,11 +108,18 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .waitSeconds(0.1)
                 .build();
 
-//        TrajectorySequence backdropToStackC3 = drive.trajectorySequenceBuilder(stackToBackdropC2.end())
-//                .setReversed(false)
-//                .splineToConstantHeading(new Vector2d(35, -27), Math.toRadians(-90))
-//                .splineTo(new Vector2d(27, -60), Math.toRadians(-115))
-//                .build();
+        TrajectorySequence backdropToStackC3 = drive.trajectorySequenceBuilder(stackToBackdropC2.end())
+                .setReversed(false)
+                .addTemporalMarker(1, () -> {
+                    this.robot.startAutoIntake();
+                })
+                .addTemporalMarker(3, () -> {
+                    this.robot.intake.setAngle(198);
+                })
+                .splineToConstantHeading(new Vector2d(35, -27), Math.toRadians(-90))
+                .splineTo(new Vector2d(29, -57.5), Math.toRadians(-115))
+                .waitSeconds(4)
+                .build();
 //
 //        TrajectorySequence stackToBackdropC3 = drive.trajectorySequenceBuilder(backdropToStackC3.end())
 //                .setReversed(true)
@@ -161,7 +168,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
         drive.followTrajectorySequence(stackToBackdropC1);
         drive.followTrajectorySequence(backdropToStackC2);
         drive.followTrajectorySequence(stackToBackdropC2);
-//        drive.followTrajectorySequence(backdropToStackC3);
+        drive.followTrajectorySequence(backdropToStackC3);
 //        drive.followTrajectorySequence(stackToBackdropC3);
 //        drive.followTrajectorySequence(backdropToStackC4);
 //        drive.followTrajectorySequence(stackToBackdropC4);
