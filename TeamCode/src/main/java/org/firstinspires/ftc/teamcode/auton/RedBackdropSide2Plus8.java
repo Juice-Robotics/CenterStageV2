@@ -74,7 +74,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(2.47, () -> {
                     robot.smartClawOpen();
                 })
-                .splineToConstantHeading(new Vector2d(36, 47.7), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 47.4), Math.toRadians(90))
                 .waitSeconds(0.1)
                 .build();
 
@@ -102,7 +102,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(2.4, () -> {
                     robot.smartClawOpen();
                 })
-                .splineToConstantHeading(new Vector2d(36, 47.2), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 47), Math.toRadians(90))
                 .waitSeconds(0.1)
                 .build();
 

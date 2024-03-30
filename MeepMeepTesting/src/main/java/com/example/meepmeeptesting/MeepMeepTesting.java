@@ -18,91 +18,88 @@ import javax.imageio.ImageIO;
 public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(750);
-        RoadRunnerBotEntity myBotCycleSafeRedRight = new DefaultBotBuilder(meepMeep)
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(0)))
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(22, 33, Math.toRadians(-90)), Math.toRadians(-90))
-                        .addTemporalMarker(1.7, () -> {
-//                            robot.ejectSpike();
-                        })
-                        .waitSeconds(1.3)
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
-                        .addTemporalMarker(1, () -> {
-//                            robot.autoPreloadDepositPreset();
-                        })
-                        .addTemporalMarker(2, () -> {
-//                            robot.smartClawOpen();
-                        })
-                        .waitSeconds(1.8)
-                        .forward(4)
-                        .strafeLeft(23)
-                        .back(10)
-                        .build()
-                );
-
-        RoadRunnerBotEntity myBotCycleSafeRedCenter = new DefaultBotBuilder(meepMeep)
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(0)))
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(22, 33, Math.toRadians(-90)), Math.toRadians(-90))
-                        .addTemporalMarker(1.7, () -> {
-//                            robot.ejectSpike();
-                        })
-                        .waitSeconds(1.3)
-
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(37.5, 50.5, Math.toRadians(-90)), Math.toRadians(90))
-                        .addTemporalMarker(1, () -> {
-//                            robot.autoPreloadDepositPreset();
-                        })
-                        .addTemporalMarker(2, () -> {
-//                            robot.smartClawOpen();
-                        })
-                        .waitSeconds(1.8)
-                        .forward(4)
-                        .strafeLeft(23)
-                        .back(10)
-                                .build()
-                );
-
-        RoadRunnerBotEntity myBotCycleSafeRedLeft = new DefaultBotBuilder(meepMeep)
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(0)))
-                        .setReversed(true)
-                        .splineToSplineHeading(new Pose2d(43, 20, Math.toRadians(270)), Math.toRadians(180))
-                        .splineToSplineHeading(new Pose2d(30, 16, Math.toRadians(270)), Math.toRadians(90))
-                        .addTemporalMarker(1.4, () -> {
-//                            robot.ejectSpike();
-                        })
-                        .waitSeconds(1.3)
-
-
-                        .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(30, 50.5, Math.toRadians(-90)), Math.toRadians(90))
-                        .addTemporalMarker(1, () -> {
-//                            robot.autoPreloadDepositPreset();
-                        })
-                        .addTemporalMarker(2, () -> {
-//                            robot.smartClawOpen();
-                        })
-                        .waitSeconds(1.8)
-                        .forward(4)
-                        .strafeLeft(29)
-                        .back(10)
-                                .build()
-                );
-
         RoadRunnerBotEntity myBotCycleSafeRed = new DefaultBotBuilder(meepMeep)
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
-                .setDimensions(14, 17)
-                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(0)))
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 10)
+                .setDimensions(11, 15)
+                .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(62, 13, Math.toRadians(180)))
+                        .setReversed(false)
+                        .splineToLinearHeading(new Pose2d(35.5, 13, Math.toRadians(180)), Math.toRadians(180))
                         .setReversed(true)
-                        .splineToLinearHeading(new Pose2d(31, 42, Math.toRadians(-90)), Math.toRadians(90))
+                        .lineToLinearHeading(new Pose2d(34.5, 48, Math.toRadians(-90)))
+                        .addTemporalMarker(0, () -> {
+                        })
+                        .addTemporalMarker(1, () -> {
+                        })
+                        .addTemporalMarker(2.8, () -> {
+                        })
+                        .setReversed(false)
+                        .addTemporalMarker(1, () -> {
+                        })
+                        .addTemporalMarker(2.45, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(35.77, -57.7), Math.toRadians(-90))
+                        .waitSeconds(0.2)
+                        .setReversed(true)
+                        .addTemporalMarker(0.5, () -> {
+                        })
+                        .addTemporalMarker(1.2, () -> {
+                        })
+                        .addTemporalMarker(2.47, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, 47.4), Math.toRadians(90))
+                        .waitSeconds(0.1)
+                        .setReversed(false)
+                        .addTemporalMarker(1, () -> {
+                        })
+                        .addTemporalMarker(2.4, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36.2, -57.9), Math.toRadians(-90))
+                        .waitSeconds(0.2)
+                        .setReversed(true)
+                        .addTemporalMarker(0.5, () -> {
+                        })
+                        .addTemporalMarker(1.2, () -> {
+                        })
+                        .addTemporalMarker(2.4, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, 47), Math.toRadians(90))
+                        .waitSeconds(0.1)
+                        .setReversed(false)
+                        .addTemporalMarker(1, () -> {
+                        })
+                        .addTemporalMarker(3, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(25.5, -58.7), Math.toRadians(-90))
+                        .waitSeconds(0.5)
+                        .setReversed(true)
+                        .addTemporalMarker(0.5, () -> {
+                        })
+                        .addTemporalMarker(1.4, () -> {
+                        })
+                        .addTemporalMarker(2.6, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(36, 43), Math.toRadians(90))
+                        .waitSeconds(0.1)
+                        .setReversed(false)
+                        .addTemporalMarker(1, () -> {
+                        })
+                        .addTemporalMarker(3, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
+                        .splineToConstantHeading(new Vector2d(25.7, -58.8), Math.toRadians(-90))
+                        .waitSeconds(0.5)
+                        .setReversed(true)
+                        .addTemporalMarker(0.5, () -> {
+                        })
+                        .addTemporalMarker(1.4, () -> {
+                        })
+                        .addTemporalMarker(2.6, () -> {
+                        })
+                        .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(90))
+                        .splineToConstantHeading(new Vector2d(36, 43), Math.toRadians(90))
+                        .waitSeconds(0.1)
                                 .build()
                 );
 
