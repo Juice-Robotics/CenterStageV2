@@ -106,39 +106,64 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .waitSeconds(0.1)
                 .build();
 
-//        TrajectorySequence backdropToStackC3 = drive.trajectorySequenceBuilder(stackToBackdropC2.end())
-//                .setReversed(false)
-//                .addTemporalMarker(1, () -> {
-//                    this.robot.startAutoIntake();
-//                })
-//                .addTemporalMarker(2.5, () -> {
-//                    this.robot.intake.setAngle(198);
-//                })
-//                .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
-//                .splineTo(new Vector2d(29.7, -58), Math.toRadians(-130))
-//                .waitSeconds(0.5)
-//                .build();
-//
-//        TrajectorySequence stackToBackdropC3 = drive.trajectorySequenceBuilder(backdropToStackC3.end())
-//                .setReversed(true)
-//                .addTemporalMarker(0.5, () -> {
-//                    this.robot.stopIntake();
-//                })
-//                .splineTo(new Vector2d(34, -27), Math.toRadians(90))
-//                .splineToConstantHeading(new Vector2d(36, 49), Math.toRadians(90))
-//                .build();
-//
-//        TrajectorySequence backdropToStackC4 = drive.trajectorySequenceBuilder(stackToBackdropC3.end())
-//                .setReversed(false)
-//                .splineToConstantHeading(new Vector2d(35, -27), Math.toRadians(-90))
-//                .splineTo(new Vector2d(27, -60), Math.toRadians(-115))
-//                .build();
-//
-//        TrajectorySequence stackToBackdropC4 = drive.trajectorySequenceBuilder(backdropToStackC4.end())
-//                .setReversed(true)
-//                .splineTo(new Vector2d(35, -27), Math.toRadians(90))
-//                .splineToConstantHeading(new Vector2d(35, 49), Math.toRadians(90))
-//                .build();
+        TrajectorySequence backdropToStackC3 = drive.trajectorySequenceBuilder(stackToBackdropC2.end())
+                .setReversed(false)
+                .addTemporalMarker(1, () -> {
+                    this.robot.startAutoIntake();
+                })
+                .addTemporalMarker(2.5, () -> {
+                    this.robot.intake.setAngle(198);
+                })
+                .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(26.3, -58.7), Math.toRadians(-90))
+                .waitSeconds(0.2)
+                .build();
+
+        TrajectorySequence stackToBackdropC3 = drive.trajectorySequenceBuilder(backdropToStackC3.end())
+                .setReversed(true)
+                .addTemporalMarker(0.5, () -> {
+                    this.robot.stopIntake();
+                })
+                .addTemporalMarker(1.4, () -> {
+                    this.robot.autoCycleDepositPreset();
+                })
+                .addTemporalMarker(2.6, () -> {
+                    robot.smartClawOpen();
+                })
+                .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 45), Math.toRadians(90))
+                .waitSeconds(0.1)
+                .build();
+
+        TrajectorySequence backdropToStackC4 = drive.trajectorySequenceBuilder(stackToBackdropC3.end())
+                .setReversed(false)
+                .addTemporalMarker(1, () -> {
+                    this.robot.startAutoIntake();
+                    this.robot.intake.setAngle(198);
+                })
+                .addTemporalMarker(2.5, () -> {
+                    this.robot.intake.setAngle(176);
+                })
+                .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(26.4, -58.8), Math.toRadians(-90))
+                .waitSeconds(0.2)
+                .build();
+
+        TrajectorySequence stackToBackdropC4 = drive.trajectorySequenceBuilder(backdropToStackC4.end())
+                .setReversed(true)
+                .addTemporalMarker(0.5, () -> {
+                    this.robot.stopIntake();
+                })
+                .addTemporalMarker(1.4, () -> {
+                    this.robot.autoCycleDepositPreset();
+                })
+                .addTemporalMarker(2.6, () -> {
+                    robot.smartClawOpen();
+                })
+                .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 44), Math.toRadians(90))
+                .waitSeconds(0.1)
+                .build();
 
 
         /*
@@ -169,10 +194,10 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
         drive.followTrajectorySequence(stackToBackdropC1);
         drive.followTrajectorySequence(backdropToStackC2);
         drive.followTrajectorySequence(stackToBackdropC2);
-//        drive.followTrajectorySequence(backdropToStackC3);
-//        drive.followTrajectorySequence(stackToBackdropC3);
-//        drive.followTrajectorySequence(backdropToStackC4);
-//        drive.followTrajectorySequence(stackToBackdropC4);
+        drive.followTrajectorySequence(backdropToStackC3);
+        drive.followTrajectorySequence(stackToBackdropC3);
+        drive.followTrajectorySequence(backdropToStackC4);
+        drive.followTrajectorySequence(stackToBackdropC4);
 
 
 
