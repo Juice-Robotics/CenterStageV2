@@ -192,12 +192,12 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
         drive.followTrajectorySequence(preloadSpikeCenter);
         drive.followTrajectorySequence(backdropToStacksC1);
         drive.followTrajectorySequence(stackToBackdropC1);
-        drive.followTrajectorySequence(backdropToStackC2);
-        drive.followTrajectorySequence(stackToBackdropC2);
-        drive.followTrajectorySequence(backdropToStackC3);
-        drive.followTrajectorySequence(stackToBackdropC3);
-        drive.followTrajectorySequence(backdropToStackC4);
-        drive.followTrajectorySequence(stackToBackdropC4);
+//        drive.followTrajectorySequence(backdropToStackC2);
+//        drive.followTrajectorySequence(stackToBackdropC2);
+//        drive.followTrajectorySequence(backdropToStackC3);
+//        drive.followTrajectorySequence(stackToBackdropC3);
+//        drive.followTrajectorySequence(backdropToStackC4);
+//        drive.followTrajectorySequence(stackToBackdropC4);
 
 
 
