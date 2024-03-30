@@ -56,11 +56,11 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(1, () -> {
                     this.robot.startAutoIntake();
                 })
-                .addTemporalMarker(2.8, () -> {
+                .addTemporalMarker(2.45, () -> {
                     this.robot.intake.setAngle(198);
                 })
-                .splineToConstantHeading(new Vector2d(35.75, -57.75), Math.toRadians(-90))
-                .waitSeconds(0.6)
+                .splineToConstantHeading(new Vector2d(35.77, -57.7), Math.toRadians(-90))
+                .waitSeconds(0.2)
                 .build();
 
         TrajectorySequence stackToBackdropC1 = drive.trajectorySequenceBuilder(backdropToStacksC1.end())
@@ -74,7 +74,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(2.47, () -> {
                     robot.smartClawOpen();
                 })
-                .splineToConstantHeading(new Vector2d(36, 47.4), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 47.7), Math.toRadians(90))
                 .waitSeconds(0.1)
                 .build();
 
@@ -87,7 +87,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(2.4, () -> {
                     this.robot.intake.setAngle(176);
                 })
-                .splineToConstantHeading(new Vector2d(36.3, -57.9), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(36.2, -57.9), Math.toRadians(-90))
                 .waitSeconds(0.2)
                 .build();
 
@@ -102,7 +102,7 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(2.4, () -> {
                     robot.smartClawOpen();
                 })
-                .splineToConstantHeading(new Vector2d(36, 47), Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(36, 47.2), Math.toRadians(90))
                 .waitSeconds(0.1)
                 .build();
 
@@ -111,11 +111,11 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(1, () -> {
                     this.robot.startAutoIntake();
                 })
-                .addTemporalMarker(2.5, () -> {
+                .addTemporalMarker(3, () -> {
                     this.robot.intake.setAngle(198);
                 })
                 .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
-                .splineToConstantHeading(new Vector2d(26.1, -58.7), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(25.5, -58.7), Math.toRadians(-90))
                 .waitSeconds(0.5)
                 .build();
 
@@ -141,11 +141,11 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                     this.robot.startAutoIntake();
                     this.robot.intake.setAngle(198);
                 })
-                .addTemporalMarker(2.5, () -> {
+                .addTemporalMarker(3, () -> {
                     this.robot.intake.setAngle(176);
                 })
                 .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
-                .splineToConstantHeading(new Vector2d(26.4, -58.8), Math.toRadians(-90))
+                .splineToConstantHeading(new Vector2d(25.7, -58.8), Math.toRadians(-90))
                 .waitSeconds(0.5)
                 .build();
 
