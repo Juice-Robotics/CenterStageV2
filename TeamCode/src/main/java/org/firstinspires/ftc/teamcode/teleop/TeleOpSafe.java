@@ -141,7 +141,7 @@ public class TeleOpSafe extends LinearOpMode {
                 } else if (robot.intake.getAngle() == 198) {
                     robot.intake.setAngle(198 - 17);
                 } else if (robot.intake.getAngle() == 181) {
-                    robot.intake.setAngle(177);
+                    robot.intake.setAngle(176);
                 } else {
                     robot.intake.setAngle(215);
                 }
