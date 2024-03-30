@@ -17,16 +17,16 @@ public class ArmElbow {
 
     // TARGETS
     public double OFFSET = 0;
-    public double intermediateTargetArm = 90;
-    public double intermediateTargetElbow = 280;
+    public double intermediateTargetArm = 97;
+    public double intermediateTargetElbow = 8; //-272
     public double captureTargetArm = 80;
-    public double captureTargetElbow = 285;
+    public double captureTargetElbow = 13;
 
     public double depositTargetArm = 245;
-    public double depositTargetElbow = 157;
+    public double depositTargetElbow = 145;
 
-    public double initPosArm = 200;
-    public double initPosElbow = 235;
+    public double initPosArm = 220;
+    public double initPosElbow = 50;
 
 
 
