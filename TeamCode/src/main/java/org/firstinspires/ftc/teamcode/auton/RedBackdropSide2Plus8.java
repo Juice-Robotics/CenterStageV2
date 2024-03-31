@@ -135,12 +135,11 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                     this.robot.startAutoIntake();
                     this.robot.intake.setAngle(198);
                 })
-                .addTemporalMarker(3, () -> {
+                .addTemporalMarker(2.55, () -> {
                     this.robot.intake.setAngle(176);
                 })
                 .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(-90))
-                .splineToConstantHeading(new Vector2d(25.7, -58.8), Math.toRadians(-90))
-                .waitSeconds(0.5)
+                .splineToConstantHeading(new Vector2d(25.4, -60), Math.toRadians(-90))
                 .build();
 
         TrajectorySequence stackToBackdropC4 = drive.trajectorySequenceBuilder(backdropToStackC4.end())
@@ -148,15 +147,14 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
                 .addTemporalMarker(0.5, () -> {
                     this.robot.stopIntake();
                 })
-                .addTemporalMarker(1.4, () -> {
+                .addTemporalMarker(1.6, () -> {
                     this.robot.autoCycleDepositPreset();
                 })
-                .addTemporalMarker(2.6, () -> {
+                .addTemporalMarker(2.5, () -> {
                     robot.smartClawOpen();
                 })
                 .splineToConstantHeading(new Vector2d(36, -27), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(36, 43), Math.toRadians(90))
-                .waitSeconds(0.1)
+                .splineToConstantHeading(new Vector2d(37, 48), Math.toRadians(90))
                 .build();
 
 
@@ -190,8 +188,8 @@ public class RedBackdropSide2Plus8 extends LinearOpMode {
         drive.followTrajectorySequence(stackToBackdropC2);
         drive.followTrajectorySequence(backdropToStackC3);
         drive.followTrajectorySequence(stackToBackdropC3);
-//        drive.followTrajectorySequence(backdropToStackC4);
-//        drive.followTrajectorySequence(stackToBackdropC4);
+        drive.followTrajectorySequence(backdropToStackC4);
+        drive.followTrajectorySequence(stackToBackdropC4);
 
 
 
