@@ -25,8 +25,8 @@ public class ArmElbow {
     public double depositTargetArm = 245;
     public double depositTargetElbow = 145;
 
-    public double initPosArm = 220;
-    public double initPosElbow = 50;
+    public double initPosArm = 200;
+    public double initPosElbow = 60;
 
 
 
