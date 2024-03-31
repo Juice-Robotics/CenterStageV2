@@ -92,7 +92,7 @@ public class TeleOpSafe extends LinearOpMode {
 
             //CLAW
             if (gamepad1.triangle && !previousTriangle) {
-                robot.smartClawOrderedOpen();
+                robot.claw.wrist.setAngle(19);
             }
 
             if (gamepad1.cross && !previousCross) {
