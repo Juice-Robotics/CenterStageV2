@@ -10,8 +10,8 @@ import org.firstinspires.ftc.teamcode.lib.AllianceColor;
 import java.util.concurrent.TimeUnit;
 
 public class IntakeSensor {
-    ColorSensor sensor1;
-    ColorSensor sensor2;
+    public ColorSensor sensor1;
+    public ColorSensor sensor2;
     ElapsedTime lastRead = new ElapsedTime();
 
     boolean[] detectedIndex = {false, false};

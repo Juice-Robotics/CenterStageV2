@@ -154,6 +154,29 @@ public class Robot {
         subsystemState = Levels.INTERMEDIATE;
     }
 
+    public void stopIntakeAndClaw() {
+        intaking = false;
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                intake.stopIntake();
+//                intake.intakeMotor.setSpeed(0.6F);
+                sleep(250);
+                arm.runtoPreset(Levels.CAPTURE);
+                sleep(250);
+                claw.setClawClose(Claw.Side.BOTH);
+                sleep(200);
+                arm.setAngleArm(120);
+                arm.setAngleElbow(5);
+                sleep(200);
+//                intake.runToPreset(Levels.INTAKE);
+//                intake.intakeMotor.setSpeed(0);
+//                sleep(500);
+                depositPreset();
+            }});
+        thread.start();
+        subsystemState = Levels.INTERMEDIATE;
+    }
+
     public void autoIntake() {
         intaking = true;
         this.intake.reverseIntake();
